@@ -269,8 +269,7 @@ def save_classroom_form(request, form, template_name):
     context = {'form': form}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
-
-
+#view class rooms
 def classroom_delete(request, classroom_pk):
     classroom = get_object_or_404(Classroom, pk=classroom_pk)
     data = dict()
