@@ -1,0 +1,36 @@
+{% for syllabus in syllabus %}
+    <tr>
+        <td>{{ syllabus.id }}</td>
+        <td>{{ syllabus.school }}</td>
+        <td>{{ syllabus.syllabus_title }}</td>
+        <td>{{ syllabus.classroom }}</td>
+        <td>{{ syllabus.subject_name }}</td>
+        <td>{{ syllabus.year }}</td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'syllabus_update' syllabus.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <div class="mb-4">
+                <a href="{{ syllabus.syllabus.url }}" class="btn btn-primary btn-sm" target="_blank">
+                    <span class="fa fa-download"></span>Download
+                </a>
+            </div>
+            <div type="button"
+                 class="btn btn-success btn-sm js-view-syllabus"
+                 data-url="{% url 'syllabus_view' syllabus.pk %}">
+                <span class="fa fa-eye"></span> View
+            </div>
+            <br>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-syllabus"
+                    data-url="{% url 'syllabus_delete' syllabus.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Syllabus</td>
+    </tr>
+{% endfor %}

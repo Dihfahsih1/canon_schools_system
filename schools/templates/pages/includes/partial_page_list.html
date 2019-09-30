@@ -1,0 +1,35 @@
+{% for page in pages %}
+    <tr>
+        <td>{{ page.id }}</td>
+        <td>{{ page.school }}</td>
+        <td>{{ page.page_location }}</td>
+        <td>{{ page.page_title }}</td>
+        <td>
+             {% if page.page_image %}
+            <img src="{{page.page_image.url}}"
+                 alt="" width="80"
+                 style="background: rgba(16,67,221,0.84); padding: 5px;"/>
+            {% endif %}
+        </td>
+        <td>
+            <button type="button"
+                    class="btn btn-warning btn-sm js-view-page"
+                    data-url="{% url 'page_view' page.pk %}">
+                <span class="glyphicon glyphicon-eye-open"></span> View
+            </button>
+            <div class="mb-4">
+                <a href="{% url 'page_update' page.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-page"
+                    data-url="{% url 'page_delete' page.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Page</td>
+    </tr>
+{% endfor %}

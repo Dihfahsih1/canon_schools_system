@@ -1,0 +1,37 @@
+{% for assignment in assignments %}
+    <tr>
+        <td>{{ assignment.id }}</td>
+        <td>{{ assignment.school }}</td>
+        <td>{{ assignment.assignment_title }}</td>
+        <td>{{ assignment.classroom }}</td>
+        <td>{{ assignment.subject }}</td>
+        <td>{{ assignment.deadline }}</td>
+        <td>{{ assignment.school.year }}</td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'assignment_update' assignment.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <div class="mb-4">
+                <a href="{{ assignment.assignment.url }}" class="btn btn-primary btn-sm" target="_blank">
+                    <span class="fa fa-download"></span>Download
+                </a>
+            </div>
+            <button type="button"
+                    class="btn btn-success btn-sm js-view-assignment"
+                    data-url="{% url 'assignment_view' assignment.pk %}">
+                <span class="fa fa-eye"></span> View
+            </button>
+            <br>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-assignment"
+                    data-url="{% url 'assignment_delete' assignment.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Assignment</td>
+    </tr>
+{% endfor %}

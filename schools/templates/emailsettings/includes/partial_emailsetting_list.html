@@ -1,0 +1,33 @@
+{% for emailsetting in emailsettings %}
+    <tr>
+        <td>{{ emailsetting.id }}</td>
+        <td>{{ emailsetting.school }}</td>
+        <td>{{ emailsetting.email_protocol }}</td>
+        <td>{{ emailsetting.email_type }}</td>
+        <td>{{ emailsetting.char_set }}</td>
+        <td>{{ emailsetting.priority }}</td>
+        <td>{{ emailsetting.email_from_name }}</td>
+        <td>{{ emailsetting.email_from_address }}</td>
+        <td>
+            <button type="button"
+                    class="btn btn-warning btn-sm js-view-emailsetting"
+                    data-url="{% url 'emailsetting_view' emailsetting.pk %}">
+                <span class="glyphicon glyphicon-eye-open"></span> View
+            </button>
+            <div class="mb-4">
+                <a href="{% url 'emailsetting_update' emailsetting.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-emailsetting"
+                    data-url="{% url 'emailsetting_delete' emailsetting.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+            <br>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="10" class="text-center bg-warning">No emailsetting</td>
+    </tr>
+{% endfor %}

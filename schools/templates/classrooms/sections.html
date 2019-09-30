@@ -1,0 +1,16 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>Classroom</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for section in sections %}
+      <tr>
+        <td>{{ section.pk }}"</td>
+        <td>{{ section.section }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

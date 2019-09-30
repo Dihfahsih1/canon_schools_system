@@ -1,0 +1,41 @@
+{% for profile in profiles %}
+    <tr>
+        <td>{{ profile.id }}</td>
+        <td>{{ profile.school }}</td>
+        <td>
+            {% if profile.library_member %}
+                <img src="{{ profile.library_member.photo.url }}"
+                     alt="" width="50"
+                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/><br/>
+            {% endif %}
+        </td>
+        <td>{{ profile.library_member }}</td>
+        <td>{{ profile.select_book }}</td>
+        <td>{{ profile.ISBN_no }}</td>
+        <td>{{ profile.profile_date }}</td>
+        <td>{{ profile.due_date }}</td>
+        <td>{{ profile.return_date }}</td>
+        <td>
+            {% if profile.book_cover %}
+                <img src="{{ profile.book_cover.url }}"
+                     alt="" width="50"
+                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/><br/>
+            {% endif %}
+        </td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'profile_update' profile.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-profile"
+                    data-url="{% url 'profile_delete' profile.id %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="11" class="text-center bg-warning">No profile</td>
+    </tr>
+{% endfor %}

@@ -1,0 +1,41 @@
+{% for issue in issues %}
+    <tr>
+        <td>{{ issue.id }}</td>
+        <td>{{ issue.school }}</td>
+        <td>
+            {% if issue.library_member %}
+                <img src="{{ issue.library_member.photo.url }}"
+                     alt="" width="50"
+                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/><br/>
+            {% endif %}
+        </td>
+        <td>{{ issue.library_member }}</td>
+        <td>{{ issue.select_book }}</td>
+        <td>{{ issue.ISBN_no }}</td>
+        <td>{{ issue.issue_date }}</td>
+        <td>{{ issue.due_date }}</td>
+        <td>{{ issue.return_date }}</td>
+        <td>
+            {% if issue.book_cover %}
+                <img src="{{ issue.book_cover.url }}"
+                     alt="" width="50"
+                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/><br/>
+            {% endif %}
+        </td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'issue_update' issue.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-issue"
+                    data-url="{% url 'issue_delete' issue.id %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="11" class="text-center bg-warning">No Issue</td>
+    </tr>
+{% endfor %}

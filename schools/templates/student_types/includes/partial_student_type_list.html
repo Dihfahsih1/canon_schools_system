@@ -1,0 +1,23 @@
+{% for student_type in student_types %}
+    <tr>
+        <td>{{ student_type.id }}</td>
+        <td>{{ student_type.student_type }}</td>
+        <td>{{ student_type.note }}</td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'student_type_update' student_type.pk %}" class="btn btn-primary btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-student_type"
+                    data-url="{% url 'student_type_delete' student_type.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Student Type</td>
+    </tr>
+{% endfor %}

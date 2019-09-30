@@ -1,0 +1,81 @@
+<form method="post" action="{% url 'superuser_view' form.instance.pk %}" class="js-superuser-view-form"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Super Admin Information</h4>
+    </div>
+    <div class="modal-body">
+       <table id="tablePreview" class="table table-bordered table-striped">
+            <!--Table head-->
+            <thead>
+            <tr>
+                <th>Name</th>
+                <td>{{ form.instance.user.full_name }}</td>
+                <th>National ID</th>
+                <td>{{ form.instance.user.national_ID }}</td>
+            </tr>
+            </thead>
+            <!--Table head-->
+            <!--Table body-->
+            <tbody>
+            <tr>
+                <th>Role</th>
+                <td>{{ form.instance.user.roles }}</td>
+                <th>Phone</th>
+                <td>{{ form.instance.user.phone }}</td>
+            </tr>
+            <tr>
+                <th>Present Address</th>
+                <td>{{ form.instance.user.present_address }}</td>
+                <th>Permanent Address</th>
+                <td>{{ form.instance.user.permanent_address }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ form.instance.user.gender }}</td>
+                <th>Blood Group</th>
+                <td>{{ form.instance.user.blood_group }}</td>
+            </tr>
+            <tr>
+                <th>Religion</th>
+                <td>{{ form.instance.user.religion }}</td>
+                <th>Birth Date</th>
+                <td>{{ form.instance.user.birth_date }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>
+                    {{ form.instance.user.email }}
+                </td>
+                <th>Other Info</th>
+                <td>{{ form.instance.user.other_info }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>
+                    {% if form.instance.user.photo %}
+                        <img src="{{ form.instance.user.photo.url }}"
+                             alt="" width="50"
+                             style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/>
+                    {% endif %}
+                </td>
+                <th>Resume</th>
+                <td>
+                    {% if form.instance.user.resume %}
+                    <img src="{{ form.instance.user.resume.url }}"
+                             alt="" width="50"
+                             style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/>
+                    {% endif %}
+                </td>
+            </tr>
+            </tbody>
+            <!--Table body-->
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</form>

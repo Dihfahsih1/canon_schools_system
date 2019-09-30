@@ -1,0 +1,197 @@
+<form method="post" action="{% url 'guardian_view' form.instance.pk %}" class="js-guardian-view-form"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="modal-lg" tabindex="-1" role="document" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Guardian Information</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                    <ul id="myTab" class="nav nav-tabs bordered" role="tablist">
+                        <li class="active"><a href="#tab_content1" id="basic-tab" role="tab"
+                                              data-toggle="tab" aria-expanded="true">
+                            <i class="fa fa-info-circle">&nbsp;</i>Basic Information</a>
+                        </li>
+                        <li class=""><a href="#tab_content2" role="tab" id="settings-tab" data-toggle="tab"
+                                        aria-expanded="false">
+                            <i class="fa fa-male">&nbsp;</i>Student List</a>
+                        </li>
+                        <li class=""><a href="#tab_content3" role="tab" id="social-tab" data-toggle="tab"
+                                        aria-expanded="false">
+                            <i class="fa fa-dollar">&nbsp;</i>Invoice List</a>
+                        </li>
+
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1"
+                             aria-labelledby="basic-tab">
+                            <p></p>
+                            <table id="tablePreview" class="table table-bordered table-striped">
+                                <!--Table head-->
+                                <thead>
+                                <tr>
+                                    <th>School Name</th>
+                                    <td>{{ form.instance.school }}</td>
+                                    <th></th>
+                                    <td></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{{ form.instance.user.full_name }}</td>
+                                    <th>Username</th>
+                                    <td>{{ form.instance.user.username }}</td>
+                                </tr>
+                                <tr>
+                                    <th>National ID</th>
+                                    <td>{{ form.instance.user.national_ID }}</td>
+                                    <th>Phone</th>
+                                    <td>{{ form.instance.user.phone }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Profession</th>
+                                    <td>{{ form.instance.profession }}</td>
+                                    <th>Religion</th>
+                                    <td>{{ form.instance.user.religion }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Present Address</th>
+                                    <td>{{ form.instance.user.present_address }}</td>
+                                    <th>Permanent Address</th>
+                                    <td>{{ form.instance.user.permanent_address }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Role</th>
+                                    <td>
+                                        {{ form.instance.roles }}
+                                    </td>
+                                    <th>Email</th>
+                                    <td>{{ form.instance.user.email }}</td>
+                                </tr>
+                                </tbody>
+                                <!--Table body-->
+                            </table>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="settings-tab">
+                            <p></p>
+                            <table id="tablePreview" class="table table-bordered table-striped">
+                                <!--Table head-->
+                                <thead>
+                                <tr>
+                                    <th>#SL</th>
+                                    <th>Name</th>
+                                    <th>Class</th>
+                                    <th>Section</th>
+                                    <th>Group</th>
+                                    <th>Gender</th>
+                                    <th>Blood Group</th>
+                                    <th>Photo</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for student in students %}
+                                    <tr>
+                                        <td>{{ student.id }}</td>
+                                        <td>{{ student.school }}</td>
+                                        <td>
+                                            {% if student.user.photo %}
+                                                <img src="{{ student.user.photo.url }}"
+                                                     alt="" width="50"
+                                                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/>
+                                                <br/>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ student.user.full_name }}</td>
+                                        <td>{{ student.group }}</td>
+                                        <td>{{ student.classroom }}</td>
+                                        <td>{{ student.section }}</td>
+                                        <td>{{ student.roll_no }}</td>
+                                        <td>{{ student.user.email }}</td>
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-success btn-sm js-view-student"
+                                                    data-url="{% url 'student_view' student.pk %}">
+                                                <span class="glyphicon glyphicon-eye-open"></span> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="10" class="text-center bg-warning">No Student</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <!--Table body-->
+                            </table>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="settings-tab">
+                            <p></p>
+                                                        <table id="tablePreview" class="table table-bordered table-striped">
+                                <!--Table head-->
+                                <thead>
+                                <tr>
+                                    <th>#SL</th>
+                                    <th>Invoice Number</th>
+                                    <th>Student</th>
+                                    <th>Class</th>
+                                    <th>Fee Type</th>
+                                    <th>Gross Amount</th>
+                                    <th>Discount</th>
+                                    <th>Net Amount</th>
+                                    <th>Payment Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for student in students %}
+                                    <tr>
+                                        <td>{{ student.id }}</td>
+                                        <td>{{ student.school }}</td>
+                                        <td>
+                                            {% if student.user.photo %}
+                                                <img src="{{ student.user.photo.url }}"
+                                                     alt="" width="50"
+                                                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/>
+                                                <br/>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ student.user.full_name }}</td>
+                                        <td>{{ student.group }}</td>
+                                        <td>{{ student.classroom }}</td>
+                                        <td>{{ student.section }}</td>
+                                        <td>{{ student.roll_no }}</td>
+                                        <td>{{ student.user.email }}</td>
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-success btn-sm js-view-student"
+                                                    data-url="{% url 'student_view' student.pk %}">
+                                                <span class="glyphicon glyphicon-eye-open"></span> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="10" class="text-center bg-warning">No Student</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <!--Table body-->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</form>

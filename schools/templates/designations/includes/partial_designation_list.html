@@ -1,0 +1,23 @@
+{% for designation in designations %}
+    <tr>
+        <td>{{ designation.id }}</td>
+        <td>{{ designation.school }}</td>
+        <td>{{ designation.designation }}</td>
+        <td>{{ designation.note }}</td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'designation_update' designation.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-designation"
+                    data-url="{% url 'designation_delete' designation.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Designations</td>
+    </tr>
+{% endfor %}

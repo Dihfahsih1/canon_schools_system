@@ -1,0 +1,54 @@
+<form method="post" action="{% url 'notice_view' form.instance.pk %}" class="js-notice-view-form"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Notice Information</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+            <div id="myTabContent" class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1"
+                     aria-labelledby="basic-tab">
+                    <p></p>
+                    <table id="tablePreview" class="table table-bordered table-striped">
+                        <tbody>
+                        <tr>
+                            <th>School Name</th>
+                            <td>{{ form.instance.school }}</td>
+                        </tr>
+                        <tr>
+                            <th>Notice Title</th>
+                            <td>{{ form.instance.notice_title }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <td>{{ form.instance.date }}</td>
+                        </tr>
+                        <tr>
+                            <th>Notice For</th>
+                            <td>{{ form.instance.notice_for }}</td>
+                        </tr>
+                        <tr>
+                            <th>Notice</th>
+                            <td>{{ form.instance.notice }}</td>
+                        </tr>
+                        <tr>
+                            <th>Is View on Web ?</th>
+                            <td>{{ form.instance.Is_View_on_Web }}</td>
+                        </tr>
+                        </tbody>
+                        <!--Table body-->
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</form>

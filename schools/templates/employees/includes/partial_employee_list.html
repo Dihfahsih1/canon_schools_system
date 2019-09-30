@@ -1,0 +1,40 @@
+{% for employee in employees %}
+    <tr>
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.school }}</td>
+        <td>
+            {% if employee.user.photo %}
+                <img src="{{ employee.user.photo.url }}"
+                     alt="" width="50"
+                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/><br/>
+            {% endif %}
+        </td>
+        <td>{{ employee.user.full_name }}</td>
+        <td>{{ employee.designation }}</td>
+        <td>{{ employee.user.phone }}</td>
+        <td>{{ employee.user.email }}</td>
+        <td>{{ user.employee.date_joined }}</td>
+        <td>{{ employee.Is_View_on_Web }}</td>
+        <td>
+            <button type="button"
+                    class="btn btn-success btn-sm js-view-employee"
+                    data-url="{% url 'employee_view' employee.pk %}">
+                <span class="glyphicon glyphicon-eye-open"></span> View
+            </button>
+             <div class="mb-4">
+                <a href="{% url 'employee_update' employee.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-employee"
+                    data-url="{% url 'employee_delete' employee.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+            <br>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Employee</td>
+    </tr>
+{% endfor %}

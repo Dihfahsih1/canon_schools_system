@@ -1,0 +1,44 @@
+{% for ebook in ebooks %}
+    <tr>
+        <td>{{ ebook.id }}</td>
+        <td>{{ ebook.school }}</td>
+        <td>{{ ebook.EBook_title }}</td>
+        <td>{{ ebook.classroom }}</td>
+        <td>{{ ebook.author }}</td>
+        <td>{{ ebook.language }}</td>
+        <td>{{ ebook.edition }}</td>
+        <td>
+            {% if ebook.cover_image %}
+                <img src="{{ ebook.cover_image.url }}"
+                     alt="" width="50"
+                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/><br/>
+            {% endif %}
+        </td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'ebook_update' ebook.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-warning btn-sm js-view-ebook"
+                    data-url="{% url 'ebook_view' ebook.pk %}">
+                <span class="glyphicon glyphicon-eye-open"></span> View
+            </button>
+            <div class="mb-4">
+                <a href="{{ ebook.e_book.url }}" class="btn btn-primary btn-sm" target="_blank">
+                    <span class="fa fa-download"></span>Download
+                </a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-ebook"
+                    data-url="{% url 'ebook_delete' ebook.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+            <br>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="10" class="text-center bg-warning">No Book</td>
+    </tr>
+{% endfor %}

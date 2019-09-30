@@ -1,0 +1,59 @@
+<form method="post" action="{% url 'route_view' form.instance.pk %}" class="js-route-view-form"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Route Information</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+            <div id="myTabContent" class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1"
+                     aria-labelledby="basic-tab">
+                    <p></p>
+                    <table id="tablePreview" class="table table-bordered table-striped">
+                        <tbody>
+                        <!--Table head-->
+                        <tr>
+                            <th>School Name</th>
+                            <td>{{ form.instance.school }}</td>
+                        </tr>
+                        <tr>
+                            <th>Transport Route Title</th>
+                            <td>{{ form.instance.route_title }}</td>
+                        </tr>
+                        <tr>
+                            <th>Route Start</th>
+                            <td>{{ form.instance.route_start }}</td>
+                        </tr>
+                        <tr>
+                            <th>Route End</th>
+                            <td>{{ form.instance.route_end }}</td>
+                        </tr>
+                        <tr>
+                            <th>Vehicle For Route</th>
+                            <td>{{ form.instance.vehicle_for_route }}</td>
+                        </tr>
+                        <tr>
+                            <th>Route Stop Fare</th>
+                            <td>{{ form.instance.stop_fare }}</td>
+                        </tr>
+                        <tr>
+                            <th>Note</th>
+                            <td>{{ form.instance.note }}</td>
+                        </tr>
+                        </tbody>
+                        <!--Table body-->
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</form>

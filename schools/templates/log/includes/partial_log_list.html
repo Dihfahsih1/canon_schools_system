@@ -1,0 +1,32 @@
+{% for log in log %}
+    <tr>
+        <td>{{ log.id }}</td>
+        <td>{{ log.school }}</td>
+        <td>{{ log.call_type }}</td>
+        <td>{{ log.name }}</td>
+        <td>{{ log.phone }}</td>
+        <td>{{ log.call_duration }}</td>
+        <td>{{ log.call_date }}</td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'log_update' log.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <div type="button"
+                 class="btn btn-success btn-sm js-view-log"
+                 data-url="{% url 'log_view' log.pk %}">
+                <span class="fa fa-eye"></span> View
+            </div>
+            <br>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-log"
+                    data-url="{% url 'log_delete' log.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Log</td>
+    </tr>
+{% endfor %}

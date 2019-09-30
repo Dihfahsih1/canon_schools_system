@@ -1,0 +1,24 @@
+{% for feedback in feedbacks %}
+    <tr>
+        <td>{{ feedback.id }}</td>
+        <td>{{ feedback.school }}</td>
+        <td>{{ feedback.feedback }}</td>
+        <td>{{ feedback.is_publish }}</td>
+        <td>{{ feedback.date }}</td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'feedback_update' feedback.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-feedback"
+                    data-url="{% url 'feedback_delete' feedback.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Feedbacks</td>
+    </tr>
+{% endfor %}

@@ -1,0 +1,71 @@
+<form method="post" action="{% url 'subject_view' form.instance.pk %}" class="js-subject-view-form"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="modal-lg" tabindex="-1" role="document" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Subject Information</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1"
+                             aria-labelledby="basic-tab">
+                            <p></p>
+                            <table id="tablePreview" class="table table-bordered table-striped">
+                                <!--Table head-->
+                                <thead>
+                                <tr>
+                                    <th>School Name</th>
+                                    <td>{{ form.instance.school }}</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>Subject Name</th>
+                                    <td>{{ form.instance.subject_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Subject Code</th>
+                                    <td>{{ form.instance.subject_code }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Author</th>
+                                    <td>{{ form.instance.author }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Type</th>
+                                    <td>{{ form.instance.type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Class</th>
+                                    <td>{{ form.instance.classroom }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Teacher</th>
+                                    <td>{{ form.instance.subject_teacher }}</td>
+                                </tr>
+                                 <tr>
+                                    <th>Note</th>
+                                    <td>{{ form.instance.note }}</td>
+                                </tr>
+                                </tbody>
+                                <!--Table body-->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</form>

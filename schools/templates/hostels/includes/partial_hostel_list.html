@@ -1,0 +1,29 @@
+{% for hostel in hostels %}
+    <tr>
+        <td>{{ hostel.id }}</td>
+        <td>{{ hostel.school }}</td>
+        <td>{{ hostel.hostel_name }}</td>
+        <td>{{ hostel.hostel_type }}</td>
+        <td>{{ hostel.address }}</td>
+        <td>
+            <button type="button"
+                    class="btn btn-warning btn-sm js-view-hostel"
+                    data-url="{% url 'hostel_view' hostel.pk %}">
+                <span class="glyphicon glyphicon-eye-open"></span> View
+            </button>
+            <div class="mb-4">
+                <a href="{% url 'hostel_update' hostel.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-hostel"
+                    data-url="{% url 'hostel_delete' hostel.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Hostel</td>
+    </tr>
+{% endfor %}

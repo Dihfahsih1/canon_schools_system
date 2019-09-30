@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta charset="ISO-8859-15">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta http-equiv="cache-control" content="max-age=0"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-store"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="pragma" content="no-store"/>
+
+
+    <title>My Profile | Global - Multi School Management System Express</title>
+    <link rel="icon" href="http://codetroopers-team.com/gmsms/assets/uploads//logo/1567888028-favicon-icon.png"
+          type="image/x-icon"/>
+
+
+    <!-- Bootstrap -->
+    <link href="http://codetroopers-team.com/gmsms/assets/vendors/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+    <!--    <link rel="stylesheet" href="//cdn.rawgit.com/morteza/bootstrap-rtl/v3.3.4/dist/css/bootstrap-rtl.min.css">-->
+    <!-- Font Awesome -->
+    <link href="http://codetroopers-team.com/gmsms/assets/vendors/font-awesome/css/font-awesome.min.css"
+          rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="http://codetroopers-team.com/gmsms/assets/css/custom.css" rel="stylesheet">
+
+    <link href="http://codetroopers-team.com/gmsms/assets/css/theme/slate-gray.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="http://codetroopers-team.com/gmsms/assets/js/jquery-1.11.2.min.js"></script>
+    <script src="http://codetroopers-team.com/gmsms/assets/js/jquery.validate.js"></script>
+
+    <script type="text/javascript"
+            src="http://codetroopers-team.com/gmsms/assets/vendors/toastr/toastr.min.js"></script>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115879658-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'UA-115879658-1');
+    </script>
+
+</head>
+
+<body class="nav-md">
+<div id="preloader"></div>
+
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="http://codetroopers-team.com/gmsms/dashboard">
+                                    <span>
+                        Multi School                    </span>
+
+
+                        <img class="logo"
+                             src="http://codetroopers-team.com/gmsms/assets/uploads/logo/1569573037-brand-logo.png"
+                             style="max-width: 65px;" alt="">
+                    </a>
+                </div>
+                <div class="clearfix" style=""></div>
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+
+                        <ul class="nav side-menu">
+                            <li><a href="http://codetroopers-team.com/gmsms/dashboard"><i class="fa fa-dashboard"></i>
+                                Dashboard</a></li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/theme"><i class="fa fa-cubes"></i> Theme</a>
+                            </li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/language"><i class="fa fa-language"></i>
+                                Language</a></li>
+
+
+                            <li><a><i class="fa fa-user"></i> Administrator <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/setting"> General
+                                        Setting</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/school"> Manage
+                                        School</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/payment">Payment
+                                        Setting</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/sms">SMS Setting</a>
+                                    </li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/emailsetting">Email
+                                        Setting</a></li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/year"> Academic
+                                        Year</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/role"> User Role
+                                        (ACL)</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/permission">Role
+                                        Permission (ACL)</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/superadmin"> Manage
+                                        Super Admin</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/user/index">Manage
+                                        User</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/password">Reset User
+                                        Password</a></li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/usercredential/index">User
+                                        Credential</a></li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/activitylog">Activity
+                                        Log</a></li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/feedback">Publish
+                                        Guardian Feedback</a></li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/backup">Backup
+                                        Database</a></li>
+
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-tags"></i> Template <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/smstemplate">SMS
+                                        Template</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/administrator/emailtemplate">Email
+                                        Template</a></li>
+
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-tty"></i> Front Office <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/frontoffice/purpose/index">Visitor
+                                        Purpose</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/frontoffice/visitor/index">Visitor
+                                        Info</a></li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/frontoffice/calllog/index">Call
+                                        Log</a></li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/frontoffice/dispatch/index">Postal
+                                        Dispatch</a></li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/frontoffice/receive/index">Postal
+                                        Receive</a></li>
+
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-user-md"></i> Human Resource <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/hrm/designation">Manage
+                                        Designation</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/hrm/employee">Manage Employee</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-bell-o"></i> Leave <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/leave/type/index">Leave Type</a>
+                                    </li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/leave/application/index">Leave
+                                        Application </a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/leave/waiting/index">Waiting
+                                        Application</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/leave/approve/index">Approved
+                                        Application</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/leave/decline/index">Declined
+                                        Application</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/teacher"><i class="fa fa-users"></i> Teacher</a>
+                            </li>
+
+                            <li><a href="http://codetroopers-team.com/gmsms/academic/classes/index"><i
+                                    class="fa fa-slideshare"></i> Class</a></li>
+
+                            <li><a href="http://codetroopers-team.com/gmsms/academic/section/index/"><i
+                                    class="fa fa-bars"></i> Section </a></li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/academic/subject/index/"><i
+                                    class="fa fa-folder-open"></i> Subject </a></li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/academic/syllabus/index/"><i
+                                    class="fa fa-clipboard"></i> Syllabus</a></li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/academic/material/index/"><i
+                                    class="fa fa-file-text-o"></i> Material</a></li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/academic/routine/index/"> <i
+                                    class="fa fa-clock-o"></i> Class Routine</a></li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/guardian/index/"><i class="fa fa-paw"></i>
+                                Guardian</a></li>
+
+
+                            <li><a><i class="fa fa-group"></i> Student <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/student/type/index"> Student
+                                        Type</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/student/index"> Manage Student</a>
+                                    </li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/student/add/"> Admit Student</a>
+                                    </li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/student/bulk/add"> Bulk
+                                        Admission</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/student/admission/index"> Online
+                                        Admission</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/student/activity/index"> Student
+                                        Activity</a></li>
+
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-barcode"></i> Generate Card<span
+                                    class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/card/idsetting/index">ID Card
+                                        Setting</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/card/admitsetting/index">Admit Card
+                                        Setting</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/card/schoolidsetting/index">ID Card
+                                        Setting</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/card/schooladmitsetting/index">Admit
+                                        Card Setting</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/card/teacher/index">Teacher ID
+                                        Card</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/card/employee/index">Employee ID
+                                        Card</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/card/student/index">Student ID
+                                        Card</a></li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/card/admit/index">Student Admit
+                                        Card</a></li>
+
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-check-circle-o"></i> Attendance <span
+                                    class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/attendance/student">Student
+                                        Attendance</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/attendance/teacher">Teacher
+                                        Attendance</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/attendance/employee">Employee
+                                        Attendance</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/attendance/absentemail/index/">Absent
+                                        Email</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/attendance/absentsms/index/">Absent
+                                        SMS</a></li>
+
+                                </ul>
+                            </li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/assignment/index/"><i
+                                    class="fa fa-file-word-o"></i> Assignment</a></li>
+
+
+                            <li><a><i class="fa fa-graduation-cap"></i> Exam <span
+                                    class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/grade/">Exam Grade</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/index">Exam Term</a></li>
+
+                                </ul>
+                            </li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/exam/schedule/index/"><i
+                                    class="fa fa-thumb-tack"></i>Exam Schedule</a></li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/exam/suggestion/index/"><i
+                                    class="fa fa-file-text"></i>Exam Suggestion</a></li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/exam/attendance/"><i
+                                    class="fa fa-check"></i> Exam Attendance</a></li>
+
+
+                            <li><a><i class="fa fa-file-text-o"></i> Exam Mark <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/mark/index">Manage Mark</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/examresult/index">Exam Term
+                                        Result</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/finalresult/index">Exam final
+                                        result</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/meritlist/index">Exam Merit
+                                        List</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/marksheet/index">Student Mark
+                                        Sheet</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/resultcard/index">Student
+                                        Result Card</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/mail/index">Mark send by
+                                        Email</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/text/index">Mark send by
+                                        SMS</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/resultemail/index">Result
+                                        Email</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/exam/resultsms/index">Result SMS</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            <li><a href="http://codetroopers-team.com/gmsms/academic/promotion"><i
+                                    class="fa fa-mail-forward"></i>Promotion</a></li>
+
+                            <li><a><i class="fa fa-certificate"></i> Certificate <span
+                                    class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/certificate/type">Certificate
+                                        Type</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/certificate/index">Generate
+                                        Certificate</a></li>
+
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-book"></i> Library <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/library/book/index/">Book</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/library/member/index/">Library
+                                        Member</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/library/issue/index">Issue &
+                                        Return</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/library/ebook/index">E-Book</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-bus"></i> Transport <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li>
+                                        <a href="http://codetroopers-team.com/gmsms/transport/vehicle/index/">Vehicle</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/transport/route/index/">Manage
+                                        Route</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/transport/member/index/">Transport
+                                        Member</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-hotel"></i> Hostel <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/hostel/index/">Manage Hostel</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/hostel/room/index/">Manage Room</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/hostel/member/index/">Hostel
+                                        Member</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/message/inbox"><i
+                                    class="fa fa-comments-o"></i> Message</a></li>
+
+                            <li><a><i class="fa fa-envelope-o"></i> Mail & SMS <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/message/mail/index/">General
+                                        Email</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/message/text/index/">General SMS</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-commenting"></i> Complain <span
+                                    class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/complain/type/index/">Complain
+                                        Type</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/complain/index/">Complain </a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-bullhorn"></i> Announcement <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li>
+                                        <a href="http://codetroopers-team.com/gmsms/announcement/notice/index/">Notice</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/announcement/news/index/">News</a>
+                                    </li>
+                                    <li>
+                                        <a href="http://codetroopers-team.com/gmsms/announcement/holiday/index/">Holiday</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li><a href="http://codetroopers-team.com/gmsms/event/index/"><i
+                                    class="fa fa fa-calendar-check-o"></i> Event</a></li>
+
+                            <li><a><i class="fa fa-dollar"></i> Payroll <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/payroll/grade/index">Salary
+                                        Grade</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/payroll/payment/index"> Salary
+                                        Payment</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/payroll/history/index"> Payment
+                                        History</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-calculator"></i> Accounting <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/accounting/discount">Discount</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/accounting/feetype"> Fee Type</a>
+                                    </li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/accounting/invoice/add">Fee
+                                        Collection</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/accounting/invoice/index">Manage
+                                        Invoice</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/accounting/invoice/due">Due Fee</a>
+                                    </li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/accounting/duefeeemail/index/">Due
+                                        Fee Email</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/accounting/duefeesms/index/">Due Fee
+                                        SMS</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/accounting/incomehead">Income
+                                        Head</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/accounting/income">Income</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/accounting/exphead">Expenditure
+                                        Head</a></li>
+                                    <li>
+                                        <a href="http://codetroopers-team.com/gmsms/accounting/expenditure">Expenditure</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            <li><a><i class="fa fa-bar-chart"></i> Report <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/income">Income Report</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/expenditure">Expenditure
+                                        Report</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/invoice">Invoice Report</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/duefee">Due Fee Report</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/feecollection">Fee Collection
+                                        Report</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/balance">Accounting Balance
+                                        Report</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/library">Library Report</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/sattendance">Student
+                                        Attendance</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/syattendance">Student Yearly
+                                        Attendance</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/tattendance">Teacher
+                                        Attendance</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/tyattendance">Teacher Yearly
+                                        Attendance</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/eattendance">Employee
+                                        Attendance</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/eyattendance">Employee Yearly
+                                        Attendance</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/student">Student Report</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/sinvoice">Student Invoice
+                                        Report</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/sactivity">Student Activity
+                                        Report</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/payroll">Payroll Report</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/transaction">Daily
+                                        Transaction Report</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/statement">Daily Statement
+                                        Report</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/report/examresult">Exam Result
+                                        Report</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-image"></i>Media Gallery <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/gallery/index">Manage Gallery</a>
+                                    </li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/gallery/image/index">Manage Gallery
+                                        Image</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a><i class="fa fa-desktop"></i>Frontend <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/frontend/index"> Manage Page</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/frontend/slider/index"> Manage
+                                        Slider</a></li>
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/frontend/about/index"> Frontend
+                                        About</a></li>
+
+                                </ul>
+                            </li>
+
+                            <li><a><i class="fa fa-lock"></i>Profile <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="http://codetroopers-team.com/gmsms/profile">My Profile</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/profile/password">Reset Password</a>
+                                    </li>
+
+
+                                    <li><a href="http://codetroopers-team.com/gmsms/auth/logout">Log Out</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="col-md-1">
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-7 ">
+                        <div class="school-name">
+                            MED & UBEC MULTI SECONDARY SCHOOL MANAGEMENT SYSTEM
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                                   aria-expanded="false">
+
+                                    <img src="http://codetroopers-team.com/gmsms/assets/uploads//employee-photo/photo-1567887468-sms.jpg"
+                                         alt="" width="60"/>
+
+                                    Super Admin <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="http://codetroopers-team.com/gmsms/profile/index"> Profile</a></li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/profile/password">Reset Password</a>
+                                    </li>
+                                    <li><a href="http://codetroopers-team.com/gmsms/auth/logout"><i
+                                            class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li>
+
+                                <a href="http://codetroopers-team.com/gmsms/"><i class="fa fa-globe"></i> Web</a>
+
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+        <div class="right_col" role="main">
+            <style type="text/css">
+                .remove {
+                    font-weight: bold;
+                    font-size: 12px;
+                    cursor: pointer;
+                    float: right;
+                }
+
+                #message_div {
+                    padding: 10px 10px 10px 10px;
+                    margin-bottom: 10px;
+                }
+            </style>
+
+
+            <script type="text/javascript">
+                $(function () {
+                    $('#message_div').delay(10000).fadeOut();
+                    $('.remove').click(function () {
+                        $('#message_div').hide();
+                    });
+                });
+            </script>                    <!-- page content -->
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h3 class="head-title"><i class="fa fa-lock"></i><small> My Profile</small></h3>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content quick-link">
+                            <span>Quick Link:</span>
+                            <a href="http://codetroopers-team.com/gmsms/profile">My Profile</a>
+                            | <a href="http://codetroopers-team.com/gmsms/profile/password">Reset Password</a>
+
+
+                            | <a href="http://codetroopers-team.com/gmsms/auth/logout">Log Out</a>
+                        </div>
+
+
+                        <div class="x_content">
+                            <div class="" data-example-id="togglable-tabs">
+                                <ul class="nav nav-tabs bordered">
+                                    <li class="active"><a href="#tab_profile" role="tab" data-toggle="tab"
+                                                          aria-expanded="true"><i class="fa fa-eye"></i> Profile</a>
+                                    </li>
+                                    <li class=""><a href="#tab_update" role="tab" data-toggle="tab"
+                                                    aria-expanded="false"><i class="fa fa-pencil-square-o"></i>
+                                        Update</a></li>
+                                </ul>
+                                <br/>
+
+                                <div class="tab-content">
+
+                                    <div class="tab-pane fade in active" id="tab_profile">
+                                        <div class="x_content">
+
+                                            <div class="col-md-12">
+                                                <div class="profile_img">
+                                                    <img src="http://codetroopers-team.com/gmsms/assets/uploads//employee-photo/photo-1567887468-sms.jpg"
+                                                         alt="" width="100"/>
+                                                    <h3>Super Admin</h3><br/>
+                                                </div>
+                                            </div>
+                                            <table id="datatable-responsive"
+                                                   class="table table-striped table-bordered dt-responsive nowrap"
+                                                   cellspacing="0" width="100%">
+                                                <tbody>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <td>Super Admin</td>
+                                                    <th>National ID</th>
+                                                    <td>125478658</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Email</th>
+                                                    <td>superadmin@gmail.com</td>
+                                                    <th>Phone</th>
+                                                    <td>78965424</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Present Address</th>
+                                                    <td>6160 Peachtree Dunwoody Rd Suite B100-A</td>
+                                                    <th>Permanent Address</th>
+                                                    <td>6160 Peachtree Dunwoody Rd Suite B100-A</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Gender</th>
+                                                    <td>Male</td>
+                                                    <th>Blood Group</th>
+                                                    <td>B+</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Religion</th>
+                                                    <td>Islam</td>
+                                                    <th>Birth Date</th>
+                                                    <td>Jan 1,1985</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Other Info</th>
+                                                    <td>Other test Info</td>
+                                                    <th>Resume</th>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="tab-pane fade in" id="tab_update">
+                                        <div class="x_content">
+                                            <form action="http://codetroopers-team.com/gmsms/profile/update/1"
+                                                  name="profile" id="profile" class="form-horizontal form-label-left"
+                                                  enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input class="form-control col-md-7 col-xs-12" name="name"
+                                                               id="name" value="Super Admin" placeholder="Name"
+                                                               required="required" type="text" autocomplete="off">
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                           for="phone">Phone <span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input class="form-control col-md-7 col-xs-12" name="phone"
+                                                               id="phone" value="78965424" placeholder="Phone"
+                                                               required="required" type="text" autocomplete="off">
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                           for="present_address">Present Address</label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <textarea class="form-control col-md-7 col-xs-12"
+                                                                  name="present_address" id="present_address"
+                                                                  placeholder="Present Address">6160 Peachtree Dunwoody Rd Suite B100-A</textarea>
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                           for="permanent_address">Permanent Address</label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <textarea class="form-control col-md-7 col-xs-12"
+                                                                  name="permanent_address" id="permanent_address"
+                                                                  placeholder="Permanent Address">6160 Peachtree Dunwoody Rd Suite B100-A</textarea>
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                           for="gender">Gender <span class="required">*</span></label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <select class="form-control col-md-7 col-xs-12" name="gender"
+                                                                id="gender" required="required">
+                                                            <option value="">--Select--</option>
+                                                            <option value="male" selected="selected">Male</option>
+                                                            <option value="female">Female</option>
+                                                        </select>
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                           for="blood_group">Blood Group</label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <select class="form-control col-md-7 col-xs-12"
+                                                                name="blood_group" id="blood_group">
+                                                            <option value="">--Select--</option>
+                                                            <option value="a_positive">A+</option>
+                                                            <option value="a_negative">A-</option>
+                                                            <option value="b_positive" selected="selected">B+</option>
+                                                            <option value="b_negative">B-</option>
+                                                            <option value="o_positive">O+</option>
+                                                            <option value="o_negative">O-</option>
+                                                            <option value="ab_positive">AB+</option>
+                                                            <option value="ab_negative">AB-</option>
+                                                        </select>
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                           for="religion">Religion </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input class="form-control col-md-7 col-xs-12" name="religion"
+                                                               id="religion" value="Islam" placeholder="Religion"
+                                                               type="text" autocomplete="off">
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Birth Date
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input class="form-control col-md-7 col-xs-12" name="dob"
+                                                               id="dob" value="01-01-1985" placeholder="Birth Date"
+                                                               required="required" type="text" autocomplete="off">
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                           for="email">Email </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input class="form-control col-md-7 col-xs-12" name="email"
+                                                               id="email" value="superadmin@gmail.com"
+                                                               placeholder="Email" type="email" autocomplete="off">
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Photo </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input type="hidden" name="prev_photo" id="prev_photo"
+                                                               value="photo-1567887468-sms.jpg"/>
+                                                        <img src="http://codetroopers-team.com/gmsms/assets/uploads//employee-photo/photo-1567887468-sms.jpg"
+                                                             alt="" width="70"/><br/><br/>
+
+                                                        <div class="btn btn-default btn-file">
+                                                            <i class="fa fa-paperclip"></i> Upload <input
+                                                                class="form-control col-md-7 col-xs-12" name="photo"
+                                                                id="photo" type="file">
+                                                        </div>
+                                                        <div class="text-info">Image file format: .jpg, .jpeg, .png or
+                                                            .gif
+                                                        </div>
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Resume </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input type="hidden" name="prev_resume" id="prev_resume"
+                                                               value=""/>
+                                                        <div class="btn btn-default btn-file">
+                                                            <i class="fa fa-paperclip"></i> Upload <input
+                                                                class="form-control col-md-7 col-xs-12" name="resume"
+                                                                id="resume" type="file">
+                                                        </div>
+                                                        <div class="text-info">Document file format: pdf, .doc, .docx or
+                                                            .txt
+                                                        </div>
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="item form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                           for="other_info">Other Info</label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <textarea class="form-control col-md-7 col-xs-12"
+                                                                  name="other_info" id="other_info"
+                                                                  placeholder="Other Info">Other test Info</textarea>
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="ln_solid"></div>
+                                                <div class="form-group">
+                                                    <div class="col-md-6 col-md-offset-3">
+                                                        <a href="http://codetroopers-team.com/gmsms/profile"
+                                                           class="btn btn-primary">Cancel</a>
+                                                        <input type="hidden" name="id" id="id" value="1"/>
+                                                        <input type="hidden" name="user_type" id="user_type"
+                                                               value="system_admin"/>
+                                                        <button id="send" type="submit" class="btn btn-success">Update
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- bootstrap-datetimepicker -->
+            <link href="http://codetroopers-team.com/gmsms/assets/vendors/datepicker/datepicker.css" rel="stylesheet">
+            <script src="http://codetroopers-team.com/gmsms/assets/vendors/datepicker/datepicker.js"></script>
+            <script type="text/javascript">
+
+                $('#dob').datepicker();
+                $('#joining_date').datepicker();
+                $("#profile").validate();
+            </script>                     <!-- /page content -->
+        </div>
+        <!-- footer content -->
+        <footer class="footer no-print">
+            <div class="pull-right">
+                <p class="white">
+                    Copyright Â© NEST TECHNOLOGIES 2019
+                </p>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- Bootstrap -->
+<script src="http://codetroopers-team.com/gmsms/assets/vendors/bootstrap/bootstrap.min.js"></script>
+
+<!--   Start   -->
+<link href="http://codetroopers-team.com/gmsms/assets/vendors/datatables/rowReorder/rowReorder.dataTables.min.css"
+      rel="stylesheet">
+<link href="http://codetroopers-team.com/gmsms/assets/vendors/datatables/rowReorder/responsive.dataTables.min.css"
+      rel="stylesheet">
+
+<link href="http://codetroopers-team.com/gmsms/assets/vendors/datatables/buttons.dataTables.min.css" rel="stylesheet">
+<link href="http://codetroopers-team.com/gmsms/assets/vendors/datatables/dataTables.bootstrap.css" rel="stylesheet">
+<script src="http://codetroopers-team.com/gmsms/assets/vendors/datatables/tools/jquery.dataTables.min.js"></script>
+<script src="http://codetroopers-team.com/gmsms/assets/vendors/datatables/tools/dataTables.buttons.min.js"></script>
+<script src="http://codetroopers-team.com/gmsms/assets/vendors/datatables/tools/pdfmake.min.js"></script>
+<script src="http://codetroopers-team.com/gmsms/assets/vendors/datatables/tools/jszip.min.js"></script>
+<script src="http://codetroopers-team.com/gmsms/assets/vendors/datatables/tools/vfs_fonts.js"></script>
+<script src="http://codetroopers-team.com/gmsms/assets/vendors/datatables/tools/buttons.html5.min.js"></script>
+<script src="http://codetroopers-team.com/gmsms/assets/vendors/datatables/dataTables.bootstrap.js"></script>
+
+<script src="http://codetroopers-team.com/gmsms/assets/vendors/datatables/rowReorder/dataTables.rowReorder.min.js"></script>
+<script src="http://codetroopers-team.com/gmsms/assets/vendors/datatables/rowReorder/dataTables.responsive.min.js"></script>
+
+<!-- dataTable with buttons end -->
+<link href="http://codetroopers-team.com/gmsms/assets/vendors/toastr/toastr.min.css" rel="stylesheet">
+<!-- Custom Theme Scripts -->
+
+<script src="http://codetroopers-team.com/gmsms/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+
+    jQuery.extend(jQuery.validator.messages, {
+        required: "This field is required.",
+        email: "Please enter a valid email address.",
+        url: "Please enter a valid URL.",
+        date: "Please enter a valid date.",
+        number: "Please enter a valid number.",
+        digits: "Please enter only digits.",
+        equalTo: "Please enter the same value again.",
+        remote: "Please fix this field.",
+        dateISO: "Please enter a valid date (ISO).",
+        maxlength: jQuery.validator.format("Please enter no more than {0} characters."),
+        minlength: jQuery.validator.format("Please enter at least {0} characters."),
+        rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
+        range: jQuery.validator.format("Please enter a value between {0} and {1}."),
+        max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
+        min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
+    });
+
+    toastr.options = {
+        "closeButton": true,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "showDuration": "300",
+        "hideDuration": "300",
+        "timeOut": "3000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+
+    $(window).on('load', function () {
+        $('#preloader').fadeOut('slow', function () {
+            $(this).remove();
+        });
+    });
+
+</script>
+
+</body>
+</html>
