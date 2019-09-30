@@ -13,13 +13,10 @@ from bootstrap_datepicker_plus import DatePickerInput
 from .forms import *
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'pjeg']
-
-
 def login_user(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
-
         user = authenticate(email=email, password=password, backend='django.contrib.auth.backends.ModelBackend')
         if user is not None:
             if user.is_active:
@@ -30,8 +27,6 @@ def login_user(request):
         else:
             return render(request, 'home/login.html', {'error_message': 'Invalid login'})
     return render(request, 'home/login.html')
-
-
 def logout_user(request):
     logout(request)
     return render(request, 'home/login.html')
