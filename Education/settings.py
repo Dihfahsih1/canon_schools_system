@@ -32,16 +32,6 @@ INSTALLED_APPS = [
 
     'sorl.thumbnail',
     'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # # 'allauth.socialaccount.providers.amazon',
-    # # 'allauth.socialaccount.providers.github',
-    # # 'allauth.socialaccount.providers.google',
-    # # 'allauth.socialaccount.providers.linkedin',
-    # # 'allauth.socialaccount.providers.slack',
-    # 'django_comments',
-    # #'channels',
-
     'graphene_django',
     'markdownx',
     'taggit',
@@ -96,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'schools',
         'USER': 'postgres',
-        'PASSWORD': 'pass12345',
+        'PASSWORD': 'canon',
         'HOST': 'localhost'
     }
 }
