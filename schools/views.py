@@ -628,10 +628,9 @@ def manage_user(request):
     if users:
         print(users)
         users = users.replace('.', '')
-        x = User.objects.filter(full_name=users)
+        x = User.objects.filter(id__in=users).order_by('full_name')
         print(x)
-        context['users']= users
-
+        context['x']= x    
     return render(request, 'users/manage_users.html', context)
 
 
