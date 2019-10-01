@@ -635,7 +635,8 @@ def manage_user(request):
             print(i.email)
             print(i.username)
             print(i.phone)
-        return render(request, 'users/manage_users.html', context)    
+        y=return render(request, 'users/manage_users.html', context)
+        print(y)
     return render(request, 'users/manage_users.html', context)
 
 
