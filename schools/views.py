@@ -13,10 +13,13 @@ from bootstrap_datepicker_plus import DatePickerInput
 from .forms import *
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'pjeg']
+
+
 def login_user(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
+
         user = authenticate(email=email, password=password, backend='django.contrib.auth.backends.ModelBackend')
         if user is not None:
             if user.is_active:
@@ -27,6 +30,8 @@ def login_user(request):
         else:
             return render(request, 'home/login.html', {'error_message': 'Invalid login'})
     return render(request, 'home/login.html')
+
+
 def logout_user(request):
     logout(request)
     return render(request, 'home/login.html')
@@ -269,7 +274,8 @@ def save_classroom_form(request, form, template_name):
     context = {'form': form}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
-#view class
+
+
 def classroom_delete(request, classroom_pk):
     classroom = get_object_or_404(Classroom, pk=classroom_pk)
     data = dict()
@@ -288,9 +294,9 @@ def classroom_delete(request, classroom_pk):
                                              )
     return JsonResponse(data)
 
-    #############################===>END OF CLASS MODULE<===########################################
+    # #######################################===>END OF CLASS MODULE<===########################################
 
-    ###################===>BEGINNING OF SECTION MODULE<===###################################
+    # #######################################===>BEGINNING OF SECTION MODULE<===###################################
 
 
 class SectionListView(ListView):
@@ -618,12 +624,16 @@ def manage_user(request):
     role = request.GET.get('user_type')
     context['form'] = ManageUserForm(school, role)
     # Filter
-    users = request.GET.get('user')
-    if users:
 
-        print("the id of the user is: "+ users)
-        users = User.objects.filter(full_name=users)
-        context['users'] = users
+    if request.method == 'POST' and request.is_ajax():
+        users = request.GET.get('user', None)
+        print(users)
+        answer=str(users)
+        print(answer)
+        x = User.objects.get(full_name=answer)
+        print(x)
+        context['users']= users
+
     return render(request, 'users/manage_users.html', context)
 
 
