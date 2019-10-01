@@ -288,9 +288,9 @@ def classroom_delete(request, classroom_pk):
                                              )
     return JsonResponse(data)
 
-    # #######################################===>END OF CLASS MODULE<===########################################
+    #############################===>END OF CLASS MODULE<===########################################
 
-    # #######################################===>BEGINNING OF SECTION MODULE<===###################################
+    ###################===>BEGINNING OF SECTION MODULE<===###################################
 
 
 class SectionListView(ListView):
@@ -620,10 +620,10 @@ def manage_user(request):
     # Filter
     users = request.GET.get('user')
     if users:
-        users = users.replace('.', '')
-        users = User.objects.filter(full_name=str(users))
-        context['users'] = users
 
+        print("the id of the user is: "+ users)
+        users = User.objects.filter(full_name=users)
+        context['users'] = users
     return render(request, 'users/manage_users.html', context)
 
 

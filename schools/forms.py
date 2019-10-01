@@ -208,7 +208,7 @@ class StudentTypeForm(forms.ModelForm):
 class ManageUserForm(forms.ModelForm):
     class Meta:
         model = ManageUser
-        fields = ('school', 'user_type', 'user',)
+        fields = ('school', 'user_type', 'user')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -724,4 +724,3 @@ class InvoiceForm(forms.Form):
         if classroom:
             self.fields['section'].queryset = Section.objects.filter(
                 classroom=classroom)
-
