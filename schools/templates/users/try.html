@@ -83,8 +83,9 @@
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
-                                        <th>Created</th>
-                                        <th>Log In Status</th>
+                                        <th>Present Address</th>
+                                        <th>Permanent Address</th>
+                                        <th>Birth Date</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -103,6 +104,9 @@
                                             <td>{{ user.full_name }}</td>
                                             <td>{{ user.email }}</td>
                                             <td>{{ user.phone }}</td>
+                                            <td>{{ user.present_address }}</td>
+                                            <td>{{ user.permanent_address }}</td>
+                                            <td>{{ user.birth_date }}</td>
                                         </tr>
                                     {% empty %}
                                         <tr>
