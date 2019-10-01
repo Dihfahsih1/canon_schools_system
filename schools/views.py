@@ -622,7 +622,7 @@ def manage_user(request):
 
     school = request.GET.get('school')
     role = request.GET.get('user_type')
-    context['form'] = ManageUserForm(school, role)
+    context['form'] = ManageUserForm(request.GET, school, role)
     # Filter
     users = request.GET.get('user')
     if users:
