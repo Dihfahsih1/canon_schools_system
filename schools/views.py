@@ -622,7 +622,7 @@ def manage_user(request):
 
     school = request.GET.get('school')
     role = request.GET.get('user_type')
-    context['form'] = ManageUserForm(request.GET, school, role)
+    context['form'] = ManageUserForm(school, role)
     # Filter
     users = request.GET.get('user')
     if users:
@@ -635,6 +635,7 @@ def manage_user(request):
             print(i.email)
             print(i.username)
             print(i.phone)
+        return render(request, 'users/manage_users.html', context)    
     return render(request, 'users/manage_users.html', context)
 
 
