@@ -624,13 +624,11 @@ def manage_user(request):
     role = request.GET.get('user_type')
     context['form'] = ManageUserForm(school, role)
     # Filter
-
-    if request.method == 'POST' and request.is_ajax():
-        users = request.GET.get('user', None)
+    users = request.GET.get('user')
+    if users:
         print(users)
-        answer=str(users)
-        print(answer)
-        x = User.objects.get(full_name=answer)
+        users = users.replace('.', '')
+        x = User.objects.filter(full_name=users)
         print(x)
         context['users']= users
 
