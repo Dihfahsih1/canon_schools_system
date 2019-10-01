@@ -630,7 +630,11 @@ def manage_user(request):
         users = users.replace('.', '')
         x = User.objects.filter(id__in=users).order_by('full_name')
         print(x)
-        context['x']= x    
+        context['x']= x
+        for i in x:
+            print(i.email)
+            print(i.username)
+            print(i.phone)
     return render(request, 'users/manage_users.html', context)
 
 
