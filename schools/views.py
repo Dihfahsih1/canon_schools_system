@@ -4885,16 +4885,6 @@ def slider_delete(request, pk):
                                              )
     return JsonResponse(data)
 
-
-# def paypal_update(request, school_pk, paypal_id):
-#     paypal = get_object_or_404(Paypal, school_pk=school_pk, pk=paypal_id)
-#     if request.method == 'POST':
-#         form = PaypalForm(request.POST, instance=paypal)
-#     else:
-#         form = PaypalForm(instance=paypal)
-#     return render(request, 'payments/paypal_update.html', {'paypal': paypal, 'form': form})
-#
-
 class PaypalView(UpdateView):
     model = Paypal
     template_name = 'payments/paypal_update.html'
