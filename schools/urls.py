@@ -426,6 +426,6 @@ urlpatterns = [
     path('ajax/load-roles/', views.load_roles, name='ajax_load_roles'),
     path('ajax/load-users/', views.load_users, name='ajax_load_users'),
 
-    url(r'^Add/', views.InvoiceCreateView.as_view(), name='add_invoice'),
-    path('ajax/classrooms/', views.load_student_classrooms, name='ajax_classrooms_load'),
+    #url(r'^Add/', views.InvoiceCreateView.as_view(), name='add_invoice'),
+    #path('ajax/classrooms/', views.load_student_classrooms, name='ajax_classrooms_load'),
 ]
