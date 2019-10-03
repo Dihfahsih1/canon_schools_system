@@ -700,7 +700,7 @@ class AttendanceForm(forms.Form):
 
 
 class InvoiceForm(forms.Form):
-    model
+
     class Meta:
         fields = ('classroom', 'section')
 

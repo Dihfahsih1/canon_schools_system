@@ -54,6 +54,7 @@ def index(request):
 
 
 
+
 class UserProfileView(DetailView):
     model = User
     template_name = 'profiles/profile.html'
@@ -4132,7 +4133,8 @@ def invoice_list(request):
 
 
 def save_invoice_form(request, form, template_name):
-    
+
+
 
 def invoice_create(request):
     if request.method == 'POST':
@@ -5043,6 +5045,10 @@ def load_sections(request):
     sections = Section.objects.filter(classroom_id=classroom_id).order_by('section')
     return render(request, 'filter/section_dropdown_list_options.html', {'sections': sections})
 
+def load_students(request):
+    role_id = request.GET.get('user_type')
+    users = User.objects.filter(roles_id=role_id).order_by('full_name')
+    return render(request, 'filter/user_dropdown_list_options.html', {'users': users})
 
 def load_roles(request):
     school_id = request.GET.get('school')
