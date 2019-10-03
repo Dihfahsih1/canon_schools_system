@@ -5082,12 +5082,12 @@ def load_users(request):
     users = User.objects.filter(roles_id=role_id).order_by('full_name')
     return render(request, 'filter/user_dropdown_list_options.html', {'users': users})
 
-class InvoiceCreateView(CreateView):
-    model = Invoice
-    form_class = InvoiceForm
-    success_url = reverse_lazy('add_invoice')
+#class InvoiceCreateView(CreateView):
+#    model = Invoice
+#    form_class = InvoiceForm
+#    success_url = reverse_lazy('add_invoice')
 
-def load_student_clssrooms(request):
-    school_id = request.GET.get('school')
-    classrooms = Classroom.objects.filter(school_id=school_id).order_by('classroom')
-    return render(request, 'invoices/classroom_dropdown_options.html', {'classrooms': classrooms})
+#def load_student_clssrooms(request):
+#    school_id = request.GET.get('school')
+#    classrooms = Classroom.objects.filter(school_id=school_id).order_by('classroom')
+#    return render(request, 'invoices/classroom_dropdown_options.html', {'classrooms': classrooms})
