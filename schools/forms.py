@@ -700,13 +700,9 @@ class AttendanceForm(forms.Form):
 
 
 class InvoiceForm(forms.Form):
-
+    model = Invoice
     class Meta:
-        fields = ('classroom', 'section')
-
-    def __init__(self, school=None, classroom=None, *args, **kwargs):
+        fields=('school','classroom','student','fee_type','fee_amount','discount','month','is_discount_applicable','paid_status','gross_amount','invoice_number','note','date')
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['classroom'].queryset = Classroom.objects.filter(school=school)
-        if classroom:
-            self.fields['section'].queryset = Section.objects.filter(
-                classroom=classroom)
+        self.fields['classroom'].queryset = Classroom.objects.none()

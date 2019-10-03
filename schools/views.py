@@ -53,7 +53,8 @@ def index(request):
     return render(request, 'home/home.html', context)
 
 
-
+# def view_profile(request):
+#     return render(request, 'profiles/profile.html')
 
 class UserProfileView(DetailView):
     model = User
@@ -4133,7 +4134,20 @@ def invoice_list(request):
 
 
 def save_invoice_form(request, form, template_name):
-
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            invoices = Invoice.objects.all()
+            data['html_invoice_list'] = render_to_string('invoices/includes/partial_invoice_list.html', {
+                'invoices': invoices
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
 
 
 def invoice_create(request):
@@ -4871,6 +4885,16 @@ def slider_delete(request, pk):
                                              )
     return JsonResponse(data)
 
+
+# def paypal_update(request, school_pk, paypal_id):
+#     paypal = get_object_or_404(Paypal, school_pk=school_pk, pk=paypal_id)
+#     if request.method == 'POST':
+#         form = PaypalForm(request.POST, instance=paypal)
+#     else:
+#         form = PaypalForm(instance=paypal)
+#     return render(request, 'payments/paypal_update.html', {'paypal': paypal, 'form': form})
+#
+
 class PaypalView(UpdateView):
     model = Paypal
     template_name = 'payments/paypal_update.html'
@@ -5045,10 +5069,6 @@ def load_sections(request):
     sections = Section.objects.filter(classroom_id=classroom_id).order_by('section')
     return render(request, 'filter/section_dropdown_list_options.html', {'sections': sections})
 
-def load_students(request):
-    role_id = request.GET.get('user_type')
-    users = User.objects.filter(roles_id=role_id).order_by('full_name')
-    return render(request, 'filter/user_dropdown_list_options.html', {'users': users})
 
 def load_roles(request):
     school_id = request.GET.get('school')
@@ -5060,3 +5080,13 @@ def load_users(request):
     role_id = request.GET.get('user_type')
     users = User.objects.filter(roles_id=role_id).order_by('full_name')
     return render(request, 'filter/user_dropdown_list_options.html', {'users': users})
+
+class InvoiceCreateView(CreateView):
+    model = Invoice
+    form_class = InvoiceForm
+    success_url = reverse_lazy('SchoolCreateView')
+
+class InvoiceUpdateView(UpdateView):
+    model = Invoice
+    form_class = InvoiceForm
+    success_url = reverse_lazy('SchoolCreateView')
