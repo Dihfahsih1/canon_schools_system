@@ -26,7 +26,6 @@ urlpatterns = [
     url(r'^settings/$', views.SchoolSettingView.as_view(), name='settings'),
     url(r'^theme/$', views.theme, name='theme'),
     url(r'^language/$', views.language, name='language'),
-
     url(r'^administrator/school/index/$', views.SchoolListView.as_view(), name='school_list'),
     url(r'^administrator/school/add/$', views.SchoolCreateView.as_view(), name='school_create'),
     url(r'^administrator/school/update/(?P<school_pk>\d+)/$', views.SchoolUpdateView.as_view(), name='school_update'),
@@ -426,4 +425,6 @@ urlpatterns = [
     path('ajax/load-sections/', views.load_sections, name='ajax_load_sections'),
     path('ajax/load-roles/', views.load_roles, name='ajax_load_roles'),
     path('ajax/load-users/', views.load_users, name='ajax_load_users'),
+
+    url(r'^Add/', views.InvoiceCreateView.as_view(), name='add_invoice'),
 ]

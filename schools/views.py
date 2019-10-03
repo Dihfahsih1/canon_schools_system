@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 from bootstrap_datepicker_plus import DatePickerInput
+from django.urls import reverse_lazy
 
 from .forms import *
 
@@ -5084,9 +5085,9 @@ def load_users(request):
 class InvoiceCreateView(CreateView):
     model = Invoice
     form_class = InvoiceForm
-    success_url = reverse_lazy('SchoolCreateView')
+    success_url = reverse_lazy('add_invoice')
 
-class InvoiceUpdateView(UpdateView):
-    model = Invoice
-    form_class = InvoiceForm
-    success_url = reverse_lazy('SchoolCreateView')
+def load_student_clssrooms(request):
+    school_id = request.GET.get('school')
+    classrooms = Classroom.objects.filter(school_id=school_id).order_by('classroom')
+    return render(request, 'invoices/classroom_dropdown_options.html', {'classrooms': classrooms})

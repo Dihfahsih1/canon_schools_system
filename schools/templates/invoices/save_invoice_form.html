@@ -36,92 +36,37 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="right_col" role="main">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2><i class="fa fa-group"></i><small>Manage Invoice</small></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
 
-                    <div class="x_content quick-link">
-                        <span>Quick Link:</span>
-                        | <a href="#">Academic Year</a>
-                        | <a href="#">Manage User</a>
-                        | <a href="#">Reset User Password</a>
-                        | <a href="#">User</a>
-                        | <a href="#">Activity Log</a>
-                        | <a href="#">Guardian Feedback</a>
-                    </div>
+  <h2>Person Form</h2>
 
-                    <form class="form-horizontal form-label-left"
-                          id="UserForm"
-                          data-roles-url="{% url 'ajax_load_roles' %}"
-                          data-users-url="{% url 'ajax_load_users' %}"
-                          method="GET"
-                          enctype="multipart/form-data"
-                          accept-charset="utf-8"
-                          novalidate>{% csrf_token %}
+  <form method="post" id="InvoiceForm" data-students-url="{% url 'ajax_classrooms_load' %}" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <button type="submit">Save</button>
+    <a href="{% url 'InvoiceCreateView' %}">Nevermind</a>
+  </form>
 
-                        <div class="form-row">
-                            <div class="form-group col-md-3 mb-0">
-                                {{ form.school|as_crispy_field }}
-                            </div>
-                            <div class="form-group col-md-3 mb-0">
-                                {{ form.user_type|as_crispy_field }}
-                            </div>
-                            <div class="form-group col-md-3 mb-0">
-                                {{ form.user|as_crispy_field }}
-                            </div>
-                            <div class="form-group col-md-3 mb-0">
-                                <br>
-                                 <button type="submit" class="btn btn-warning">Find</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <script type="text/javascript">
-             $("#id_school").change(function () {
-                var url = $("#UserForm").attr("data-roles-url");
-                var schoolId = $(this).val();
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_school").change(function () {
+      var url = $("#InvoiceForm").attr("data-students-url");  
 
-                $.ajax({
-                    url: url,
-                    data: {
-                        'school': schoolId
-                    },
-                    success: function (data) {
-                        $("#id_user_type").html(data);
-                    }
-                });
+      $.ajax({
+        url: url,
+        data: {
+          'school': SchoolId
+        },
+        success: function (data) {
+          $("#id_classroom").html(data);
+        }
+      });
 
-            });
+    });
+  </script>
 
-            $("#id_user_type").change(function () {
-                var url = $("#UserForm").attr("data-users-url");
-                var roleId = $(this).val();
-
-                $.ajax({
-                    url: url,
-                    data: {
-                        'user_type': roleId
-                    },
-                    success: function (data) {
-                        $("#id_user").html(data);
-                    }
-                });
-            });
-        </script>
-    </div>
-
-{% endblock content %}
+{% endblock %}
 
 {% block javascripts %}
 
