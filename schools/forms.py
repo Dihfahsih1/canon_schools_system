@@ -700,21 +700,7 @@ class AttendanceForm(forms.Form):
 
 
 class InvoiceForm(forms.Form):
-    school = forms.ModelChoiceField(
-        queryset=School.objects.all(),
-        required=False
-    )
-
-    classroom = forms.ModelChoiceField(
-        queryset=Classroom.objects.none(),
-        required=False
-    )
-
-    section = forms.ModelChoiceField(
-        queryset=Section.objects.none(),
-        required=False
-    )
-
+    model
     class Meta:
         fields = ('classroom', 'section')
 

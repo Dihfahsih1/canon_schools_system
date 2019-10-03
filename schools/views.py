@@ -53,8 +53,6 @@ def index(request):
     return render(request, 'home/home.html', context)
 
 
-# def view_profile(request):
-#     return render(request, 'profiles/profile.html')
 
 class UserProfileView(DetailView):
     model = User
@@ -4134,21 +4132,7 @@ def invoice_list(request):
 
 
 def save_invoice_form(request, form, template_name):
-    data = dict()
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            data['form_is_valid'] = True
-            invoices = Invoice.objects.all()
-            data['html_invoice_list'] = render_to_string('invoices/includes/partial_invoice_list.html', {
-                'invoices': invoices
-            })
-        else:
-            data['form_is_valid'] = False
-    context = {'form': form}
-    data['html_form'] = render_to_string(template_name, context, request=request)
-    return JsonResponse(data)
-
+    
 
 def invoice_create(request):
     if request.method == 'POST':
