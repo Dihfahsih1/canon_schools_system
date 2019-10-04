@@ -42,7 +42,6 @@
                         <div class="clearfix"></div>
                     </div>
 
-
                     <div class="x_content quick-link">
                         <span>Quick Link:</span>
                         <a href="{% url 'student_create' %}">Admit Student</a>
@@ -464,6 +463,11 @@
     </div>
 
 {% endblock content %}
+
+{% block extra_js %}
+    <script src="{% static 'schools/js/util.js' %}"></script>
+    <script src="{% static 'schools/js/main.js' %}"></script>
+{% endblock extra_js %}
 
 {% block javascripts %}
 

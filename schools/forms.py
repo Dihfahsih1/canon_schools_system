@@ -2,7 +2,7 @@ from django import forms
 from django.forms import Textarea
 from django.db import transaction
 from schools.models import *
-from bootstrap_datepicker_plus import DatePickerInput
+from bootstrap_datepicker_plus import DatePickerInput, TimePickerInput, MonthPickerInput
 from django.forms.widgets import CheckboxSelectMultiple
 
 
@@ -77,7 +77,6 @@ class UserForm(forms.ModelForm):
             'other_info': Textarea(attrs={'cols': 30, 'rows': 2}),
             'birth_date': DatePickerInput(),
         }
-
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -208,7 +207,7 @@ class StudentTypeForm(forms.ModelForm):
 class ManageUserForm(forms.ModelForm):
     class Meta:
         model = ManageUser
-        fields = ('school', 'user_type', 'user')
+        fields = ('school', 'user_type', 'user',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -253,6 +252,11 @@ class YearForm(forms.ModelForm):
         model = Year
         fields = ('school', 'start_month', 'end_month', 'is_running', 'note')
 
+    widgets = {
+        'start_month': MonthPickerInput(),
+        'end_month': MonthPickerInput(),
+    }
+
 
 class SubjectForm(forms.ModelForm):
     class Meta:
@@ -278,9 +282,13 @@ class RoutineForm(forms.ModelForm):
         fields = ['school', 'classroom', 'section', 'subject_name', 'day', 'teacher', 'start_time', 'end_time',
                   'room_no']
 
+    widgets = {
+        'start_time': TimePickerInput(),
+        'end_time': TimePickerInput(),
+    }
+
     def __init__(self, *args, **kwargs):
         super(RoutineForm, self).__init__(*args, **kwargs)
-        self.fields["section"].widget = CheckboxSelectMultiple()
         self.fields["section"].queryset = Section.objects.select_related('classroom').order_by('classroom')
 
 
@@ -293,17 +301,43 @@ class BulkStudentForm(forms.ModelForm):
 class StudentAttendanceForm(forms.ModelForm):
     class Meta:
         model = StudentAttendance
-        fields = ('classroom', 'section', 'date')
+        fields = ('school', 'classroom', 'section', 'date')
 
         widgets = {
             'date': DatePickerInput(),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['classroom'].queryset = Classroom.objects.none()
+        self.fields['section'].queryset = Section.objects.none()
+
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['classroom'].queryset = Classroom.objects.filter(school_id=school_id).order_by(
+                    'classroom')
+            except (ValueError, TypeError):
+                pass
+
+                if 'classroom' in self.data:
+                    try:
+                        classroom_id = int(self.data.get('classroom'))
+                        self.fields['section'].queryset = Section.objects.filter(classroom_id=classroom_id).order_by(
+                            'section')
+                    except (ValueError, TypeError):
+                        pass
+                elif self.instance.pk:
+                    self.fields['section'].queryset = self.instance.classroom.section_set.order_by('section')
+
+        elif self.instance.pk:
+            self.fields['classroom'].queryset = self.instance.school.classroom_set.order_by('classroom')
+
 
 class TeacherAttendanceForm(forms.ModelForm):
     class Meta:
         model = StudentAttendance
-        fields = ('date',)
+        fields = ('school', 'date',)
 
         widgets = {
             'date': DatePickerInput(),
@@ -378,6 +412,43 @@ class ExamSuggestionForm(forms.ModelForm):
         fields = ('school', 'suggestion_title', 'exam', 'classroom', 'subject', 'suggestion', 'note')
 
 
+class MarkForm(forms.ModelForm):
+    class Meta:
+        model = Mark
+        fields = ('school', 'exam', 'classroom', 'section', 'subject', 'student')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['exam'].queryset = Exam.objects.none()
+        self.fields['classroom'].queryset = Classroom.objects.none()
+        self.fields['section'].queryset = Section.objects.none()
+        self.fields['subject'].queryset = Subject.objects.none()
+
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['exam'].queryset = Exam.objects.filter(school_id=school_id).order_by('school')
+                self.fields['classroom'].queryset = Classroom.objects.filter(school_id=school_id).order_by('school')
+            except (ValueError, TypeError):
+                pass
+
+            if 'classroom' in self.data:
+                try:
+                    classroom_id = int(self.data.get('classroom'))
+                    self.fields['section'].queryset = Section.objects.filter(classroom_id=classroom_id).order_by(
+                        'classroom')
+                    self.fields['subject'].queryset = Subject.objects.filter(classroom_id=classroom_id).order_by(
+                        'classroom')
+                except (ValueError, TypeError):
+                    pass
+            elif self.instance.pk:
+                self.fields['section'].queryset = self.instance.classroom.section_set.order_by('section')
+                self.fields['subject'].queryset = self.instance.classroom.subject_set.order_by('subject')
+
+        elif self.instance.pk:
+            self.fields['classroom'].queryset = self.instance.school.classroom_set.order_by('classroom')
+
+
 class ExamAttendanceForm(forms.ModelForm):
     class Meta:
         model = ExamAttendance
@@ -401,7 +472,8 @@ class BookForm(forms.ModelForm):
 class EBookForm(forms.ModelForm):
     class Meta:
         model = EBook
-        fields = ('school', 'classroom', 'subject', 'EBook_title', 'edition', 'author', 'language', 'cover_image', 'e_book')
+        fields = (
+            'school', 'classroom', 'subject', 'EBook_title', 'edition', 'author', 'language', 'cover_image', 'e_book')
 
 
 class LibraryMemberForm(forms.ModelForm):
@@ -546,10 +618,53 @@ class LogForm(forms.ModelForm):
         fields = ('school', 'name', 'phone', 'call_duration', 'call_date', 'follow_up', 'call_type', 'note')
 
 
+class LeaveForm(forms.ModelForm):
+    class Meta:
+        model = Leave
+        fields = ('school', 'applicant_type', 'leave_Type', 'total_Type')
+
+
+class ApplicationForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = ('school', 'applicant_type', 'applicant', 'leave_Type', 'application_Date', 'leave_From', 'leave_To',
+                  'leave_Reason', 'leave_attachment')
+
+
+class CardForm(forms.ModelForm):
+    class Meta:
+        model = Card
+        fields = ('school', 'border_color', 'top_background', 'card_school_name', 'school_name_font_size',
+                  'school_name_color', 'school_address', 'school_address_color', 'admit_card_font_size',
+                  'admit_card_color', 'admit_card_background', 'title_font_size', 'title_color', 'value_font_size',
+                  'value_color', 'exam_font_size', 'exam_color', 'subject_font_size', 'subject_color',
+                  'bottom_signature', 'signature_background', 'signature_color', 'signature_align', 'admit_card_logo')
+
+
+class ActivityForm(forms.ModelForm):
+    class Meta:
+        model = Activity
+        fields = ('school', 'classroom', 'section', 'student', 'activity_date', 'activity')
+
+
 class DiscountForm(forms.ModelForm):
     class Meta:
         model = Discount
         fields = ('school', 'title', 'amount', 'note')
+
+
+class DispatchForm(forms.ModelForm):
+    class Meta:
+        model = Dispatch
+        fields = (
+            'school', 'to_Title', 'reference', 'address', 'from_Title', 'dispatch_date', 'note', 'postal_Attachment')
+
+
+class ReceiveForm(forms.ModelForm):
+    class Meta:
+        model = Receive
+        fields = (
+            'school', 'to_Title', 'reference', 'address', 'from_Title', 'receive_date', 'note', 'postal_Attachment')
 
 
 class FeeTypeForm(forms.ModelForm):
@@ -568,27 +683,27 @@ class BulkInvoiceForm(forms.ModelForm):
 class DueFeeEmailForm(forms.ModelForm):
     class Meta:
         model = DueFeeEmail
-        fields = ('receiver_role', 'classroom', 'due_fee_student', 'template',
+        fields = ('school', 'receiver_role', 'classroom', 'due_fee_student', 'template',
                   'subject', 'email_body', 'attachment')
 
 
 class DueFeeSMSForm(forms.ModelForm):
     class Meta:
         model = DueFeeSMS
-        fields = ('receiver_type', 'classroom', 'due_fee_student', 'template',
+        fields = ('school', 'receiver_type', 'classroom', 'due_fee_student', 'template',
                   'SMS', 'gateway')
 
 
 class IncomeHeadForm(forms.ModelForm):
     class Meta:
         model = IncomeHead
-        fields = ('income_head', 'note')
+        fields = ('school', 'income_head', 'note')
 
 
 class IncomeForm(forms.ModelForm):
     class Meta:
         model = Income
-        fields = ('income_head', 'payment_method', 'amount', 'date', 'note')
+        fields = ('school', 'income_head', 'payment_method', 'amount', 'date', 'note')
 
         widgets = {
             'date': DatePickerInput(),
@@ -598,13 +713,13 @@ class IncomeForm(forms.ModelForm):
 class ExpenditureHeadForm(forms.ModelForm):
     class Meta:
         model = ExpenditureHead
-        fields = ('expenditure_head', 'note')
+        fields = ('school', 'expenditure_head', 'note')
 
 
 class ExpenditureForm(forms.ModelForm):
     class Meta:
         model = Expenditure
-        fields = ('expenditure_head', 'expenditure_method', 'amount', 'date', 'note')
+        fields = ('school', 'expenditure_head', 'expenditure_method', 'amount', 'date', 'note')
 
         widgets = {
             'date': DatePickerInput(),
@@ -660,6 +775,25 @@ class SliderForm(forms.ModelForm):
         fields = ('school', 'slider_image', 'image_title')
 
 
+class TypeForm(forms.ModelForm):
+    class Meta:
+        model = Type
+        fields = ('school', 'complain_type')
+
+
+class ComplainForm(forms.ModelForm):
+    class Meta:
+        model = Complain
+        fields = ('school', 'complain_user_type', 'complain_user', 'complain_type', 'complain_date', 'complain',
+                  'action_date')
+
+
+class AboutForm(forms.ModelForm):
+    class Meta:
+        model = About
+        fields = ('school', 'about', 'about_image')
+
+
 class SMSTemplateForm(forms.ModelForm):
     class Meta:
         model = smstemplate
@@ -699,10 +833,50 @@ class AttendanceForm(forms.Form):
                 classroom=classroom)
 
 
-class InvoiceForm(forms.Form):
-    model = Invoice
+class InvoiceForm(forms.ModelForm):
     class Meta:
-        fields=('school','classroom','student','fee_type','fee_amount','discount','month','is_discount_applicable','paid_status','gross_amount','invoice_number','note','date')
+        model = Invoice
+        fields = ('school', 'classroom', 'student', 'fee_type', 'fee_amount', 'discount', 'month',
+                  'is_discount_applicable', 'paid_status', 'gross_amount', 'invoice_number', 'note', 'date')
+
+        widgets = {
+            'note': Textarea(attrs={'cols': 30, 'rows': 2}),
+            'month': MonthPickerInput(),
+        }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['classroom'].queryset = Classroom.objects.none()
+        self.fields['fee_type'].queryset = FeeType.objects.none()
+        self.fields['student'].queryset = Student.objects.none()
+
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['fee_type'].queryset = FeeType.objects.filter(school_id=school_id).order_by('school')
+                self.fields['classroom'].queryset = Classroom.objects.filter(school_id=school_id).order_by('school')
+            except (ValueError, TypeError):
+                pass
+
+            if 'classroom' in self.data:
+                try:
+                    classroom_id = int(self.data.get('classroom'))
+                    self.fields['student'].queryset = Student.objects.filter(classroom_id=classroom_id).order_by(
+                        'classroom')
+                except (ValueError, TypeError):
+                    pass
+            elif self.instance.pk:
+                self.fields['student'].queryset = self.instance.classroom.student_set.order_by('student')
+
+            # if 'fee_type' in self.data:
+            #     try:
+            #         fee_type_id = int(self.data.get('fee_type'))
+            #         self.fields['fee_amount'].queryset = F.objects.filter(classroom_id=classroom_id).order_by(
+            #             'classroom')
+            #     except (ValueError, TypeError):
+            #         pass
+            # elif self.instance.pk:
+            #     self.fields['student'].queryset = self.instance.classroom.student_set.order_by('student')
+
+        elif self.instance.pk:
+            self.fields['classroom'].queryset = self.instance.school.classroom_set.order_by('classroom')

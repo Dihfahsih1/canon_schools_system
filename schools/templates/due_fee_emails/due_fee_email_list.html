@@ -29,7 +29,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2><i class="fa fa-calculator"></i><small> Manage Due Fee Email</small></h2>
+                        <h2><i class="fa fa-envelope-o"></i><small> Manage Due Fee Email</small></h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -55,20 +55,14 @@
                     <div class="x_content">
                         <div class="" data-example-id="togglable-tabs">
 
-                            <ul class="nav nav-tabs bordered">
-                                <li class="active"><a href="#tab_due_fee_email_list" role="tab" data-toggle="tab"
-                                                      aria-expanded="true"><i class="fa fa-list-ol"></i> Due Fee Email List</a>
+                             <ul class="nav nav-tabs bordered">
+                                 <li role="presentation" class="active"><a href="{% url 'due_fee_email_list' %}"><i
+                                        class="fa fa-list-ol"></i> Due Fee Mail List</a>
                                 </li>
-
-                                <li class="">
-                                    <!-- BUTTON TO TRIGGER THE ACTION -->
-                                    <p>
-                                        <button type="button" class="btn btn-primary js-create-due_fee_email"
-                                                data-url="{% url 'due_fee_email_create' %}">
-                                            <span class="glyphicon glyphicon-plus"></span>
-                                            New Due Fee Email
-                                        </button>
-                                    </p>
+                                <li role="presentation"><a
+                                        href="{% url 'due_fee_email_create' %}"><i
+                                        class="fa fa-plus-square-o"></i> Add
+                                    Due Fee Mail</a>
                                 </li>
                             </ul>
                             <br/>
@@ -113,22 +107,6 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="modal fade bs-due_fee_email-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                        </button>
-                        <h4 class="modal-title">Due Fee Email Information</h4>
-                    </div>
-                    <div class="modal-body fn_due_fee_email_data">
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
         <script type="text/javascript">
             $(document).ready(function () {

@@ -2,19 +2,19 @@
     <tr>
         <td>{{ expenditure.id }}</td>
         <td>{{ expenditure.school }}</td>
+        <td></td>
         <td>{{ expenditure.expenditure_head }}</td>
         <td>{{ expenditure.expenditure_method }}</td>
         <td>{{ expenditure.amount }}</td>
         <td>{{ expenditure.date }}</td>
         <td>
-            <button type="button"
-                    class="btn btn-warning btn-sm js-update-expenditure"
-                    data-url="{% url 'expenditure_update' expenditure.id %}">
-                <span class="glyphicon glyphicon-pencil"></span> Edit
-            </button>
+            <div class="mb-4">
+                <a href="{% url 'expenditure_update' expenditure.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
             <button type="button"
                     class="btn btn-danger btn-sm js-delete-expenditure"
-                    data-url="{% url 'expenditure_delete' expenditure.id %}">
+                    data-url="{% url 'expenditure_delete' expenditure.pk %}">
                 <span class="glyphicon glyphicon-trash"></span> Delete
             </button>
         </td>

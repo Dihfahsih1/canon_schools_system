@@ -1,0 +1,105 @@
+<form method="post" action="{% url 'card_view' form.instance.pk %}" class="js-card-view-form"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">ID Card Setting Information</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+            <div id="myTabContent" class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1"
+                     aria-labelledby="basic-tab">
+                    <p></p>
+                    <table id="tablePreview" class="table table-bordered table-striped">
+                        <!--Table head-->
+                        <thead>
+                        <tr>
+                            <th>School Name</th>
+                            <td>{{ form.instance.school }}</td>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>Border Color</th>
+                            <td>{{ form.instance.border_color }}</td>
+                            <th>Top Background</th>
+                            <td>{{ form.instance.top_background }}</td>
+                        </tr>
+                        <tr>
+                            <th>Card School Name</th>
+                            <td>{{ form.instance.card_school_name }}</td>
+                            <th>Card Logo</th>
+                            <td>
+                                {% if form.instance.admit_card_logo %}
+                                    <img src="{{ form.instance.admit_card_logo.url }}"
+                                         alt="" width="50"
+                                         style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/><br/>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>School Name Font Size</th>
+                            <td>{{ form.instance.school_name_font_size }}</td>
+                            <th>School Name Color</th>
+                            <td>{{ form.instance.school_name_color }}</td>
+                        </tr>
+                        <tr>
+                            <th>School Address</th>
+                            <td>{{ form.instance.school_address }}</td>
+                            <th>School Address Color</th>
+                            <td>{{ form.instance.school_address_color }}</td>
+                        </tr>
+                        <tr>
+                            <th>ID No Title Font Size</th>
+                            <td>{{ form.instance.school_name_font_size }}</td>
+                            <th>ID No Title Color</th>
+                            <td>{{ form.instance.school_name_color }}</td>
+                        </tr>
+                        <tr>
+                            <th>ID No Title Background</th>
+                            <td>{{ form.instance.top_background }}</td>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Title Font Size</th>
+                            <td>{{ form.instance.title_font_size }}</td>
+                            <th>Title Color</th>
+                            <td>{{ form.instance.title_color }}</td>
+                        </tr>
+                        <tr>
+                            <th>Value Font Size</th>
+                            <td>{{ form.instance.value_font_size }}</td>
+                            <th>Value Color</th>
+                            <td>{{ form.instance.value_color }}</td>
+                        </tr>
+                        <tr>
+                            <th>Bottom Signature</th>
+                            <td>{{ form.instance.bottom_signature }}</td>
+                            <th>Signature Background</th>
+                            <td>{{ form.instance.signature_background }}</td>
+                        </tr>
+                        <tr>
+                            <th>Signature Color</th>
+                            <td>{{ form.instance.signature_color }}</td>
+                            <th>Signature Align</th>
+                            <td>{{ form.instance.signature_align }}</td>
+                        </tr>
+                        </tbody>
+                        <!--Table body-->
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</form>

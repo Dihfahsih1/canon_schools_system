@@ -1,0 +1,24 @@
+{% for leave in leaves %}
+    <tr>
+        <td>{{ leave.id }}</td>
+        <td>{{ leave.school }}</td>
+        <td>{{ leave.applicant_type }}</td>
+        <td>{{ leave.leave_Type }}</td>
+        <td>{{ leave.total_Type }}</td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'leave_update' leave.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-leave"
+                    data-url="{% url 'leave_delete' leave.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Leave</td>
+    </tr>
+{% endfor %}

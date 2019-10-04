@@ -1,0 +1,28 @@
+{% for complain in complains %}
+    <tr>
+        <td>{{ complain.id }}</td>
+        <td>{{ complain.school }}</td>
+        <td></td>
+        <td>{{ complain.complain_user }}</td>
+        <td>{{ complain.complain_type }}</td>
+        <td>{{ complain.complain_date }}</td>
+        <td>{{ complain.action_date }}</td>
+        <td>
+
+            <div class="mb-4">
+                <a href="{% url 'complain_update' complain.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button complain="button"
+                    class="btn btn-danger btn-sm js-delete-complain"
+                    data-url="{% url 'complain_delete' complain.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+            <br>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Complain</td>
+    </tr>
+{% endfor %}

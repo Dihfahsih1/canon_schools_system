@@ -1,0 +1,31 @@
+{% for card in cards %}
+    <tr>
+        <td>{{ card.id }}</td>
+        <td>{{ card.school }}</td>
+        <td>{{ card.border_color }}</td>
+        <td>{{ card.top_background }}</td>
+        <td>{{ card.bottom_signature }}</td>
+        <td>{{ card.signature_background }}</td>
+        <td>
+            <button type="button"
+                    class="btn btn-warning btn-sm js-view-card"
+                    data-url="{% url 'card_view' card.pk %}">
+                <span class="glyphicon glyphicon-eye-open"></span> View
+            </button>
+            <div class="mb-4">
+                <a href="{% url 'card_update' card.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-card"
+                    data-url="{% url 'card_delete' card.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+            <br>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="10" class="text-center bg-warning">No Card</td>
+    </tr>
+{% endfor %}

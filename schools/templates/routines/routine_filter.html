@@ -1,0 +1,43 @@
+{% load i18n %}
+
+<div class="x_content">
+
+    <form
+            action=""
+            role="form"
+            class="form-horizontal form-label-left"
+            id="schedule_list_filter"
+            method="POST"
+            enctype="multipart/form-data"
+            accept-charset="utf-8">{% csrf_token %}
+
+        <div class="form-row">
+            <div class="form-group col-md-3 mb-0">
+                <select class="form-control form-control-sm" name="school">
+                    <option value=""> School</option>
+                    {% for s in schools %}
+                        <option value="{{ s.id }}">{{ s.school }} </option>
+
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3 mb-0">
+                <select class="form-control form-control-sm" name="classroom">
+                    <option value=""> Classroom</option>
+                    {% for c in classrooms %}
+                        <option value="{{ c.id }}"
+                                {% if request.POST.classroom %}{% ifequal c.id request.POST.classroom|add:"0" %}selected
+                                {% endifequal %}{% endif %}>{{ c.classroom }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3 mb-0">
+                <button class="btn btn-info save btn-sm" type="submit">Search</button>
+                <a href="{% url 'routine_list' %}" class="btn btn-primary btn-sm">Clear</a>
+            </div>
+        </div>
+
+    </form>
+
+</div>

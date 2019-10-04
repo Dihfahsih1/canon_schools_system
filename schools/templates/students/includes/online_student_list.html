@@ -1,0 +1,47 @@
+{% for student in students %}
+    <tr>
+        <td>{{ student.id }}</td>
+        <td>{{ student.school }}</td>
+        <td>
+            {% if student.user.photo %}
+                <img src="{{ student.user.photo.url }}"
+                     alt="" width="50"
+                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/><br/>
+            {% endif %}
+        </td>
+        <td>{{ student.user.full_name }}</td>
+        <td>{{ student.classroom }}</td>
+        <td>
+            <button type="button"
+                    class="btn btn-success btn-sm js-approve-student"
+                    data-url="#">
+                <span class="fa fa-check-square-o"></span> Approve
+            </button>
+             <button type="button"
+                    class="btn btn-info btn-sm js-waiting-student"
+                    data-url="#">
+                <span class="fa fa-spinner"></span> Waiting
+            </button>
+                        <button type="button"
+                    class="btn btn-danger btn-sm js-decline-student"
+                    data-url="#">
+                <span class="fa fa-close"></span> Decline
+            </button>
+            <button type="button"
+                    class="btn btn-success btn-sm js-view-student"
+                    data-url="{% url 'student_view' student.pk %}">
+                <span class="glyphicon glyphicon-eye-open"></span> View
+            </button>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-student"
+                    data-url="{% url 'student_delete' student.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+            <br>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="10" class="text-center bg-warning">No Student</td>
+    </tr>
+{% endfor %}

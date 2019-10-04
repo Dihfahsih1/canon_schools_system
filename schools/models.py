@@ -1,12 +1,17 @@
+import datetime
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.urls import reverse
 from django.conf import settings
+from datetime import datetime, date, timedelta
 from django.utils.text import slugify
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from taggit.managers import TaggableManager
+from django.utils.translation import gettext as _
+
 
 START = (('January', 'January'),
          ('February', 'February'),
@@ -110,6 +115,30 @@ DAYS_OF_THE_WEEK = (
     (SATURDAY, 'Saturday'),
     (SUNDAY, 'Sunday'),
 )
+
+
+def GenTimeList():
+    StartTime_str = '0100-01-01 08:00:00'
+    StartTime = datetime.strptime(StartTime_str, '%Y-%m-%d %H:%M:%S')
+
+    EndTime_str = '0100-01-01 17:00:00'
+    EndTime = datetime.strptime(EndTime_str, '%Y-%m-%d %H:%M:%S')
+
+    TimeStep_int = 30
+    TimeStep = timedelta(minutes=TimeStep_int)
+
+    TimeList = list()
+
+    TimeInc = StartTime
+    while (TimeInc <= EndTime):
+        TimeList.append(datetime.strftime(TimeInc, '%H:%M'))
+        TimeInc = TimeInc + TimeStep
+
+    return (TimeList)
+
+
+TimeList = GenTimeList()
+
 
 
 class Settings(models.Model):
@@ -499,6 +528,48 @@ class StudentType(models.Model):
         return self.student_type
 
 
+class Activity(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    classroom = models.ForeignKey('Classroom', on_delete=models.CASCADE)
+    section = models.ForeignKey('Section', on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)
+    activity_date = models.DateField(blank=True, null=True)
+    activity = models.TextField(max_length=130)
+
+    def __str__(self):
+        return self.activity
+
+
+class Card(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    border_color = models.CharField(max_length=130)
+    top_background = models.CharField(max_length=130)
+    card_school_name = models.CharField(max_length=130)
+    school_name_font_size = models.CharField(max_length=130)
+    school_name_color = models.CharField(max_length=130)
+    school_address = models.CharField(max_length=130)
+    school_address_color = models.CharField(max_length=130)
+    admit_card_font_size = models.CharField(max_length=130)
+    admit_card_color = models.CharField(max_length=130)
+    admit_card_background = models.CharField(max_length=130)
+    title_font_size = models.CharField(max_length=130)
+    title_color = models.CharField(max_length=130)
+    value_font_size = models.CharField(max_length=130)
+    value_color = models.CharField(max_length=130)
+    exam_font_size = models.CharField(max_length=130)
+    exam_color = models.CharField(max_length=130)
+    subject_font_size = models.CharField(max_length=130)
+    subject_color = models.CharField(max_length=130)
+    bottom_signature = models.CharField(max_length=130)
+    signature_background = models.CharField(max_length=130)
+    signature_color = models.CharField(max_length=130)
+    signature_align = models.CharField(max_length=130)
+    admit_card_logo = models.FileField(upload_to='card/', null=True, blank=False)
+
+    def __str__(self):
+        return self.card_school_name
+
+
 class Classroom(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     classroom = models.CharField(max_length=130)
@@ -604,16 +675,21 @@ class Material(models.Model):
 class Routine(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=False, null=True)
-    section = models.CharField(max_length=130)
-    subject_name = models.CharField(max_length=130)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, blank=False, null=True)
+    subject_name = models.ForeignKey(Subject, on_delete=models.CASCADE, blank=False, null=True)
     day = models.IntegerField(choices=DAYS_OF_THE_WEEK, null=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=False, null=True)
-    start_time = models.TimeField(null=True)
-    end_time = models.TimeField(null=True)
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
     room_no = models.CharField(max_length=130)
 
     def __str__(self):
-        return self.start_time
+        return '{} - {} {} - {}'.format(self.id, self.day, self.start_time, self.subject_name)
+
+    class Meta:
+        ordering = ('day', 'start_time')
+        verbose_name = _('Routine')
+        verbose_name_plural = _('Routine')
 
 
 class BulkStudent(models.Model):
@@ -683,12 +759,25 @@ class ExamGrade(models.Model):
 
 class Exam(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=True, null=True)
     exam_title = models.CharField(max_length=100)
     start_date = models.DateField(null=True)
     note = models.TextField(max_length=300)
 
     def __str__(self):
         return self.exam_title
+
+
+class Mark(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, blank=False, null=True)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=False, null=True)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, blank=False, null=True)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, blank=False, null=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=False, null=True)
+
+    def __str__(self):
+        return self.subject
 
 
 class ExamSchedule(models.Model):
@@ -829,6 +918,27 @@ class Vehicle(models.Model):
 
     def __str__(self):
         return self.vehicle_number
+
+
+class Type(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    complain_type = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.complain_type
+
+
+class Complain(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    complain_user_type = models.ForeignKey(Role, on_delete=models.CASCADE, blank=False, null=True)
+    complain_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)
+    complain_type = models.ForeignKey(Type, on_delete=models.CASCADE, blank=False, null=True)
+    complain_date = models.DateField(null=True)
+    action_date = models.DateField(null=True)
+    complain = models.TextField(max_length=400)
+
+    def __str__(self):
+        return self.complain_user
 
 
 class Route(models.Model):
@@ -998,7 +1108,7 @@ class Discount(models.Model):
 
 class FeeType(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
-    IS = (('General Fee', 'General Fee'),
+    IS = (('Tuition', 'Tuition'),
           ('Hostel', 'Hostel'),
           ('Transport', 'Transport'))
     fee_type = models.CharField(max_length=100, blank=False, choices=IS)
@@ -1006,25 +1116,29 @@ class FeeType(models.Model):
     fee_title = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
 
+    def __str__(self):
+        return self.fee_type
+
 
 class Invoice(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=False, null=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=False, null=True)
-    fee_type = models.CharField(max_length=100)
+    fee_type = models.ForeignKey(FeeType, on_delete=models.CASCADE, blank=False, null=True)
     fee_amount = models.CharField(max_length=100)
-    discount = models.CharField(max_length=100)
-    month = models.DateField(max_length=100)
+    discount = models.CharField(max_length=100, blank=True, null=True)
+    month = models.CharField(max_length=100)
     IS = (('Yes', 'Yes'),
           ('No', 'No'))
     is_discount_applicable = models.CharField(max_length=100, blank=False, choices=IS)
     STATUS = (('Paid', 'Paid'),
               ('Pending', 'Pending'))
     paid_status = models.CharField(max_length=100, blank=False, choices=STATUS)
-    gross_amount = models.CharField(max_length=100)
-    invoice_number = models.CharField(max_length=100)
+    gross_amount = models.CharField(max_length=100, blank=True, null=True)
+    invoice_number = models.CharField(max_length=100, blank=True, null=True)
     note = models.TextField(max_length=300)
-    date = models.DateField(null=True)
+    date = models.DateField(default=datetime.now, blank=True, null=True)
+
 
 
 class BulkInvoice(models.Model):
@@ -1073,6 +1187,9 @@ class IncomeHead(models.Model):
     income_head = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
 
+    def __str__(self):
+        return self.income_head
+
 
 class Income(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
@@ -1082,11 +1199,17 @@ class Income(models.Model):
     date = models.DateField(null=True)
     note = models.TextField(max_length=300)
 
+    def __str__(self):
+        return self.income_head
+
 
 class ExpenditureHead(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     expenditure_head = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
+
+    def __str__(self):
+        return self.expenditure_head
 
 
 class Expenditure(models.Model):
@@ -1096,6 +1219,9 @@ class Expenditure(models.Model):
     amount = models.CharField(max_length=100)
     date = models.DateField(null=True)
     note = models.TextField(max_length=300)
+
+    def __str__(self):
+        return self.expenditure_head
 
 
 class Gallery(models.Model):
@@ -1140,6 +1266,15 @@ class Slider(models.Model):
 
     def __str__(self):
         return self.image_title
+
+
+class About(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    about_image = models.FileField(upload_to='about/', null=True, blank=False)
+    about = models.TextField(max_length=500)
+
+    def __str__(self):
+        return self.about
 
 
 class Paypal(models.Model):
@@ -1258,6 +1393,7 @@ class Dispatch(models.Model):
     from_Title = models.CharField(max_length=100)
     dispatch_date = models.DateField(max_length=100)
     note = models.TextField(max_length=100)
+    postal_Attachment = models.FileField(upload_to='attachments/', max_length=100)
 
 
 class Receive(models.Model):
@@ -1270,6 +1406,9 @@ class Receive(models.Model):
     note = models.TextField(max_length=100)
     postal_Attachment = models.FileField(upload_to='attachments/', max_length=100)
 
+    def __str__(self):
+        return self.receive_date
+
 
 class Leave(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE)
@@ -1277,14 +1416,20 @@ class Leave(models.Model):
     leave_Type = models.CharField(max_length=100)
     total_Type = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.leave_Type
+
 
 class Application(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     applicant_type = models.ForeignKey(Role, on_delete=models.CASCADE, blank=False)
-    applicant = models.CharField(max_length=100)
-    leave_Type = models.CharField(max_length=100)
+    applicant = models.ForeignKey(User, on_delete=models.CASCADE, blank=False)
+    leave_Type = models.ForeignKey(Leave, on_delete=models.CASCADE, blank=False)
     application_Date = models.DateField(max_length=100)
     leave_From = models.CharField(max_length=100)
     leave_To = models.CharField(max_length=100)
     leave_Reason = models.TextField(max_length=100)
     leave_attachment = models.FileField(upload_to='leave/', max_length=100)
+
+    def __str__(self):
+        return self.applicant_type

@@ -8,9 +8,9 @@
         <td>{{ due_fee_email.subject }}</td>
         <td>
             <button type="button"
-                    class="btn btn-warning btn-sm js-update-due_fee_email"
-                    data-url="{% url 'due_fee_email_update' due_fee_email.id %}">
-                <span class="glyphicon glyphicon-pencil"></span> Edit
+                    class="btn btn-warning btn-sm js-view-due_fee_email"
+                    data-url="{% url 'due_fee_email_view' due_fee_email.pk %}">
+                <span class="glyphicon glyphicon-eye-open"></span> View
             </button>
             <button type="button"
                     class="btn btn-danger btn-sm js-delete-due_fee_email"

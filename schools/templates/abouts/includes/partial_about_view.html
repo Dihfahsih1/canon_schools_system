@@ -1,0 +1,57 @@
+<form method="post" action="{% url 'about_view' form.instance.pk %}" class="js-about-view-form"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="modal-lg " tabindex="-1">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">About Information</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1"
+                             aria-labelledby="basic-tab">
+                            <p></p>
+                            <table id="tablePreview" class="table table-bordered table-striped">
+                                <tbody>
+                                <tr>
+                                    <th>School Name</th>
+                                    <td>{{ form.instance.school }}</td>
+                                </tr>
+                                <tr>
+                                    <th>About </th>
+                                    <td>{{ form.instance.about }}</td>
+                                </tr>
+                                <tr>
+                                    <th>About Image</th>
+                                    <td>
+                                        {% if form.instance.about_image %}
+                                            <img src="{{ form.instance.about_image.url }}"
+                                                 alt="" width="50"
+                                                 style="background: rgba(16,67,221,0.84); padding: 5px;"/>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Modified</th>
+                                    <td>{{ form.instance.about_place }}</td>
+                                </tr>
+                                </tbody>
+                                <!--Table body-->
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</form>

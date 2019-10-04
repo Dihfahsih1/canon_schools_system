@@ -1,0 +1,312 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Invoice {% endblock title %}
+
+{% load static i18n %}
+
+{% load widget_tweaks %}
+
+{% block javascript %}
+    <script src="{% static 'schools/js/invoices.js' %}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+{% endblock stylesheets %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2><i class="fa fa fa-calculator"></i><small> Manage Invoice</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content quick-link">
+                        <span>Quick Link:</span>
+                        <a href="#">Discount</a>
+                        | <a href="#">Fee Type</a>
+                        | <a href="#">Fee Collection</a>
+                        | <a href="#">Manage Invoice</a>
+                        | <a href="#">Due Invoice</a>
+                        | <a href="#">Due Free Email</a>
+                        | <a href="#">Due Free SMS</a>
+                        | <a href="#">Income Head</a>
+                        | <a href="#">Income</a>
+                        | <a href="#">Expenditure Head</a>
+                        | <a href="#">Expenditure</a>
+                    </div>
+
+                    <div class="x_content">
+                        <section class="content invoice profile_img ">
+                            <div class="col-md-12 col-sm-12">
+                                <!-- title row -->
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-6 invoice-header">
+                                        <h1>Invoice</h1>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6 invoice-header text-center">
+                                        <img src="{{ form.instance.school.frontend_Logo.url }}"
+                                              width="100"
+                                             alt=""/>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <!-- info row -->
+                                <div class="row invoice-info">
+                                    <div class="col-md-4 col-sm-4 col-xs-4 invoice-col text-left">
+                                        <strong>School:</strong>
+                                        <address>
+                                            {{ form.instance.school.school_name }}
+                                            <br> {{ form.instance.school.address }}
+                                            <br>Phone: {{ form.instance.school.phone }}
+                                            <br>Email: {{ form.instance.school.email_address }}
+                                        </address>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-4 col-sm-4 col-xs-4 invoice-col text-left">
+                                        <strong>Student:</strong>
+                                        <address>
+                                            {{ form.instance.student.user.full_name }}
+                                            <br>{{ form.instance.student.user.present_address }}
+                                            <br>Class: {{ form.instance.student.classroom }}
+                                            <br>Phone: {{ form.instance.student.user.phone }}
+                                        </address>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-4 col-sm-4 col-xs-4 invoice-col text-left">
+                                        <b>Invoice #INV00082</b>
+                                        <br>
+                                        <b>Payment Status:</b> <span class="btn-success">{{ form.instance.paid_status }}</span>
+                                        <br>
+                                        <b>Date:</b> {{ form.instance.date }}
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                        </section>
+                        <section class="content invoice">
+                            <!-- Table row -->
+                            <div class="row">
+                                <div class="col-xs-12 table">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>#SL</th>
+                                            <th>Fee Type</th>
+                                            <th>Note</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td style="width:15%">{{ form.instance.pk }}</td>
+                                            <td style="width:25%"> {{ form.instance.fee_type }}</td>
+                                            <td style="width:35%">{{ form.instance.note }}</td>
+                                            <td>{{ form.instance.fee_amount }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <p class="lead">Payment Method:</p>
+                                    <img src="/static/images/visa.png" alt="Visa">
+                                    <img src="/static/images/mastercard.png" alt="Mastercard">
+                                    <img src="/static/images/american-express.png" alt="American Express">
+                                    <img src="/static/images/paypal.png" alt="Paypal">
+                                </div>
+
+                                <!-- /.col -->
+                                <div class="col-xs-6">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <th style="width:50%">Subtotal:</th>
+                                                <td>{{ form.instance.fee_amount }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Discount</th>
+                                                <td>{{ form.instance.discount }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total:</th>
+                                                <td>{{ form.instance.fee_amount }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Paid Amount:</th>
+                                                <td>{{ form.instance.fee_amount }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Due Amount:</th>
+                                                <td><span class="btn-danger" style="padding: 5px;">{{ form.instance.fee_amount }}</span></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+
+                            <!-- this row will not appear when printing -->
+                            <div class="row no-print">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-default" onclick="window.print();"><i
+                                            class="fa fa-print"></i> Print
+                                    </button>
+                                    <a href="#">
+                                        <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i>
+                                            Submit Payment
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#invoice-table').DataTable({
+                    dom: 'Bfrtip',
+                    iDisplayLength: 15,
+                    buttons: [
+                        'copyHtml5',
+                        'excelHtml5',
+                        'csvHtml5',
+                        'pdfHtml5',
+                        'print',
+                        'pageLength'
+                    ],
+                    search: true,
+                    responsive: true
+                });
+            });
+
+            $("#id_school").change(function () {
+                var url = $("#InvoiceForm").attr("data-classrooms-url");
+                var schoolId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_classroom").html(data);
+                    }
+                });
+
+            });
+
+            $("#id_school").change(function () {
+                var url = $("#InvoiceForm").attr("data-fee_types-url");
+                var schoolId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_fee_type").html(data);
+                    }
+                });
+
+            });
+
+
+            $("#id_classroom").change(function () {
+                var url = $("#InvoiceForm").attr("data-students-url");
+                var classroomId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'classroom': classroomId
+                    },
+                    success: function (data) {
+                        $("#id_student").html(data);
+                    }
+                });
+            });
+
+        </script>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    {{ block.super }}
+    <!-- Datatables -->
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Chart.js -->
+    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- Skycons -->
+    <script src="/static/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/static/vendors/Flot/jquery.flot.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/static/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+
+
+
+{% endblock javascripts %}
+

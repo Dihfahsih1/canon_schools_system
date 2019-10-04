@@ -17,7 +17,7 @@
     <meta http-equiv="pragma" content="no-store"/>
 
 
-    <title>My Profile | Global - Multi School Management System Express</title>
+    <title>Manage Mark | Global - Multi School Management System Express</title>
     <link rel="icon" href="http://codetroopers-team.com/gmsms/assets/uploads//logo/1567888028-favicon-icon.png"
           type="image/x-icon"/>
 
@@ -33,7 +33,7 @@
     <!-- Custom Theme Style -->
     <link href="http://codetroopers-team.com/gmsms/assets/css/custom.css" rel="stylesheet">
 
-    <link href="http://codetroopers-team.com/gmsms/assets/css/theme/slate-gray.css" rel="stylesheet">
+    <link href="http://codetroopers-team.com/gmsms/assets/css/theme/radical-red.css" rel="stylesheet">
 
     <!-- jQuery -->
     <script src="http://codetroopers-team.com/gmsms/assets/js/jquery-1.11.2.min.js"></script>
@@ -72,7 +72,7 @@
 
 
                         <img class="logo"
-                             src="http://codetroopers-team.com/gmsms/assets/uploads/logo/1569573037-brand-logo.png"
+                             src="http://codetroopers-team.com/gmsms/assets/uploads/logo/1567887984-brand-logo.png"
                              style="max-width: 65px;" alt="">
                     </a>
                 </div>
@@ -283,11 +283,6 @@
                                     <li><a href="http://codetroopers-team.com/gmsms/card/admitsetting/index">Admit Card
                                         Setting</a></li>
 
-                                    <li><a href="http://codetroopers-team.com/gmsms/card/schoolidsetting/index">ID Card
-                                        Setting</a></li>
-
-                                    <li><a href="http://codetroopers-team.com/gmsms/card/schooladmitsetting/index">Admit
-                                        Card Setting</a></li>
 
                                     <li><a href="http://codetroopers-team.com/gmsms/card/teacher/index">Teacher ID
                                         Card</a></li>
@@ -627,7 +622,7 @@
                     </div>
                     <div class="col-md-7 ">
                         <div class="school-name">
-                            MED & UBEC MULTI SECONDARY SCHOOL MANAGEMENT SYSTEM
+                            Global Multi School Management System Express
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -693,293 +688,293 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h3 class="head-title"><i class="fa fa-lock"></i><small> My Profile</small></h3>
+                            <h3 class="head-title"><i class="fa fa-file-text-o"></i><small> Manage Mark</small></h3>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>
 
+
                         <div class="x_content quick-link">
                             <span>Quick Link:</span>
-                            <a href="http://codetroopers-team.com/gmsms/profile">My Profile</a>
-                            | <a href="http://codetroopers-team.com/gmsms/profile/password">Reset Password</a>
+                            <a href="http://codetroopers-team.com/gmsms/exam/mark/index">Manage Mark</a>
+                            | <a href="http://codetroopers-team.com/gmsms/exam/examresult/index">Exam Term Result</a>
+                            | <a href="http://codetroopers-team.com/gmsms/exam/finalresult/index">Exam final result</a>
+                            | <a href="http://codetroopers-team.com/gmsms/exam/meritlist/index">Merit List</a>
 
+                            | <a href="http://codetroopers-team.com/gmsms/exam/marksheet/index">Mark Sheet</a>
+                            | <a href="http://codetroopers-team.com/gmsms/exam/resultcard/index">Result Card</a>
 
-                            | <a href="http://codetroopers-team.com/gmsms/auth/logout">Log Out</a>
+                            | <a href="http://codetroopers-team.com/gmsms/exam/resultcard/all">All Result Card</a>
+
+                            | <a href="http://codetroopers-team.com/gmsms/exam/mail/index">Mark send by Email</a>
+                            | <a href="http://codetroopers-team.com/gmsms/exam/text/index">Mark send by SMS</a>
+                            | <a href="http://codetroopers-team.com/gmsms/exam/resultemail/index"> Result Email</a>
+                            | <a href="http://codetroopers-team.com/gmsms/exam/resultsms/index"> Result SMS</a>
                         </div>
 
 
                         <div class="x_content">
-                            <div class="" data-example-id="togglable-tabs">
-                                <ul class="nav nav-tabs bordered">
-                                    <li class="active"><a href="#tab_profile" role="tab" data-toggle="tab"
-                                                          aria-expanded="true"><i class="fa fa-eye"></i> Profile</a>
-                                    </li>
-                                    <li class=""><a href="#tab_update" role="tab" data-toggle="tab"
-                                                    aria-expanded="false"><i class="fa fa-pencil-square-o"></i>
-                                        Update</a></li>
-                                </ul>
-                                <br/>
+                            <form action="http://codetroopers-team.com/gmsms/exam/mark/index" name="mark" id="mark"
+                                  class="form-horizontal form-label-left" enctype="multipart/form-data" method="post"
+                                  accept-charset="utf-8">
+                                <div class="row">
 
-                                <div class="tab-content">
+                                    <div class="col-md-10 col-sm-10 col-xs-12">
 
-                                    <div class="tab-pane fade in active" id="tab_profile">
-                                        <div class="x_content">
-
-                                            <div class="col-md-12">
-                                                <div class="profile_img">
-                                                    <img src="http://codetroopers-team.com/gmsms/assets/uploads//employee-photo/photo-1567887468-sms.jpg"
-                                                         alt="" width="100"/>
-                                                    <h3>Super Admin</h3><br/>
-                                                </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <div class="item form-group">
+                                                <div>School <span class="required"> *</span></div>
+                                                <select class="form-control col-md-7 col-xs-12 fn_school_id"
+                                                        name="school_id" id="school_id" required="required">
+                                                    <option value="">--Select--</option>
+                                                    <option value="1">Windsor Park High School</option>
+                                                    <option value="2">The British Standard School</option>
+                                                    <option value="3">Ideal Stevenson High School</option>
+                                                    <option value="4">Scholastica Ideal School</option>
+                                                </select>
                                             </div>
-                                            <table id="datatable-responsive"
-                                                   class="table table-striped table-bordered dt-responsive nowrap"
-                                                   cellspacing="0" width="100%">
-                                                <tbody>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <td>Super Admin</td>
-                                                    <th>National ID</th>
-                                                    <td>125478658</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Email</th>
-                                                    <td>superadmin@gmail.com</td>
-                                                    <th>Phone</th>
-                                                    <td>78965424</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Present Address</th>
-                                                    <td>6160 Peachtree Dunwoody Rd Suite B100-A</td>
-                                                    <th>Permanent Address</th>
-                                                    <td>6160 Peachtree Dunwoody Rd Suite B100-A</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Gender</th>
-                                                    <td>Male</td>
-                                                    <th>Blood Group</th>
-                                                    <td>B+</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Religion</th>
-                                                    <td>Islam</td>
-                                                    <th>Birth Date</th>
-                                                    <td>Jan 1,1985</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Other Info</th>
-                                                    <td>Other test Info</td>
-                                                    <th>Resume</th>
-                                                    <td>
-                                                    </td>
-                                                </tr>
+                                        </div>
 
-                                                </tbody>
-                                            </table>
+
+                                        <div class="col-md-2 col-sm-2 col-xs-12">
+                                            <div class="item form-group">
+                                                <div>Exam <span class="required">*</span></div>
+                                                <select class="form-control col-md-7 col-xs-12" name="exam_id"
+                                                        id="exam_id" required="required">
+                                                    <option value="">--Select--</option>
+                                                </select>
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2 col-xs-12">
+                                            <div class="item form-group">
+                                                <div>Class <span class="required">*</span></div>
+                                                <select class="form-control col-md-7 col-xs-12" name="class_id"
+                                                        id="class_id" required="required"
+                                                        onchange="get_section_subject_by_class(this.value,'','');">
+                                                    <option value="">--Select--</option>
+                                                </select>
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-2 col-xs-12">
+                                            <div class="item form-group">
+                                                <div>Section</div>
+                                                <select class="form-control col-md-7 col-xs-12" name="section_id"
+                                                        id="section_id">
+                                                    <option value="">--Select--</option>
+                                                </select>
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <div class="item form-group">
+                                                <div>Subject <span class="required">*</span></div>
+                                                <select class="form-control col-md-7 col-xs-12" name="subject_id"
+                                                        id="subject_id" required="required">
+                                                    <option value="">--Select--</option>
+                                                </select>
+                                                <div class="help-block"></div>
+                                            </div>
                                         </div>
                                     </div>
 
-
-                                    <div class="tab-pane fade in" id="tab_update">
-                                        <div class="x_content">
-                                            <form action="http://codetroopers-team.com/gmsms/profile/update/1"
-                                                  name="profile" id="profile" class="form-horizontal form-label-left"
-                                                  enctype="multipart/form-data" method="post" accept-charset="utf-8">
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name
-                                                        <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input class="form-control col-md-7 col-xs-12" name="name"
-                                                               id="name" value="Super Admin" placeholder="Name"
-                                                               required="required" type="text" autocomplete="off">
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                           for="phone">Phone <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input class="form-control col-md-7 col-xs-12" name="phone"
-                                                               id="phone" value="78965424" placeholder="Phone"
-                                                               required="required" type="text" autocomplete="off">
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                           for="present_address">Present Address</label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <textarea class="form-control col-md-7 col-xs-12"
-                                                                  name="present_address" id="present_address"
-                                                                  placeholder="Present Address">6160 Peachtree Dunwoody Rd Suite B100-A</textarea>
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                           for="permanent_address">Permanent Address</label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <textarea class="form-control col-md-7 col-xs-12"
-                                                                  name="permanent_address" id="permanent_address"
-                                                                  placeholder="Permanent Address">6160 Peachtree Dunwoody Rd Suite B100-A</textarea>
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                           for="gender">Gender <span class="required">*</span></label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <select class="form-control col-md-7 col-xs-12" name="gender"
-                                                                id="gender" required="required">
-                                                            <option value="">--Select--</option>
-                                                            <option value="male" selected="selected">Male</option>
-                                                            <option value="female">Female</option>
-                                                        </select>
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                           for="blood_group">Blood Group</label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <select class="form-control col-md-7 col-xs-12"
-                                                                name="blood_group" id="blood_group">
-                                                            <option value="">--Select--</option>
-                                                            <option value="a_positive">A+</option>
-                                                            <option value="a_negative">A-</option>
-                                                            <option value="b_positive" selected="selected">B+</option>
-                                                            <option value="b_negative">B-</option>
-                                                            <option value="o_positive">O+</option>
-                                                            <option value="o_negative">O-</option>
-                                                            <option value="ab_positive">AB+</option>
-                                                            <option value="ab_negative">AB-</option>
-                                                        </select>
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                           for="religion">Religion </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input class="form-control col-md-7 col-xs-12" name="religion"
-                                                               id="religion" value="Islam" placeholder="Religion"
-                                                               type="text" autocomplete="off">
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Birth Date
-                                                        <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input class="form-control col-md-7 col-xs-12" name="dob"
-                                                               id="dob" value="01-01-1985" placeholder="Birth Date"
-                                                               required="required" type="text" autocomplete="off">
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                           for="email">Email </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input class="form-control col-md-7 col-xs-12" name="email"
-                                                               id="email" value="superadmin@gmail.com"
-                                                               placeholder="Email" type="email" autocomplete="off">
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Photo </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input type="hidden" name="prev_photo" id="prev_photo"
-                                                               value="photo-1567887468-sms.jpg"/>
-                                                        <img src="http://codetroopers-team.com/gmsms/assets/uploads//employee-photo/photo-1567887468-sms.jpg"
-                                                             alt="" width="70"/><br/><br/>
-
-                                                        <div class="btn btn-default btn-file">
-                                                            <i class="fa fa-paperclip"></i> Upload <input
-                                                                class="form-control col-md-7 col-xs-12" name="photo"
-                                                                id="photo" type="file">
-                                                        </div>
-                                                        <div class="text-info">Image file format: .jpg, .jpeg, .png or
-                                                            .gif
-                                                        </div>
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Resume </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input type="hidden" name="prev_resume" id="prev_resume"
-                                                               value=""/>
-                                                        <div class="btn btn-default btn-file">
-                                                            <i class="fa fa-paperclip"></i> Upload <input
-                                                                class="form-control col-md-7 col-xs-12" name="resume"
-                                                                id="resume" type="file">
-                                                        </div>
-                                                        <div class="text-info">Document file format: pdf, .doc, .docx or
-                                                            .txt
-                                                        </div>
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                           for="other_info">Other Info</label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <textarea class="form-control col-md-7 col-xs-12"
-                                                                  name="other_info" id="other_info"
-                                                                  placeholder="Other Info">Other test Info</textarea>
-                                                        <div class="help-block"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="ln_solid"></div>
-                                                <div class="form-group">
-                                                    <div class="col-md-6 col-md-offset-3">
-                                                        <a href="http://codetroopers-team.com/gmsms/profile"
-                                                           class="btn btn-primary">Cancel</a>
-                                                        <input type="hidden" name="id" id="id" value="1"/>
-                                                        <input type="hidden" name="user_type" id="user_type"
-                                                               value="system_admin"/>
-                                                        <button id="send" type="submit" class="btn btn-success">Update
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                    <div class="col-md-2 col-sm-2 col-xs-12">
+                                        <div class="form-group"><br/>
+                                            <button id="send" type="submit" class="btn btn-success">Find</button>
                                         </div>
                                     </div>
+                                </div>
+                            </form>
+                        </div>
 
+
+                        <div class="x_content">
+                            <form action="http://codetroopers-team.com/gmsms/exam/mark/add" name="addmark" id="addmark"
+                                  class="form-horizontal form-label-left" method="post" accept-charset="utf-8">
+
+
+                                <table id="datatable-responsive"
+                                       class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
+                                       width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th rowspan="2">Roll No</th>
+                                        <th rowspan="2">Name</th>
+                                        <th rowspan="2">Photo</th>
+                                        <th colspan="2">Written</th>
+                                        <th colspan="2">Tutorial</th>
+                                        <th colspan="2">Practical</th>
+                                        <th colspan="2">Viva</th>
+                                        <th colspan="2">Total</th>
+                                        <th rowspan="2">Grade</th>
+                                        <th rowspan="2">Comment</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Mark</th>
+                                        <th>Obtain</th>
+                                        <th>Mark</th>
+                                        <th>Obtain</th>
+                                        <th>Mark</th>
+                                        <th>Obtain</th>
+                                        <th>Mark</th>
+                                        <th>Obtain</th>
+                                        <th>Mark</th>
+                                        <th>Obtain</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody id="fn_mark">
+                                    <tr>
+                                        <td colspan="15" align="center">No available data found</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-md-offset-5">
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="instructions"><strong>Instruction: </strong> Please ensure Exam Schedule and
+                                    Exam Attendance before Exam Mark Entry.
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
 
-            <!-- bootstrap-datetimepicker -->
-            <link href="http://codetroopers-team.com/gmsms/assets/vendors/datepicker/datepicker.css" rel="stylesheet">
-            <script src="http://codetroopers-team.com/gmsms/assets/vendors/datepicker/datepicker.js"></script>
+            <!-- Super admin js START  -->
             <script type="text/javascript">
 
-                $('#dob').datepicker();
-                $('#joining_date').datepicker();
-                $("#profile").validate();
-            </script>                     <!-- /page content -->
+                $("document").ready(function () {
+                });
+
+                $('.fn_school_id').on('change', function () {
+
+                    var school_id = $(this).val();
+                    var exam_id = '';
+                    var class_id = '';
+
+
+                    if (!school_id) {
+                        toastr.error('Select School');
+                        return false;
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "http://codetroopers-team.com/gmsms/ajax/get_exam_by_school",
+                        data: {school_id: school_id, exam_id: exam_id},
+                        async: false,
+                        success: function (response) {
+                            if (response) {
+                                $('#exam_id').html(response);
+                                get_class_by_school(school_id, class_id);
+                            }
+                        }
+                    });
+                });
+
+                function get_class_by_school(school_id, class_id) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "http://codetroopers-team.com/gmsms/ajax/get_class_by_school",
+                        data: {school_id: school_id, class_id: class_id},
+                        async: false,
+                        success: function (response) {
+                            if (response) {
+                                $('#class_id').html(response);
+                            }
+                        }
+                    });
+                }
+
+            </script>
+            <!-- Super admin js end -->
+
+            <script type="text/javascript">
+
+
+                function get_section_subject_by_class(class_id, section_id, subject_id) {
+
+                    var school_id = $('#school_id').val();
+
+                    if (!school_id) {
+                        toastr.error('Select School');
+                        return false;
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "http://codetroopers-team.com/gmsms/ajax/get_section_by_class",
+                        data: {school_id: school_id, class_id: class_id, section_id: section_id},
+                        async: false,
+                        success: function (response) {
+                            if (response) {
+                                $('#section_id').html(response);
+                            }
+                        }
+                    });
+
+                    $.ajax({
+                        type: "POST",
+                        url: "http://codetroopers-team.com/gmsms/ajax/get_subject_by_class",
+                        data: {school_id: school_id, class_id: class_id, subject_id: subject_id},
+                        async: false,
+                        success: function (response) {
+                            if (response) {
+                                $('#subject_id').html(response);
+                            }
+                        }
+                    });
+                }
+
+                $(document).ready(function () {
+
+                    $('#fn_total_mark').keyup(function () {
+                        var student_id = $(this).attr('itemid');
+                        var written_mark = $('#written_mark_' + student_id).val() ? parseFloat($('#written_mark_' + student_id).val()) : 0;
+                        var written_obtain = $('#written_obtain_' + student_id).val() ? parseFloat($('#written_obtain_' + student_id).val()) : 0;
+                        var tutorial_mark = $('#tutorial_mark_' + student_id).val() ? parseFloat($('#tutorial_mark_' + student_id).val()) : 0;
+                        var tutorial_obtain = $('#tutorial_obtain_' + student_id).val() ? parseFloat($('#tutorial_obtain_' + student_id).val()) : 0;
+                        var practical_mark = $('#practical_mark_' + student_id).val() ? parseFloat($('#practical_mark_' + student_id).val()) : 0;
+                        var practical_obtain = $('#practical_obtain_' + student_id).val() ? parseFloat($('#practical_obtain_' + student_id).val()) : 0;
+                        var viva_mark = $('#viva_mark_' + student_id).val() ? parseFloat($('#viva_mark_' + student_id).val()) : 0;
+                        var viva_obtain = $('#viva_obtain_' + student_id).val() ? parseFloat($('#viva_obtain_' + student_id).val()) : 0;
+
+                        $('#exam_total_mark_' + student_id).val(written_mark + tutorial_mark + practical_mark + viva_mark);
+                        $('#obtain_total_mark_' + student_id).val(written_obtain + tutorial_obtain + practical_obtain + viva_obtain);
+
+                    });
+
+                });
+
+                $("#mark").validate();
+                $("#addmark").validate();
+            </script>
+            <style>
+                #datatable-responsive label.error {
+                    display: none !important;
+                }
+            </style>
+
+
+            <!-- /page content -->
         </div>
         <!-- footer content -->
         <footer class="footer no-print">
             <div class="pull-right">
                 <p class="white">
-                    Copyright Â© NEST TECHNOLOGIES 2019
+                    Copyright Â© Global - Multi School Management System Express at 2019
                 </p>
             </div>
             <div class="clearfix"></div>
@@ -1060,4 +1055,4 @@
 </script>
 
 </body>
-</html>
+</html>v

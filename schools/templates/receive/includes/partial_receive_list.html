@@ -1,0 +1,36 @@
+{% for receive in receive %}
+    <tr>
+        <td>{{ receive.id }}</td>
+        <td>{{ receive.school }}</td>
+        <td>{{ receive.to_Title }}</td>
+        <td>{{ receive.reference }}</td>
+        <td>{{ receive.from_Title }}</td>
+        <td>{{ receive.receive_date }}</td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'receive_update' receive.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <div class="mb-4">
+                <a href="{{ receive.postal_Attachment.url }}" class="btn btn-primary btn-sm" target="_blank">
+                    <span class="fa fa-download"></span>Download
+                </a>
+            </div>
+            <div type="button"
+                 class="btn btn-success btn-sm js-view-receive"
+                 data-url="{% url 'receive_view' receive.pk %}">
+                <span class="fa fa-eye"></span> View
+            </div>
+            <br>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-receive"
+                    data-url="{% url 'receive_delete' receive.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Receive</td>
+    </tr>
+{% endfor %}

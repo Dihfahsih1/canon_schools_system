@@ -46,9 +46,16 @@
                                 </tr>
                                 <tr>
                                     <th>Syllabus</th>
-                                    <td>{{ form.instance.syllabus }}</td>
+                                    <td>
+                                        <div class="mb-4">
+                                            <a href="{{ form.instance.syllabus.url }}" class="btn btn-primary btn-sm"
+                                               target="_blank">
+                                                <span class="fa fa-download"></span>Download
+                                            </a>
+                                        </div>
+                                    </td>
                                 </tr>
-                                 <tr>
+                                <tr>
                                     <th>Note</th>
                                     <td>{{ form.instance.note }}</td>
                                 </tr>

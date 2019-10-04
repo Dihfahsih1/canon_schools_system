@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^settings/$', views.SchoolSettingView.as_view(), name='settings'),
     url(r'^theme/$', views.theme, name='theme'),
     url(r'^language/$', views.language, name='language'),
+
     url(r'^administrator/school/index/$', views.SchoolListView.as_view(), name='school_list'),
     url(r'^administrator/school/add/$', views.SchoolCreateView.as_view(), name='school_create'),
     url(r'^administrator/school/update/(?P<school_pk>\d+)/$', views.SchoolUpdateView.as_view(), name='school_update'),
@@ -96,10 +97,8 @@ urlpatterns = [
 
     url(r'^administrator/smstemplate/index/$', views.SmstemplateListView.as_view(), name='smstemplate_list'),
     url(r'^administrator/smstemplate/add/$', views.SmstemplateCreateView.as_view(), name='smstemplate_create'),
-    url(r'^administrator/smstemplate/edit/(?P<smstemplate_pk>\d+)/$', views.SmstemplateUpdateView.as_view(),
-        name='smstemplate_update'),
-    url(r'^administrator/smstemplate/delete/(?P<smstemplate_pk>\d+)/$', views.smstemplate_delete,
-        name='smstemplate_delete'),
+    url(r'^administrator/smstemplate/edit/(?P<smstemplate_pk>\d+)/$', views.SmstemplateUpdateView.as_view(), name='smstemplate_update'),
+    url(r'^administrator/smstemplate/delete/(?P<smstemplate_pk>\d+)/$', views.smstemplate_delete, name='smstemplate_delete'),
 
     url(r'^hrm/employee/index/$', views.EmployeeListView.as_view(), name='employee_list'),
     url(r'^hrm/employee/add/$', views.employee_create, name='employee_create'),
@@ -109,15 +108,33 @@ urlpatterns = [
 
     url(r'^student/type/index/$', views.StudentTypeListView.as_view(), name='student_type_list'),
     url(r'^student/type/add/$', views.StudentTypeCreateView.as_view(), name='student_type_create'),
-    url(r'^student/type/edit/(?P<student_type_pk>\d+)/$', views.StudentTypeUpdateView.as_view(),
-        name='student_type_update'),
+    url(r'^student/type/edit/(?P<student_type_pk>\d+)/$', views.StudentTypeUpdateView.as_view(), name='student_type_update'),
     url(r'^student/type/delete/(?P<student_type_pk>\d+)/$', views.student_type_delete, name='student_type_delete'),
 
     url(r'^student/index/$', views.StudentListView.as_view(), name='student_list'),
+    url(r'^student/admission/index/$', views.OnlineStudentListView.as_view(), name='online_student_list'),
     url(r'^student/add/$', views.student_create, name='student_create'),
     url(r'^student/edit/(?P<student_pk>\d+)/$', views.student_update, name='student_update'),
     url(r'^student/view/(?P<student_pk>\d+)/$', views.student_view, name='student_view'),
     url(r'^student/delete/(?P<student_pk>\d+)/$', views.student_delete, name='student_delete'),
+
+    url(r'^student/activity/index/$', views.ActivityListView.as_view(), name='activity_list'),
+    url(r'^student/activity/add/$', views.ActivityCreateView.as_view(), name='activity_create'),
+    url(r'^student/activity/edit/(?P<activity_pk>\d+)/$', views.ActivityUpdateView.as_view(), name='activity_update'),
+    url(r'^student/activity/view/(?P<activity_pk>\d+)/$', views.activity_view, name='activity_view'),
+    url(r'^student/activity/delete/(?P<activity_pk>\d+)/$', views.activity_delete, name='activity_delete'),
+
+    url(r'^card/admitsetting/index/$', views.CardListView.as_view(), name='card_list'),
+    url(r'^card/admitsetting/add/$', views.CardCreateView.as_view(), name='card_create'),
+    url(r'^card/admitsetting/edit/(?P<card_pk>\d+)/$', views.CardUpdateView.as_view(), name='card_update'),
+    url(r'^card/admitsetting/view/(?P<card_pk>\d+)/$', views.card_view, name='card_view'),
+    url(r'^card/admitsetting/delete/(?P<card_pk>\d+)/$', views.card_delete, name='card_delete'),
+
+    url(r'^card/idsetting/index/$', views.AdmitListView.as_view(), name='admit_list'),
+    url(r'^card/idsetting/add/$', views.AdmitCreateView.as_view(), name='admit_create'),
+    url(r'^card/idsetting/edit/(?P<admit_pk>\d+)/$', views.AdmitUpdateView.as_view(), name='admit_update'),
+    url(r'^card/idsetting/view/(?P<admit_pk>\d+)/$', views.admit_view, name='admit_view'),
+    url(r'^card/idsetting/delete/(?P<admit_pk>\d+)/$', views.admit_delete, name='admit_delete'),
 
     url(r'^guardian/index/$', views.GuardianListView.as_view(), name='guardian_list'),
     url(r'^guardian/add/$', views.guardian_create, name='guardian_create'),
@@ -127,8 +144,7 @@ urlpatterns = [
 
     url(r'^academic/classes/index/$', views.ClassroomListView.as_view(), name='classroom_list'),
     url(r'^academic/classes/add/$', views.ClassroomCreateView.as_view(), name='classroom_create'),
-    url(r'^academic/classes/update/(?P<classroom_pk>\d+)/$', views.ClassroomUpdateView.as_view(),
-        name='classroom_update'),
+    url(r'^academic/classes/update/(?P<classroom_pk>\d+)/$', views.ClassroomUpdateView.as_view(), name='classroom_update'),
     url(r'^academic/classes/delete/(?P<classroom_pk>\d+)/$', views.classroom_delete, name='classroom_delete'),
 
     url(r'^academic/section/index/$', views.SectionListView.as_view(), name='section_list'),
@@ -147,6 +163,18 @@ urlpatterns = [
     url(r'^academic/syllabus/view/(?P<syllabus_pk>\d+)/$', views.syllabus_view, name='syllabus_view'),
     url(r'^academic/syllabus/delete/(?P<syllabus_pk>\d+)/$', views.syllabus_delete, name='syllabus_delete'),
 
+    url(r'^frontoffice/receive/index/$', views.ReceiveListView.as_view(), name='receive_list'),
+    url(r'^frontoffice/receive/add/$', views.ReceiveCreateView.as_view(), name='receive_create'),
+    url(r'^frontoffice/receive/edit/(?P<receive_pk>\d+)/$', views.ReceiveUpdateView.as_view(), name='receive_update'),
+    url(r'^frontoffice/receive/view/(?P<receive_pk>\d+)/$', views.receive_view, name='receive_view'),
+    url(r'^frontoffice/receive/delete/(?P<receive_pk>\d+)/$', views.receive_delete, name='receive_delete'),
+
+    url(r'^frontoffice/dispatch/index/$', views.DispatchListView.as_view(), name='dispatch_list'),
+    url(r'^frontoffice/dispatch/add/$', views.DispatchCreateView.as_view(), name='dispatch_create'),
+    url(r'^frontoffice/dispatch/edit/(?P<dispatch_pk>\d+)/$', views.DispatchUpdateView.as_view(), name='dispatch_update'),
+    url(r'^frontoffice/dispatch/view/(?P<dispatch_pk>\d+)/$', views.dispatch_view, name='dispatch_view'),
+    url(r'^frontoffice/dispatch/delete/(?P<dispatch_pk>\d+)/$', views.dispatch_delete, name='dispatch_delete'),
+
     url(r'^academic/subject/index/$', views.SubjectListView.as_view(), name='subject_list'),
     url(r'^academic/subject/add/$', views.SubjectCreateView.as_view(), name='subject_create'),
     url(r'^academic/subject/edit/(?P<subject_pk>\d+)/$', views.SubjectUpdateView.as_view(), name='subject_update'),
@@ -160,9 +188,26 @@ urlpatterns = [
     url(r'^academic/material/delete/(?P<material_pk>\d+)/$', views.material_delete, name='material_delete'),
 
     url(r'^academic/routine/index/$', views.routine_list, name='routine_list'),
-    url(r'^academic/routine/add/$', views.routine_create, name='routine_create'),
-    url(r'^academic/routine/update/(?P<routine_pk>\d+)/$', views.routine_update, name='routine_update'),
+    url(r'^academic/routine/add/$', views.RoutineCreateView.as_view(), name='routine_create'),
+    url(r'^academic/routine/update/(?P<routine_pk>\d+)/$', views.RoutineUpdateView.as_view(), name='routine_update'),
     url(r'^academic/routine/delete/(?P<routine_pk>\d+)/$', views.routine_delete, name='routine_delete'),
+
+    # path('schedule/', views.schedule_main, name='schedule_main'),
+    # path('schedule/new/', views.create_edit_slot, name='create_slot'),
+    # path('slot/<int:id>/edit/', views.create_edit_slot, name='edit_slot'),
+
+    url(r'^leave/type/index/$', views.LeaveListView.as_view(), name='leave_list'),
+    url(r'^leave/type/add/$', views.LeaveCreateView.as_view(), name='leave_create'),
+    url(r'^leave/type/update/(?P<leave_pk>\d+)/$', views.LeaveUpdateView.as_view(), name='leave_update'),
+    url(r'^leave/type/delete/(?P<leave_pk>\d+)/$', views.leave_delete, name='leave_delete'),
+
+    url(r'^leave/application/index/$', views.ApplicationListView.as_view(), name='application_list'),
+    url(r'^leave/application/add/$', views.ApplicationCreateView.as_view(), name='application_create'),
+    url(r'^leave/waiting/index/$', views.WaitingApplicationListView.as_view(), name='waiting_application_list'),
+    url(r'^leave/declined/index/$', views.DeclinedApplicationListView.as_view(), name='declined_application_list'),
+    url(r'^leave/approved/add/$', views.ApprovedApplicationListView.as_view(), name='approved_application_list'),
+    url(r'^leave/application/update/(?P<application_pk>\d+)/$', views.ApplicationUpdateView.as_view(), name='application_update'),
+    url(r'^leave/application/delete/(?P<application_pk>\d+)/$', views.application_delete, name='application_delete'),
 
     url(r'^(?P<school_id>\d+)/bulk_students/$', views.bulk_student_list, name='bulk_student_list'),
     url(r'^(?P<school_id>\d+)/bulk_student/create/$', views.bulk_student_create, name='bulk_student_create'),
@@ -172,6 +217,8 @@ urlpatterns = [
     url(r'^assignment/edit/(?P<assignment_pk>\d+)/$', views.AssignmentUpdateView.as_view(), name='assignment_update'),
     url(r'^assignment/view/(?P<assignment_pk>\d+)/$', views.assignment_view, name='assignment_view'),
     url(r'^assignment/delete/(?P<assignment_pk>\d+)/$', views.assignment_delete, name='assignment_delete'),
+
+    url(r'^exam/mark/index/$', views.manage_mark, name='manage_mark'),
 
     url(r'^exam/grade/index/$', views.ExamGradeListView.as_view(), name='exam_grade_list'),
     url(r'^exam/grade/add/$', views.ExamGradeCreateView.as_view(), name='exam_grade_create'),
@@ -292,6 +339,17 @@ urlpatterns = [
     url(r'^announcement/news/view/(?P<news_pk>\d+)/$', views.news_view, name='news_view'),
     url(r'^announcement/news/delete/(?P<news_pk>\d+)/$', views.news_delete, name='news_delete'),
 
+    url(r'^complain/type/index/$', views.TypeListView.as_view(), name='type_list'),
+    url(r'^complain/type/add/$', views.TypeCreateView.as_view(), name='type_create'),
+    url(r'^complain/type/update/(?P<type_pk>\d+)/$', views.TypeUpdateView.as_view(), name='type_update'),
+    url(r'^complain/type/delete/(?P<type_pk>\d+)/$', views.type_delete, name='type_delete'),
+
+    url(r'^complain/index/$', views.ComplainListView.as_view(), name='complain_list'),
+    url(r'^complain/add/$', views.ComplainCreateView.as_view(), name='complain_create'),
+    url(r'^complain/update/(?P<complain_pk>\d+)/$', views.ComplainUpdateView.as_view(), name='complain_update'),
+    url(r'^complain/view/(?P<complain_pk>\d+)/$', views.complain_view, name='complain_view'),
+    url(r'^complain/delete/(?P<complain_pk>\d+)/$', views.complain_delete, name='complain_delete'),
+
     url(r'^announcement/holiday/index/$', views.HolidayListView.as_view(), name='holiday_list'),
     url(r'^announcement/holiday/add/$', views.HolidayCreateView.as_view(), name='holiday_create'),
     url(r'^announcement/holiday/update/(?P<holiday_pk>\d+)/$', views.HolidayUpdateView.as_view(),
@@ -329,40 +387,46 @@ urlpatterns = [
         name='fee_type_update'),
     url(r'^accounting/feetype/delete/(?P<fee_type_pk>\d+)/$', views.fee_type_delete, name='fee_type_delete'),
 
-    url(r'^due_fee_emails/$', views.due_fee_email_list, name='due_fee_email_list'),
-    url(r'^due_fee_email/create/$', views.due_fee_email_create, name='due_fee_email_create'),
-    url(r'^due_fee_email/(?P<pk>\d+)/update/$', views.due_fee_email_update,
-        name='due_fee_email_update'),
-    url(r'^due_fee_email/(?P<pk>\d+)/delete/$', views.due_fee_email_delete,
-        name='due_fee_email_delete'),
+    url(r'^accounting/duefeeemail/index/$', views.DueEmailListView.as_view(), name='due_fee_email_list'),
+    url(r'^accounting/duefeeemail/create/$', views.DueEmailCreateView.as_view(), name='due_fee_email_create'),
+    url(r'^accounting/duefeeemail/view/(?P<due_fee_email_pk>\d+)/$', views.due_fee_email_view, name='due_fee_email_view'),
+    url(r'^accounting/duefeeemail/delete/(?P<due_fee_email_pk>\d+)/$', views.due_fee_email_delete, name='due_fee_email_delete'),
 
-    url(r'^due_fee_smss/$', views.due_fee_sms_list, name='due_fee_sms_list'),
-    url(r'^due_fee_sms/create/$', views.due_fee_sms_create, name='due_fee_sms_create'),
-    url(r'^due_fee_sms/(?P<pk>\d+)/update/$', views.due_fee_sms_update, name='due_fee_sms_update'),
-    url(r'^due_fee_sms/(?P<pk>\d+)/delete/$', views.due_fee_sms_delete, name='due_fee_sms_delete'),
+    url(r'^accounting/duefeeesms/index/$', views.DueSmsListView.as_view(), name='due_fee_sms_list'),
+    url(r'^accounting/duefeeesms/create/$', views.DueSmsCreateView.as_view(), name='due_fee_sms_create'),
+    url(r'^accounting/duefeeesms/update/(?P<due_fee_sms_pk>\d+)/$', views.due_fee_sms_view, name='due_fee_sms_view'),
+    url(r'^accounting/duefeeesms/delete/(?P<due_fee_sms_pk>\d+)/$', views.due_fee_sms_delete, name='due_fee_sms_delete'),
 
-    url(r'^incomes/$', views.income_list, name='income_list'),
-    url(r'^income/create/$', views.income_create, name='income_create'),
-    url(r'^income/(?P<pk>\d+)/update/$', views.income_update, name='income_update'),
-    url(r'^income/(?P<pk>\d+)/delete/$', views.income_delete, name='income_delete'),
+    url(r'^accounting/income/index/$', views.IncomeListView.as_view(), name='income_list'),
+    url(r'^accounting/income/create/$', views.IncomeCreateView.as_view(), name='income_create'),
+    url(r'^accounting/income/update/(?P<income_pk>\d+)/$', views.IncomeUpdateView.as_view(), name='income_update'),
+    url(r'^accounting/income/delete/(?P<income_pk>\d+)/$', views.income_delete, name='income_delete'),
 
-    url(r'^income_heads/$', views.income_head_list, name='income_head_list'),
-    url(r'^income_head/create/$', views.income_head_create, name='income_head_create'),
-    url(r'^income_head/(?P<pk>\d+)/update/$', views.income_head_update, name='income_head_update'),
-    url(r'^income_head/(?P<pk>\d+)/delete/$', views.income_head_delete, name='income_head_delete'),
+    url(r'^accounting/incomehead/index/$', views.IncomeHeadListView.as_view(), name='income_head_list'),
+    url(r'^accounting/incomehead/create/$', views.IncomeHeadCreateView.as_view(), name='income_head_create'),
+    url(r'^accounting/incomehead/update/(?P<income_head_pk>\d+)/$', views.IncomeHeadUpdateView.as_view(), name='income_head_update'),
+    url(r'^accounting/incomehead/delete/(?P<income_head_pk>\d+)/$', views.income_head_delete, name='income_head_delete'),
 
-    url(r'^expenditures/$', views.expenditure_list, name='expenditure_list'),
-    url(r'^expenditure/create/$', views.expenditure_create, name='expenditure_create'),
-    url(r'^expenditure/(?P<pk>\d+)/update/$', views.expenditure_update, name='expenditure_update'),
-    url(r'^expenditure/(?P<pk>\d+)/delete/$', views.expenditure_delete, name='expenditure_delete'),
+    url(r'^accounting/expenditure/index/$', views.ExpenditureListView.as_view(), name='expenditure_list'),
+    url(r'^accounting/expenditure/create/$', views.ExpenditureCreateView.as_view(), name='expenditure_create'),
+    url(r'^accounting/expenditure/update/(?P<expenditure_pk>\d+)/$', views.ExpenditureUpdateView.as_view(), name='expenditure_update'),
+    url(r'^accounting/expenditure/delete/(?P<expenditure_pk>\d+)/$', views.expenditure_delete, name='expenditure_delete'),
 
-    url(r'^expenditure_heads/$', views.expenditure_head_list, name='expenditure_head_list'),
-    url(r'^expenditure_head/create/$', views.expenditure_head_create,
+    url(r'^accounting/exphead/index/$', views.ExpenditureHeadListView.as_view(), name='expenditure_head_list'),
+    url(r'^accounting/exphead/create/$', views.ExpenditureHeadCreateView.as_view(),
         name='expenditure_head_create'),
-    url(r'^expenditure_head/(?P<pk>\d+)/update/$', views.expenditure_head_update,
+    url(r'^accounting/exphead/update/(?P<expenditure_head_pk>\d+)/$', views.ExpenditureHeadUpdateView.as_view(),
         name='expenditure_head_update'),
-    url(r'^expenditure_head/(?P<pk>\d+)/delete/$', views.expenditure_head_delete,
+    url(r'^accounting/exphead/delete/(?P<expenditure_head_pk>\d+)/$', views.expenditure_head_delete,
         name='expenditure_head_delete'),
+
+    url(r'^accounting/invoice/due/$', views.due_fee_list, name='due_fee_list'),
+
+    url(r'^accounting/invoice/index/$', views.InvoiceListView.as_view(), name='invoice_list'),
+    url(r'^accounting/invoice/add/$', views.invoice_create, name='invoice_create'),
+    url(r'^accounting/invoice/update/(?P<invoice_pk>\d+)/$', views.InvoiceUpdateView.as_view(), name='invoice_update'),
+    url(r'^accounting/invoice/view/(?P<invoice_pk>\d+)/$', views.invoice_view, name='invoice_view'),
+    url(r'^accounting/invoice/delete/(?P<invoice_pk>\d+)/$', views.invoice_delete, name='invoice_delete'),
 
     url(r'^gallery/index/$', views.GalleryListView.as_view(), name='gallery_list'),
     url(r'^gallery/add/$', views.GalleryCreateView.as_view(), name='gallery_create'),
@@ -375,10 +439,17 @@ urlpatterns = [
     url(r'^gallery/image/view/(?P<image_pk>\d+)/$', views.image_view, name='image_view'),
     url(r'^gallery/image/delete/(?P<image_pk>\d+)/$', views.image_delete, name='image_delete'),
 
-    url(r'^frontend/slider/index/$', views.slider_list, name='slider_list'),
-    url(r'^frontend/slider/add/$', views.slider_create, name='slider_create'),
-    url(r'^frontend/slider/update/(?P<slider_pk>\d+)/$', views.slider_update, name='slider_update'),
+    url(r'^frontend/slider/index/$', views.SliderListView.as_view(), name='slider_list'),
+    url(r'^frontend/slider/add/$', views.SliderCreateView.as_view(), name='slider_create'),
+    url(r'^frontend/slider/update/(?P<slider_pk>\d+)/$', views.SliderUpdateView.as_view(), name='slider_update'),
+    url(r'^frontend/slider/view/(?P<slider_pk>\d+)/$', views.slider_view, name='slider_view'),
     url(r'^frontend/slider/delete/(?P<slider_pk>\d+)/$', views.slider_delete, name='slider_delete'),
+
+    url(r'^frontend/about/index/$', views.AboutListView.as_view(), name='about_list'),
+    url(r'^frontend/about/add/$', views.AboutCreateView.as_view(), name='about_create'),
+    url(r'^frontend/about/update/(?P<about_pk>\d+)/$', views.AboutUpdateView.as_view(), name='about_update'),
+    url(r'^frontend/about/view/(?P<about_pk>\d+)/$', views.about_view, name='about_view'),
+    url(r'^frontend/about/delete/(?P<about_pk>\d+)/$', views.about_delete, name='about_delete'),
 
     url(r'^frontend/index/$', views.PageListView.as_view(), name='page_list'),
     url(r'^frontend/add/$', views.PageCreateView.as_view(), name='page_create'),
@@ -386,8 +457,9 @@ urlpatterns = [
     url(r'^frontend/view/(?P<page_pk>\d+)/$', views.page_view, name='page_view'),
     url(r'^frontend/delete/(?P<page_pk>\d+)/$', views.page_delete, name='page_delete'),
 
-    url(r'^(?P<school_id>\d+)/teacher_attendance/$', views.teacher_attendance_list, name='teacher_attendance_list'),
-    url(r'^(?P<school_id>\d+)/employee_attendance/$', views.employee_attendance_list, name='employee_attendance_list'),
+    url(r'^attendance/students/$', views.attendance_student, name='attendance_student'),
+    url(r'^attendance/teachers/$', views.attendance_teacher, name='attendance_teacher'),
+    url(r'^attendance/employees/$', views.attendance_employee, name='attendance_employee'),
 
     path('student_attendance/', views.student_attendance, name='student_attendance'),
     url(r'^(?P<student_id>[0-9]+)/present/$', views.present, name='present'),
@@ -399,33 +471,16 @@ urlpatterns = [
     path('sections/ajax/', views.sections_ajax, name='sections_ajax'),
     path('sections/choices/ajax/', views.sections_choices_ajax, name='sections_choices_ajax'),
 
-    path('invoice/', views.invoices, name='invoices'),
-    # path('classrooms/ajax/', views.classroom_ajax, name='classroom_ajax'),
-    # path('classrooms/choices/ajax/', views.classroom_choices_ajax, name='classroom_choices_ajax'),
-    # path('sections/ajax/', views.section_ajax, name='section_ajax'),
-    # path('sections/choices/ajax/', views.section_choices_ajax, name='section_choices_ajax'),
-
-    # path('invoices/', views.invoice_list, name='invoice_list'),
-    # path('classroom/ajax/', views.classroom_ajax, name='classroom_ajax'),
-    # path('classroom/choices/ajax/', views.classroom_choices_ajax, name='classroom_choices_ajax'),
-    # path('section/ajax/', views.section_ajax, name='section_ajax'),
-    # path('section/choices/ajax/', views.section_choices_ajax, name='section_choices_ajax'),
-
-    # url(r'^invoices/$', views.invoice_list, name='invoice_list'),
-    # url(r'^invoice/create/$', views.invoice_create, name='invoice_create'),
-    # url(r'^invoice/(?P<pk>\d+)/update/$', views.invoice_update, name='invoice_update'),
-    # # url(r'^invoice/(?P<pk>\d+)/view/$', views.invoice_view, name='invoice_view'),
-    # url(r'^invoice/(?P<pk>\d+)/delete/$', views.invoice_delete, name='invoice_delete'),
-
     # path('profile/', views.profile, name='profile'),
     # path('profile/view/<int:id>/', views.user_profile, name='user_profile'),
     # path('profile/edit/', views.profile_update, name='edit_profile'),
 
+    path('ajax/load-subjects/', views.load_subjects, name='ajax_load_subjects'),
+    path('ajax/load-exams/', views.load_exams, name='ajax_load_exams'),
     path('ajax/load-classrooms/', views.load_classrooms, name='ajax_load_classrooms'),
     path('ajax/load-sections/', views.load_sections, name='ajax_load_sections'),
     path('ajax/load-roles/', views.load_roles, name='ajax_load_roles'),
     path('ajax/load-users/', views.load_users, name='ajax_load_users'),
-
-    #url(r'^Add/', views.InvoiceCreateView.as_view(), name='add_invoice'),
-    #path('ajax/classrooms/', views.load_student_classrooms, name='ajax_classrooms_load'),
+    path('ajax/load-students/', views.load_students, name='ajax_load_students'),
+    path('ajax/load-fee_types/', views.load_fee_types, name='ajax_load_fee_types'),
 ]

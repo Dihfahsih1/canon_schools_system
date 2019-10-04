@@ -1,0 +1,24 @@
+{% for type in types %}
+    <tr>
+        <td>{{ type.id }}</td>
+        <td>{{ type.school }}</td>
+        <td>{{ type.complain_type }}</td>
+        <td>
+
+            <div class="mb-4">
+                <a href="{% url 'type_update' type.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-type"
+                    data-url="{% url 'type_delete' type.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+            <br>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Type</td>
+    </tr>
+{% endfor %}

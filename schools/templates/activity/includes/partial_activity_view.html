@@ -1,0 +1,68 @@
+<form method="post" action="{% url 'activity_view' form.instance.pk %}" class="js-activity-view-form"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="modal-lg" tabindex="-1" role="document" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Activity Information</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1"
+                             aria-labelledby="basic-tab">
+                            <p></p>
+                            <table id="tablePreview" class="table table-bordered table-striped">
+                                <!--Table head-->
+                                <thead>
+                                <tr>
+                                    <th>School Name</th>
+                                    <td>{{ form.instance.school }}</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>Session Year</th>
+                                    <td>{{ form.instance.subject_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Student</th>
+                                    <td>{{ form.instance.student }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Class</th>
+                                    <td>{{ form.instance.classroom }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Section</th>
+                                    <td>{{ form.instance.section }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Activity</th>
+                                         <td>{{ form.instance.activity }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Activity Date</th>
+                                    <td>{{ form.instance.activity_date }}</td>
+                                </tr>
+                                </tbody>
+                                <!--Table body-->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</form>

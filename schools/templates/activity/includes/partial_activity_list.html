@@ -1,0 +1,32 @@
+{% for activity in activity %}
+    <tr>
+        <td>{{ activity.id }}</td>
+        <td>{{ activity.school }}</td>
+        <td>{{ activity.student }}</td>
+        <td>{{ activity.classroom }}</td>
+        <td>{{ activity.section }}</td>
+        <td>{{ activity.activity }}</td>
+        <td>{{ activity.activity_date }}</td>
+        <td>
+            <div class="mb-4">
+                <a href="{% url 'activity_update' activity.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
+            <div type="button"
+                 class="btn btn-success btn-sm js-view-activity"
+                 data-url="{% url 'activity_view' activity.pk %}">
+                <span class="fa fa-eye"></span> View
+            </div>
+            <br>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-activity"
+                    data-url="{% url 'activity_delete' activity.pk %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center bg-warning">No Activity</td>
+    </tr>
+{% endfor %}

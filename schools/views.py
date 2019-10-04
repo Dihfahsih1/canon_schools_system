@@ -1,3 +1,6 @@
+import random
+import string
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -9,9 +12,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 from bootstrap_datepicker_plus import DatePickerInput
-from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect, HttpResponseForbidden, Http404
 
 from .forms import *
+from .models import *
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'pjeg']
 
@@ -543,6 +547,8 @@ def save_superuser_form(request, form, template_name):
 
 
 def superuser_create(request):
+    temp_password = ''.join([random.choice(string.ascii_letters + string.digits + '-_') for ch in range(8)])
+
     if request.method == 'POST':
         form = UserForm(request.POST or None, request.FILES or None)
         superuser_form = SuperuserForm(request.POST or None, request.FILES or None)
@@ -564,6 +570,7 @@ def superuser_create(request):
 
     context = {
         'form': form,
+        'temp_password': temp_password,
         'superuser_form': superuser_form
     }
     return render(request, 'superusers/superuser_create.html', context)
@@ -625,18 +632,12 @@ def manage_user(request):
     role = request.GET.get('user_type')
     context['form'] = ManageUserForm(school, role)
     # Filter
-    users = request.GET.get('user')
-    if users:
-        print(users)
-        users = users.replace('.', '')
-        x = User.objects.filter(id__in=users).order_by('full_name')
-        print(x)
-        context['x']=x
-        for i in x:
-            print(i.email)
-            print(i.username)
-            print(i.phone)
-        return render(request, 'users/try.html', context)
+    q = request.GET.get('user')
+    if q:
+        q = q.replace('.', '')
+        users = User.objects.filter(id__in=q).order_by('full_name')
+        context['users'] = users
+        return render(request, 'users/test.html', context)
     return render(request, 'users/manage_users.html', context)
 
 
@@ -774,6 +775,12 @@ def feedback_delete(request, feedback_pk):
 class StudentListView(ListView):
     model = Student
     template_name = 'students/student_list.html'
+    context_object_name = 'students'
+
+
+class OnlineStudentListView(ListView):
+    model = Student
+    template_name = 'students/online_list.html'
     context_object_name = 'students'
 
 
@@ -1405,6 +1412,12 @@ class AcademicYearCreateView(CreateView):
     template_name = 'years/year_create.html'
     fields = ('school', 'start_month', 'end_month', 'is_running', 'note')
 
+    def get_form(self):
+        form = super().get_form()
+        form.fields['start_month'].widget = MonthPickerInput()
+        form.fields['end_month'].widget = MonthPickerInput()
+        return form
+
     def form_valid(self, form):
         year = form.save(commit=False)
         year.save()
@@ -1641,6 +1654,87 @@ def student_type_delete(request, student_type_pk):
 
 # #######################################===>END OF STUDENT TYPE MODULE<===#####################################
 
+
+# #######################################===>BEGINNING OF ACTIVITY MODULE<===#####################################
+
+
+class ActivityListView(ListView):
+    model = Activity
+    template_name = 'activity/activity_list.html'
+    context_object_name = 'activity'
+
+
+class ActivityCreateView(CreateView):
+    model = Activity
+    template_name = 'activity/activity_create.html'
+    fields = ('school', 'classroom', 'section', 'student', 'activity_date', 'activity')
+
+    def form_valid(self, form):
+        activity = form.save(commit=False)
+        activity.save()
+        return redirect('activity_list')
+
+
+class ActivityUpdateView(UpdateView):
+    model = Activity
+    template_name = 'activity/update_activity.html'
+    pk_url_kwarg = 'activity_pk'
+    fields = ('school', 'classroom', 'section', 'student', 'activity_date', 'activity')
+
+    def form_valid(self, form):
+        activity = form.save(commit=False)
+        activity.save()
+        return redirect('activity_list')
+
+
+def activity_view(request, activity_pk):
+    activity = get_object_or_404(Activity, pk=activity_pk)
+    if request.method == 'POST':
+        form = ActivityForm(request.POST, instance=activity)
+    else:
+        form = ActivityForm(instance=activity)
+    return save_activity_form(request, form, 'activity/includes/partial_activity_view.html')
+
+
+def save_activity_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            activitys = Activity.objects.all()
+            data['html_activity_list'] = render_to_string('activity/includes/partial_activity_list.html', {
+                'activitys': activitys
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def activity_delete(request, activity_pk):
+    activity = get_object_or_404(Activity, pk=activity_pk)
+    data = dict()
+    if request.method == 'POST':
+        activity.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        activitys = Activity.objects.all()
+        data['html_activity_list'] = render_to_string('activity/includes/partial_activity_list.html', {
+            'activitys': activitys
+        })
+    else:
+        context = {'activity': activity}
+        data['html_form'] = render_to_string('activity/includes/partial_activity_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+
+# #######################################===>END OF ACTIVITY MODULE<===##########################################
+
+
 # #######################################===>BEGINNING OF SYLLABUS MODULE<===#####################################
 
 
@@ -1718,7 +1812,167 @@ def syllabus_delete(request, syllabus_pk):
     return JsonResponse(data)
 
 
-# #######################################===>END OF SYLLABUS MODULE<===#####################################
+# #######################################===>END OF SYLLABUS MODULE<===##########################################
+
+
+# #######################################===>BEGINNING OF CARD MODULE<===#####################################
+
+
+class CardListView(ListView):
+    model = Card
+    template_name = 'card/card_list.html'
+    context_object_name = 'cards'
+
+
+class CardCreateView(CreateView):
+    model = Card
+    template_name = 'card/card_create.html'
+    fields = ('school', 'border_color', 'top_background', 'card_school_name', 'school_name_font_size',
+              'school_name_color', 'school_address', 'school_address_color', 'admit_card_font_size',
+              'admit_card_color', 'admit_card_background', 'title_font_size', 'title_color', 'value_font_size',
+              'value_color', 'exam_font_size', 'exam_color', 'subject_font_size', 'subject_color',
+              'bottom_signature', 'signature_background', 'signature_color', 'signature_align', 'admit_card_logo')
+
+    def form_valid(self, form):
+        card = form.save(commit=False)
+        card.save()
+        return redirect('card_list')
+
+
+class CardUpdateView(UpdateView):
+    model = Card
+    template_name = 'card/update_card.html'
+    pk_url_kwarg = 'card_pk'
+    fields = ('school', 'border_color', 'top_background', 'card_school_name', 'school_name_font_size',
+              'school_name_color', 'school_address', 'school_address_color', 'admit_card_font_size',
+              'admit_card_color', 'admit_card_background', 'title_font_size', 'title_color', 'value_font_size',
+              'value_color', 'exam_font_size', 'exam_color', 'subject_font_size', 'subject_color',
+              'bottom_signature', 'signature_background', 'signature_color', 'signature_align', 'admit_card_logo')
+
+    def form_valid(self, form):
+        card = form.save(commit=False)
+        card.save()
+        return redirect('card_list')
+
+
+def card_view(request, card_pk):
+    card = get_object_or_404(Card, pk=card_pk)
+    if request.method == 'POST':
+        form = CardForm(request.POST, instance=card)
+    else:
+        form = CardForm(instance=card)
+    return save_card_form(request, form, 'card/includes/partial_card_view.html')
+
+
+def save_card_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            cards = Card.objects.all()
+            data['html_card_list'] = render_to_string('card/includes/partial_card_list.html', {
+                'cards': cards
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def card_delete(request, card_pk):
+    card = get_object_or_404(Card, pk=card_pk)
+    data = dict()
+    if request.method == 'POST':
+        card.delete()
+        data['form_is_valid'] = True
+        cards = Card.objects.all()
+        data['html_card_list'] = render_to_string('card/includes/partial_card_list.html', {
+            'cards': cards
+        })
+    else:
+        context = {'card': card}
+        data['html_form'] = render_to_string('card/includes/partial_card_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+
+# #######################################===>END OF CARD MODULE<===##########################################
+
+
+# #######################################===>BEGINNING OF ADMIT MODULE<===#####################################
+
+
+class AdmitListView(ListView):
+    model = Card
+    template_name = 'card/card_list.html'
+    context_object_name = 'cards'
+
+
+class AdmitCreateView(CreateView):
+    model = Card
+    template_name = 'card/card_create.html'
+    fields = ('school', 'border_color', 'top_background', 'card_school_name', 'school_name_font_size',
+              'school_name_color', 'school_address', 'school_address_color', 'admit_card_font_size',
+              'admit_card_color', 'admit_card_background', 'title_font_size', 'title_color', 'value_font_size',
+              'value_color', 'exam_font_size', 'exam_color', 'subject_font_size', 'subject_color',
+              'bottom_signature', 'signature_background', 'signature_color', 'signature_align', 'admit_card_logo')
+
+    def form_valid(self, form):
+        card = form.save(commit=False)
+        card.save()
+        return redirect('card_list')
+
+
+class AdmitUpdateView(UpdateView):
+    model = Card
+    template_name = 'card/update_card.html'
+    pk_url_kwarg = 'admit_pk'
+    fields = ('school', 'border_color', 'top_background', 'card_school_name', 'school_name_font_size',
+              'school_name_color', 'school_address', 'school_address_color', 'admit_card_font_size',
+              'admit_card_color', 'admit_card_background', 'title_font_size', 'title_color', 'value_font_size',
+              'value_color', 'exam_font_size', 'exam_color', 'subject_font_size', 'subject_color',
+              'bottom_signature', 'signature_background', 'signature_color', 'signature_align', 'admit_card_logo')
+
+    def form_valid(self, form):
+        card = form.save(commit=False)
+        card.save()
+        return redirect('card_list')
+
+
+def admit_view(request, admit_pk):
+    card = get_object_or_404(Card, pk=admit_pk)
+    if request.method == 'POST':
+        form = CardForm(request.POST, instance=card)
+    else:
+        form = CardForm(instance=card)
+    return save_card_form(request, form, 'card/includes/partial_card_view.html')
+
+
+def admit_delete(request, admit_pk):
+    card = get_object_or_404(Card, pk=admit_pk)
+    data = dict()
+    if request.method == 'POST':
+        card.delete()
+        data['form_is_valid'] = True
+        cards = Card.objects.all()
+        data['html_card_list'] = render_to_string('card/includes/partial_card_list.html', {
+            'cards': cards
+        })
+    else:
+        context = {'card': card}
+        data['html_form'] = render_to_string('card/includes/partial_card_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+
+# #######################################===>END OF ADMIT MODULE<===##########################################
+
 
 # #######################################===>BEGINNING OF MATERIAL MODULE<===#####################################
 
@@ -1881,25 +2135,28 @@ def subject_delete(request, subject_pk):
 
 
 def routine_list(request):
-    classroom = Classroom.objects.all()
-    routine = Routine.objects.none()
+    schools = School.objects.all()
+    classrooms = Classroom.objects.all()
 
-    # Filter
-    classroom_filter = request.POST.get('classroom')
+    # Filters
+    classrooms_filter = request.POST.get('classroom')
 
-    routine_dict = dict()
-    if classroom_filter:
-        routine = Routine.objects.filter(sectuion__classroom=classroom_filter).distinct().prefetch_related('teacher')
+    schedule_dict = dict()
+    if classrooms_filter:
+        schedule = Routine.objects.filter(section__classroom=classrooms_filter).distinct().prefetch_related(
+            'teacher')
 
-        if routine:
+        if schedule:
             for day in DAYS_OF_THE_WEEK:
-                routine_dict[day[1]] = routine.filter(weekDay=day[0])
-
-    return render(request, 'routines/routine_list.html', {
+                schedule_dict[day[1]] = schedule.filter(day=day[0])
+    context = {
+        'TimeList': TimeList,
         'days': DAYS_OF_THE_WEEK[0:5],
-        'routine': routine_dict,
-        'classroom': classroom,
-    })
+        'schedule': schedule_dict,
+        'classrooms': classrooms,
+        'schools': schools,
+    }
+    return render(request, 'routines/routine_list.html', context)
 
 
 def save_routine_form(request, form, template_name):
@@ -1919,37 +2176,64 @@ def save_routine_form(request, form, template_name):
     return JsonResponse(data)
 
 
-def routine_create(request, school_pk):
-    form = RoutineForm(request.POST or None, request.FILES or None)
-    school = get_object_or_404(School, pk=school_pk)
-    if form.is_valid():
-        routines = school.routine_set.all()
-        for cr in routines:
-            if cr.routine == form.cleaned_data.get("routine"):
-                context = {
-                    'school': school,
-                    'form': form,
-                    'error_message': 'You already added that routine',
-                }
-                return render(request, 'routines/routine_create.html', context)
+# def routine_create(request):
+#     form = RoutineForm(request.POST or None, request.FILES or None)
+#     if form.is_valid():
+#         slot = form.save(commit=False)
+#         slot.save()
+#
+#         slot.school = form.cleaned_data.get('school')
+#         slot.classroom = form.cleaned_data.get('classroom')
+#         slot.section = form.cleaned_data.get('section')
+#         slot.subject = form.cleaned_data.get('subject')
+#         slot.day = form.cleaned_data.get('day')
+#         slot.teacher = form.cleaned_data.get('teacher')
+#         slot.start_time = form.cleaned_data.get('start_time')
+#         slot.end_time = form.cleaned_data.get('end_time')
+#         slot.room_number = form.cleaned_data.get('room_number')
+#         slot.save()
+#
+#         routine_url = reverse('routine_list')
+#         return redirect(routine_url)
+#
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, 'routines/routine_create.html', context)
+
+class RoutineCreateView(CreateView):
+    model = Routine
+    template_name = 'routines/routine_create.html'
+    fields = ('school', 'classroom', 'section', 'subject_name', 'day', 'teacher', 'start_time', 'end_time', 'room_no')
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['start_time'].widget = TimePickerInput()
+        form.fields['end_time'].widget = TimePickerInput()
+        return form
+
+    def form_valid(self, form):
         routine = form.save(commit=False)
-        routine.school = school
         routine.save()
-        return render(request, 'routines/routine_list.html', {'school': school})
-    context = {
-        'school': school,
-        'form': form,
-    }
-    return render(request, 'routines/routine_create.html', context)
+        return redirect('routine_list')
 
 
-def routine_update(request, pk):
-    routine = get_object_or_404(Routine, pk=pk)
-    if request.method == 'POST':
-        form = RoutineForm(request.POST, instance=routine)
-    else:
-        form = RoutineForm(instance=routine)
-    return save_routine_form(request, form, 'routines/includes/partial_routine_update.html')
+class RoutineUpdateView(UpdateView):
+    model = Routine
+    template_name = 'routines/update_routine.html'
+    pk_url_kwarg = 'routine_pk'
+    fields = ('school', 'classroom', 'section', 'subject_name', 'day', 'teacher', 'start_time', 'end_time', 'room_no')
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['start_time'].widget = TimePickerInput()
+        form.fields['end_time'].widget = TimePickerInput()
+        return form
+
+    def form_valid(self, form):
+        routine = form.save(commit=False)
+        routine.save()
+        return redirect('routine_list')
 
 
 def routine_delete(request, pk):
@@ -1973,7 +2257,330 @@ def routine_delete(request, pk):
 
 # #######################################===>END OF ROUTINE MODULE<===##########################################
 
-# #######################################===>BEGINNING OF BULK STUDENT<===#####################################
+
+# #######################################===>BEGINNING OF DISPATCH MODULE<===#####################################
+
+
+class DispatchListView(ListView):
+    model = Dispatch
+    template_name = 'dispatch/dispatch_list.html'
+    context_object_name = 'dispatch'
+
+
+class DispatchCreateView(CreateView):
+    model = Dispatch
+    template_name = 'dispatch/dispatch_create.html'
+    fields = ('school', 'to_Title', 'reference', 'address', 'from_Title', 'dispatch_date', 'note', 'postal_Attachment')
+
+    def form_valid(self, form):
+        dispatch = form.save(commit=False)
+        dispatch.save()
+        return redirect('dispatch_list')
+
+
+class DispatchUpdateView(UpdateView):
+    model = Dispatch
+    template_name = 'dispatch/update_dispatch.html'
+    pk_url_kwarg = 'dispatch_pk'
+    fields = ('school', 'to_Title', 'reference', 'address', 'from_Title', 'dispatch_date', 'note', 'postal_Attachment')
+
+    def form_valid(self, form):
+        dispatch = form.save(commit=False)
+        dispatch.save()
+        return redirect('dispatch_list')
+
+
+def dispatch_view(request, dispatch_pk):
+    dispatch = get_object_or_404(Dispatch, pk=dispatch_pk)
+    if request.method == 'POST':
+        form = DispatchForm(request.POST, instance=dispatch)
+    else:
+        form = DispatchForm(instance=dispatch)
+    return save_dispatch_form(request, form, 'dispatch/includes/partial_dispatch_view.html')
+
+
+def save_dispatch_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            dispatchs = Dispatch.objects.all()
+            data['html_dispatch_list'] = render_to_string('dispatch/includes/partial_dispatch_list.html', {
+                'dispatchs': dispatchs
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def dispatch_delete(request, dispatch_pk):
+    dispatch = get_object_or_404(Dispatch, pk=dispatch_pk)
+    data = dict()
+    if request.method == 'POST':
+        dispatch.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        dispatchs = Dispatch.objects.all()
+        data['html_dispatch_list'] = render_to_string('dispatch/includes/partial_dispatch_list.html', {
+            'dispatchs': dispatchs
+        })
+    else:
+        context = {'dispatch': dispatch}
+        data['html_form'] = render_to_string('dispatch/includes/partial_dispatch_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+
+# #######################################===>END OF DISPATCH MODULE<===#####################################
+
+
+# #######################################===>BEGINNING OF RECEIVE MODULE<===#####################################
+
+
+class ReceiveListView(ListView):
+    model = Receive
+    template_name = 'receive/receive_list.html'
+    context_object_name = 'receive'
+
+
+class ReceiveCreateView(CreateView):
+    model = Receive
+    template_name = 'receive/receive_create.html'
+    fields = ('school', 'to_Title', 'reference', 'address', 'from_Title', 'receive_date', 'note', 'postal_Attachment')
+
+    def form_valid(self, form):
+        receive = form.save(commit=False)
+        receive.save()
+        return redirect('receive_list')
+
+
+class ReceiveUpdateView(UpdateView):
+    model = Receive
+    template_name = 'receive/update_receive.html'
+    pk_url_kwarg = 'receive_pk'
+    fields = ('school', 'to_Title', 'reference', 'address', 'from_Title', 'receive_date', 'note', 'postal_Attachment')
+
+    def form_valid(self, form):
+        receive = form.save(commit=False)
+        receive.save()
+        return redirect('receive_list')
+
+
+def receive_view(request, receive_pk):
+    receive = get_object_or_404(Receive, pk=receive_pk)
+    if request.method == 'POST':
+        form = ReceiveForm(request.POST, instance=receive)
+    else:
+        form = ReceiveForm(instance=receive)
+    return save_receive_form(request, form, 'receive/includes/partial_receive_view.html')
+
+
+def save_receive_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            receives = Receive.objects.all()
+            data['html_receive_list'] = render_to_string('receive/includes/partial_receive_list.html', {
+                'receives': receives
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def receive_delete(request, receive_pk):
+    receive = get_object_or_404(Receive, pk=receive_pk)
+    data = dict()
+    if request.method == 'POST':
+        receive.delete()
+        data['form_is_valid'] = True
+        receives = Receive.objects.all()
+        data['html_receive_list'] = render_to_string('receive/includes/partial_receive_list.html', {
+            'receives': receives
+        })
+    else:
+        context = {'receive': receive}
+        data['html_form'] = render_to_string('receive/includes/partial_receive_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+
+# #######################################===>END OF RECEIVE MODULE<===#####################################
+
+
+# #######################################===>BEGINNING OF LEAVE MODULE<===##########################################
+
+
+class LeaveListView(ListView):
+    model = Leave
+    template_name = 'leaves/leave_list.html'
+    context_object_name = 'leaves'
+
+
+class LeaveCreateView(CreateView):
+    model = Leave
+    template_name = 'leaves/leave_create.html'
+    fields = ('school', 'applicant_type', 'leave_Type', 'total_Type')
+
+    def form_valid(self, form):
+        leave = form.save(commit=False)
+        leave.save()
+        return redirect('leave_list')
+
+
+class LeaveUpdateView(UpdateView):
+    model = Leave
+    template_name = 'leaves/update_leave.html'
+    pk_url_kwarg = 'leave_pk'
+    fields = ('school', 'applicant_type', 'leave_Type', 'total_Type')
+
+    def form_valid(self, form):
+        leave = form.save(commit=False)
+        leave.save()
+        return redirect('leave_list')
+
+
+def save_leave_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            leaves = Leave.objects.all()
+            data['html_leave_list'] = render_to_string('leaves/includes/partial_leave_list.html', {
+                'leaves': leaves
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def leave_delete(request, leave_pk):
+    leave = get_object_or_404(Leave, pk=leave_pk)
+    data = dict()
+    if request.method == 'POST':
+        leave.delete()
+        data['form_is_valid'] = True
+        leaves = Leave.objects.all()
+        data['html_leave_list'] = render_to_string('leaves/includes/partial_leave_list.html', {
+            'leaves': leaves
+        })
+    else:
+        context = {'leave': leave}
+        data['html_form'] = render_to_string('leaves/includes/partial_leave_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+
+# #######################################===>END OF LEAVE MODULE<===#################################################
+
+
+# #######################################===>BEGINNING OF APPLICATION MODULE<===######################################
+
+
+class ApplicationListView(ListView):
+    model = Application
+    template_name = 'applications/application_list.html'
+    context_object_name = 'applications'
+
+
+class WaitingApplicationListView(ListView):
+    model = Application
+    template_name = 'applications/waiting_list.html'
+    context_object_name = 'applications'
+
+
+class ApprovedApplicationListView(ListView):
+    model = Application
+    template_name = 'applications/approved_list.html'
+    context_object_name = 'applications'
+
+
+class DeclinedApplicationListView(ListView):
+    model = Application
+    template_name = 'applications/declined_list.html'
+    context_object_name = 'applications'
+
+
+class ApplicationCreateView(CreateView):
+    model = Application
+    template_name = 'applications/application_create.html'
+    fields = ('school', 'applicant_type', 'applicant', 'leave_Type', 'application_Date', 'leave_From', 'leave_To',
+              'leave_Reason', 'leave_attachment')
+
+    def form_valid(self, form):
+        application = form.save(commit=False)
+        application.save()
+        return redirect('application_list')
+
+
+class ApplicationUpdateView(UpdateView):
+    model = Application
+    template_name = 'applications/update_application.html'
+    pk_url_kwarg = 'application_pk'
+    fields = ('school', 'applicant_type', 'applicant', 'leave_Type', 'application_Date', 'leave_From', 'leave_To',
+              'leave_Reason', 'leave_attachment')
+
+    def form_valid(self, form):
+        application = form.save(commit=False)
+        application.save()
+        return redirect('application_list')
+
+
+def save_application_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            applications = Application.objects.all()
+            data['html_application_list'] = render_to_string('applications/includes/partial_application_list.html', {
+                'applications': applications
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def application_delete(request, application_pk):
+    application = get_object_or_404(Application, pk=application_pk)
+    data = dict()
+    if request.method == 'POST':
+        application.delete()
+        data['form_is_valid'] = True
+        applications = Application.objects.all()
+        data['html_application_list'] = render_to_string('applications/includes/partial_application_list.html', {
+            'applications': applications
+        })
+    else:
+        context = {'application': application}
+        data['html_form'] = render_to_string('applications/includes/partial_application_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+
+# #######################################===>END OF APPLICATION MODULE<===#############################################
+
+
+# #######################################===>BEGINNING OF BULK STUDENT<===###########################################
 
 
 def save_bulk_student_form(request, form, template_name):
@@ -2011,17 +2618,28 @@ def bulk_student_create(request):
 # #######################################===>BEGINNING OF ATTENDANCE MODULE<===#####################################
 
 
-def student_attendance_list(request):
-    student_attendance = StudentAttendance.objects.all()
-    return render(request, 'attendance/student_attendance_list.html', {'student_attendance': student_attendance})
+def attendance_student(request):
+    context = {}
+
+    school = request.GET.get('school')
+    classroom = request.GET.get('classroom')
+    context['form'] = StudentAttendanceForm(school, classroom)
+    # Filter
+    q = request.GET.get('section')
+    if q:
+        q = q.replace('.', '')
+        students = Student.objects.filter(section=str(q))
+        context['students'] = students
+
+    return render(request, 'attendance/student_list.html', context)
 
 
-def teacher_attendance_list(request):
+def attendance_teacher(request):
     teacher_attendance = TeacherAttendance.objects.all()
     return render(request, 'attendance/teacher_attendance_list.html', {'teacher_attendance': teacher_attendance})
 
 
-def employee_attendance_list(request):
+def attendance_employee(request):
     employee_attendance = EmployeeAttendance.objects.all()
     return render(request, 'attendance/employee_attendance_list.html', {'employee_attendance': employee_attendance})
 
@@ -2106,6 +2724,33 @@ def assignment_delete(request, assignment_pk):
 
 
 # #######################################===>END OF ASSIGNMENT MODULE<===##########################################
+
+# #######################################===>BEGINNING OF MARK MODULE<===##########################################
+
+
+def manage_mark(request):
+    form = MarkForm(request.POST or None, request.FILES or None)
+
+    if form.is_valid():
+        mark = form.save(commit=False)
+        mark.save()
+
+        mark.school = form.cleaned_data.get('school')
+        mark.classroom = form.cleaned_data.get('classroom')
+        mark.exam = form.cleaned_data.get('exam')
+        mark.section = form.cleaned_data.get('section')
+        mark.subject = form.cleaned_data.get('subject')
+        mark.save()
+
+        mark_url = reverse('manage_mark')
+        return redirect(mark_url)
+    context = {
+        'form': form,
+    }
+    return render(request, 'marks/manage_marks.html', context)
+
+
+# #######################################===>END OF MARK MODULE<===#################################################
 
 # #######################################===>BEGINNING OF EXAM GRADE MODULE<===#####################################
 
@@ -3825,6 +4470,171 @@ def event_delete(request, event_pk):
 
 # #######################################===>END OF EVENT MODULE<===##################################################
 
+
+# ###################################===>BEGINNING OF TYPE MODULE<===###############################################
+
+
+class TypeListView(ListView):
+    model = Type
+    template_name = 'types/type_list.html'
+    context_object_name = 'types'
+
+
+class TypeCreateView(CreateView):
+    model = Type
+    template_name = 'types/type_create.html'
+    fields = ('school', 'complain_type')
+
+    def form_valid(self, form):
+        type = form.save(commit=False)
+        type.save()
+        return redirect('type_list')
+
+
+class TypeUpdateView(UpdateView):
+    model = Type
+    template_name = 'types/update_type.html'
+    pk_url_kwarg = 'type_pk'
+    fields = ('school', 'complain_type')
+
+    def form_valid(self, form):
+        type = form.save(commit=False)
+        type.save()
+        return redirect('type_list')
+
+
+def save_type_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            types = Type.objects.all()
+            data['html_type_list'] = render_to_string('types/includes/partial_type_list.html', {
+                'types': types
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def type_delete(request, type_pk):
+    type = get_object_or_404(Type, pk=type_pk)
+    data = dict()
+    if request.method == 'POST':
+        type.delete()
+        data['form_is_valid'] = True
+        types = Type.objects.all()
+        data['html_type_list'] = render_to_string('types/includes/partial_type_list.html', {
+            'types': types
+        })
+    else:
+        context = {'type': type}
+        data['html_form'] = render_to_string('types/includes/partial_type_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+
+# #######################################===>END OF TYPE MODULE<===##################################################
+
+# ###################################===>BEGINNING OF COMPLAIN MODULE<===###############################################
+
+
+class ComplainListView(ListView):
+    model = Complain
+    template_name = 'complains/complain_list.html'
+    context_object_name = 'complains'
+
+
+class ComplainCreateView(CreateView):
+    model = Complain
+    template_name = 'complains/complain_create.html'
+    fields = ('school', 'complain_user_type', 'complain_user', 'complain_type', 'complain_date', 'complain',
+              'action_date')
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['complain_date'].widget = DatePickerInput()
+        form.fields['action_date'].widget = DatePickerInput()
+        return form
+
+    def form_valid(self, form):
+        complain = form.save(commit=False)
+        complain.save()
+        return redirect('complain_list')
+
+
+class ComplainUpdateView(UpdateView):
+    model = Complain
+    template_name = 'complains/update_complain.html'
+    pk_url_kwarg = 'complain_pk'
+    fields = ('school', 'complain_user_type', 'complain_user', 'complain_type', 'complain_date', 'complain',
+              'action_date')
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['complain_date'].widget = DatePickerInput()
+        form.fields['action_date'].widget = DatePickerInput()
+        return form
+
+    def form_valid(self, form):
+        complain = form.save(commit=False)
+        complain.save()
+        return redirect('complain_list')
+
+
+def save_complain_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            complains = Complain.objects.all()
+            data['html_complain_list'] = render_to_string('complains/includes/partial_complain_list.html', {
+                'complains': complains
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def complain_view(request, complain_pk):
+    complain = get_object_or_404(Complain, pk=complain_pk)
+    if request.method == 'POST':
+        form = ComplainForm(request.POST, instance=complain)
+    else:
+        form = ComplainForm(instance=complain)
+    return save_vehicle_form(request, form, 'complains/includes/partial_complain_view.html')
+
+
+def complain_delete(request, complain_pk):
+    complain = get_object_or_404(Complain, pk=complain_pk)
+    data = dict()
+    if request.method == 'POST':
+        complain.delete()
+        data['form_is_valid'] = True
+        complains = Complain.objects.all()
+        data['html_complain_list'] = render_to_string('complains/includes/partial_complain_list.html', {
+            'complains': complains
+        })
+    else:
+        context = {'complain': complain}
+        data['html_form'] = render_to_string('complains/includes/partial_complain_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+
+# #######################################===>END OF COMPLAIN MODULE<===################################################
+
+
 # ###################################===>BEGINNING OF VISITOR MODULE<===###############################################
 
 
@@ -4124,14 +4934,76 @@ def fee_type_delete(request, fee_type_pk):
                                              )
     return JsonResponse(data)
 
-    # #######################################===>END OF FEE TYPE MODULE<===############################################
 
-    # #######################################===>BEGINNING OF INVOICE MODULE<===######################################
+# #######################################===>END OF FEE TYPE MODULE<===############################################
+
+# #######################################===>BEGINNING OF INVOICE MODULE<===######################################
 
 
-def invoice_list(request):
-    invoices = Invoice.objects.all()
-    return render(request, 'invoices/invoice_list.html', {'invoices': invoices})
+class InvoiceListView(ListView):
+    model = Invoice
+    template_name = 'invoices/invoice_list.html'
+    context_object_name = 'invoices'
+
+
+# class InvoiceCreateView(CreateView):
+#     model = Invoice
+#     template_name = 'invoices/invoice_create.html'
+#     fields = ('school', 'classroom', 'student', 'fee_type', 'fee_amount', 'discount', 'month',
+#               'is_discount_applicable', 'paid_status', 'gross_amount', 'invoice_number', 'note', 'date')
+#
+#     def form_valid(self, form):
+#         invoice = form.save(commit=False)
+#         invoice.save()
+#         return redirect('invoice_list')
+#
+
+def invoice_create(request):
+    form = InvoiceForm(request.POST or None, request.FILES or None)
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['date'].widget = MonthPickerInput()
+        return form
+
+    if form.is_valid():
+        invoice = form.save(commit=False)
+        invoice.save()
+
+        invoice.school = form.cleaned_data.get('school')
+        invoice.classroom = form.cleaned_data.get('classroom')
+        invoice.student = form.cleaned_data.get('student')
+        invoice.fee_type = form.cleaned_data.get('fee_type')
+        invoice.fee_amount = form.cleaned_data.get('fee_amount')
+        invoice.discount = form.cleaned_data.get('discount')
+        invoice.month = form.cleaned_data.get('month')
+        invoice.is_discount_applicable = form.cleaned_data.get('is_discount_applicable')
+        invoice.paid_status = form.cleaned_data.get('paid_status')
+        invoice.gross_amount = form.cleaned_data.get('gross_amount')
+        invoice.invoice_number = form.cleaned_data.get('invoice_number')
+        invoice.note = form.cleaned_data.get('note')
+        invoice.date = form.cleaned_data.get('date')
+        invoice.save()
+
+        invoice_url = reverse('invoice_list')
+        return redirect(invoice_url)
+    context = {
+        'form': form,
+    }
+    return render(request, 'invoices/invoice_create.html', context)
+
+
+class InvoiceUpdateView(UpdateView):
+    model = Invoice
+    template_name = 'invoices/update_invoice.html'
+    pk_url_kwarg = 'invoice_pk'
+    fields = ('school', 'classroom', 'student', 'fee_type', 'fee_amount', 'discount', 'month',
+              'is_discount_applicable', 'paid_status', 'gross_amount', 'invoice_number', 'note', 'date')
+
+    def form_valid(self, form):
+        invoice = form.save(commit=False)
+        invoice.save()
+        return redirect('invoice_list')
 
 
 def save_invoice_form(request, form, template_name):
@@ -4151,29 +5023,22 @@ def save_invoice_form(request, form, template_name):
     return JsonResponse(data)
 
 
-def invoice_create(request):
-    if request.method == 'POST':
-        form = InvoiceForm(request.POST)
-    else:
-        form = InvoiceForm()
-    return save_invoice_form(request, form, 'invoices/includes/partial_invoice_create.html')
-
-
-def invoice_update(request, pk):
-    invoice = get_object_or_404(Invoice, pk=pk)
+def invoice_view(request, invoice_pk):
+    invoice = get_object_or_404(Invoice, pk=invoice_pk)
     if request.method == 'POST':
         form = InvoiceForm(request.POST, instance=invoice)
     else:
         form = InvoiceForm(instance=invoice)
-    return save_invoice_form(request, form, 'invoices/includes/partial_invoice_update.html')
+    context = {'form': form}
+    return render(request, 'invoices/invoice_view.html', context)
 
 
-def invoice_delete(request, pk):
-    invoice = get_object_or_404(Invoice, pk=pk)
+def invoice_delete(request, invoice_pk):
+    invoice = get_object_or_404(Invoice, pk=invoice_pk)
     data = dict()
     if request.method == 'POST':
         invoice.delete()
-        data['form_is_valid'] = True  # This is just to play along with the existing code
+        data['form_is_valid'] = True
         invoices = Invoice.objects.all()
         data['html_invoice_list'] = render_to_string('invoices/includes/partial_invoice_list.html', {
             'invoices': invoices
@@ -4185,6 +5050,11 @@ def invoice_delete(request, pk):
                                              request=request,
                                              )
     return JsonResponse(data)
+
+
+# #######################################===>END OF INVOICE MODULE<===############################################
+
+# #######################################===>BEGINNING OF BULK INVOICE MODULE<===######################################
 
 
 def bulk_invoice_list(request):
@@ -4245,9 +5115,37 @@ def bulk_invoice_delete(request, pk):
     return JsonResponse(data)
 
 
-def due_fee_email_list(request):
-    due_fee_emails = DueFeeEmail.objects.all()
-    return render(request, 'due_fee_emails/due_fee_email_list.html', {'due_fee_emails': due_fee_emails})
+# #######################################===>END OF BULK INVOICE MODULE<===#############################################
+
+
+# #######################################===>BEGINNING OF DUE FEE MODULE<===######################################
+
+def due_fee_list(request):
+    invoices = Invoice.objects.filter(paid_status__icontains='Pending')
+    return render(request, 'invoices/due_list.html', {'invoices': invoices})
+
+# #######################################===>END OF DUE FEE MODULE<===######################################
+
+
+# ###################################===>BEGINNING OF DUE FEE EMAIL MODULE<===#########################################
+
+
+class DueEmailListView(ListView):
+    model = DueFeeEmail
+    template_name = 'due_fee_emails/due_fee_email_list.html'
+    context_object_name = 'due_fee_emails'
+
+
+class DueEmailCreateView(CreateView):
+    model = DueFeeEmail
+    template_name = 'due_fee_emails/due_fee_email_create.html'
+    fields = ('school', 'receiver_role', 'classroom', 'due_fee_student', 'template', 'subject', 'email_body',
+              'attachment')
+
+    def form_valid(self, form):
+        due_fee_emails = form.save(commit=False)
+        due_fee_emails.save()
+        return redirect('due_fee_email_list')
 
 
 def save_due_fee_email_form(request, form, template_name):
@@ -4257,10 +5155,9 @@ def save_due_fee_email_form(request, form, template_name):
             form.save()
             data['form_is_valid'] = True
             due_fee_emails = DueFeeEmail.objects.all()
-            data['html_due_fee_email_list'] = render_to_string(
-                'due_fee_emails/includes/partial_due_fee_email_list.html', {
-                    'due_fee_emails': due_fee_emails
-                })
+            data['html_due_fee_email_list'] = render_to_string('due_fee_emails/includes/partial_due_fee_email_list.html', {
+                'due_fee_emails': due_fee_emails
+            })
         else:
             data['form_is_valid'] = False
     context = {'form': form}
@@ -4268,29 +5165,21 @@ def save_due_fee_email_form(request, form, template_name):
     return JsonResponse(data)
 
 
-def due_fee_email_create(request):
-    if request.method == 'POST':
-        form = DueFeeEmailForm(request.POST)
-    else:
-        form = DueFeeEmailForm()
-    return save_due_fee_email_form(request, form, 'due_fee_emails/includes/partial_due_fee_email_create.html')
-
-
-def due_fee_email_update(request, pk):
-    due_fee_email = get_object_or_404(DueFeeEmail, pk=pk)
+def due_fee_email_view(request, due_fee_email_pk):
+    due_fee_email = get_object_or_404(DueFeeEmail, pk=due_fee_email_pk)
     if request.method == 'POST':
         form = DueFeeEmailForm(request.POST, instance=due_fee_email)
     else:
         form = DueFeeEmailForm(instance=due_fee_email)
-    return save_due_fee_email_form(request, form, 'due_fee_emails/includes/partial_due_fee_email_update.html')
+    return save_due_fee_email_form(request, form, 'due_fee_emails/includes/partial_due_fee_email_view.html')
 
 
-def due_fee_email_delete(request, pk):
-    due_fee_email = get_object_or_404(DueFeeEmail, pk=pk)
+def due_fee_email_delete(request, due_fee_email_pk):
+    due_fee_email = get_object_or_404(DueFeeEmail, pk=due_fee_email_pk)
     data = dict()
     if request.method == 'POST':
         due_fee_email.delete()
-        data['form_is_valid'] = True  # This is just to play along with the existing code
+        data['form_is_valid'] = True
         due_fee_emails = DueFeeEmail.objects.all()
         data['html_due_fee_email_list'] = render_to_string('due_fee_emails/includes/partial_due_fee_email_list.html', {
             'due_fee_emails': due_fee_emails
@@ -4304,9 +5193,26 @@ def due_fee_email_delete(request, pk):
     return JsonResponse(data)
 
 
-def due_fee_sms_list(request):
-    due_fee_smss = DueFeeSMS.objects.all()
-    return render(request, 'due_fee_smss/due_fee_sms_list.html', {'due_fee_smss': due_fee_smss})
+# #######################################===>END OF DUE FEE EMAIL MODULE<===###########################################
+
+# ###################################===>BEGINNING OF DUE FEE SMS MODULE<===###########################################
+
+
+class DueSmsListView(ListView):
+    model = DueFeeSMS
+    template_name = 'due_fee_smss/due_fee_sms_list.html'
+    context_object_name = 'due_fee_smss'
+
+
+class DueSmsCreateView(CreateView):
+    model = DueFeeSMS
+    template_name = 'due_fee_smss/due_fee_sms_create.html'
+    fields = ('school', 'receiver_type', 'classroom', 'due_fee_student', 'template', 'SMS', 'gateway')
+
+    def form_valid(self, form):
+        due_fee_smss = form.save(commit=False)
+        due_fee_smss.save()
+        return redirect('due_fee_sms_list')
 
 
 def save_due_fee_sms_form(request, form, template_name):
@@ -4326,29 +5232,21 @@ def save_due_fee_sms_form(request, form, template_name):
     return JsonResponse(data)
 
 
-def due_fee_sms_create(request):
-    if request.method == 'POST':
-        form = DueFeeSMSForm(request.POST)
-    else:
-        form = DueFeeSMSForm()
-    return save_due_fee_sms_form(request, form, 'due_fee_smss/includes/partial_due_fee_sms_create.html')
-
-
-def due_fee_sms_update(request, pk):
-    due_fee_sms = get_object_or_404(DueFeeSMS, pk=pk)
+def due_fee_sms_view(request, due_fee_sms_pk):
+    due_fee_sms = get_object_or_404(DueFeeSMS, pk=due_fee_sms_pk)
     if request.method == 'POST':
         form = DueFeeSMSForm(request.POST, instance=due_fee_sms)
     else:
         form = DueFeeSMSForm(instance=due_fee_sms)
-    return save_due_fee_sms_form(request, form, 'due_fee_smss/includes/partial_due_fee_sms_update.html')
+    return save_due_fee_sms_form(request, form, 'due_fee_smss/includes/partial_due_fee_sms_view.html')
 
 
-def due_fee_sms_delete(request, pk):
-    due_fee_sms = get_object_or_404(DueFeeSMS, pk=pk)
+def due_fee_sms_delete(request, due_fee_sms_pk):
+    due_fee_sms = get_object_or_404(DueFeeSMS, pk=due_fee_sms_pk)
     data = dict()
     if request.method == 'POST':
         due_fee_sms.delete()
-        data['form_is_valid'] = True  # This is just to play along with the existing code
+        data['form_is_valid'] = True
         due_fee_smss = DueFeeSMS.objects.all()
         data['html_due_fee_sms_list'] = render_to_string('due_fee_smss/includes/partial_due_fee_sms_list.html', {
             'due_fee_smss': due_fee_smss
@@ -4362,9 +5260,38 @@ def due_fee_sms_delete(request, pk):
     return JsonResponse(data)
 
 
-def income_head_list(request):
-    income_heads = IncomeHead.objects.all()
-    return render(request, 'income_heads/income_head_list.html', {'income_heads': income_heads})
+# #######################################===>END OF DUE FEE SMS MODULE<===#############################################
+
+# ###################################===>BEGINNING OF INCOME HEAD MODULE<===###########################################
+
+
+class IncomeHeadListView(ListView):
+    model = IncomeHead
+    template_name = 'income_heads/income_head_list.html'
+    context_object_name = 'income_heads'
+
+
+class IncomeHeadCreateView(CreateView):
+    model = IncomeHead
+    template_name = 'income_heads/income_head_create.html'
+    fields = ('school', 'income_head', 'note')
+
+    def form_valid(self, form):
+        income_head = form.save(commit=False)
+        income_head.save()
+        return redirect('income_head_list')
+
+
+class IncomeHeadUpdateView(UpdateView):
+    model = IncomeHead
+    template_name = 'income_heads/update_income_head.html'
+    pk_url_kwarg = 'income_head_pk'
+    fields = ('school', 'income_head', 'note')
+
+    def form_valid(self, form):
+        income_head = form.save(commit=False)
+        income_head.save()
+        return redirect('income_head_list')
 
 
 def save_income_head_form(request, form, template_name):
@@ -4384,29 +5311,12 @@ def save_income_head_form(request, form, template_name):
     return JsonResponse(data)
 
 
-def income_head_create(request):
-    if request.method == 'POST':
-        form = IncomeHeadForm(request.POST)
-    else:
-        form = IncomeHeadForm()
-    return save_income_head_form(request, form, 'income_heads/includes/partial_income_head_create.html')
-
-
-def income_head_update(request, pk):
-    income_head = get_object_or_404(IncomeHead, pk=pk)
-    if request.method == 'POST':
-        form = IncomeHeadForm(request.POST, instance=income_head)
-    else:
-        form = IncomeHeadForm(instance=income_head)
-    return save_income_head_form(request, form, 'income_heads/includes/partial_income_head_update.html')
-
-
-def income_head_delete(request, pk):
-    income_head = get_object_or_404(IncomeHead, pk=pk)
+def income_head_delete(request, income_head_pk):
+    income_head = get_object_or_404(IncomeHead, pk=income_head_pk)
     data = dict()
     if request.method == 'POST':
         income_head.delete()
-        data['form_is_valid'] = True  # This is just to play along with the existing code
+        data['form_is_valid'] = True
         income_heads = IncomeHead.objects.all()
         data['html_income_head_list'] = render_to_string('income_heads/includes/partial_income_head_list.html', {
             'income_heads': income_heads
@@ -4420,9 +5330,38 @@ def income_head_delete(request, pk):
     return JsonResponse(data)
 
 
-def income_list(request):
-    incomes = Income.objects.all()
-    return render(request, 'incomes/income_list.html', {'incomes': incomes})
+# #######################################===>END OF INCOME HEAD MODULE<===#############################################
+
+# ###################################===>BEGINNING OF INCOME MODULE<===###############################################
+
+
+class IncomeListView(ListView):
+    model = Income
+    template_name = 'incomes/income_list.html'
+    context_object_name = 'incomes'
+
+
+class IncomeCreateView(CreateView):
+    model = Income
+    template_name = 'incomes/income_create.html'
+    fields = ('school', 'income_head', 'payment_method', 'amount', 'date', 'note')
+
+    def form_valid(self, form):
+        income = form.save(commit=False)
+        income.save()
+        return redirect('income_list')
+
+
+class IncomeUpdateView(UpdateView):
+    model = Income
+    template_name = 'incomes/update_income.html'
+    pk_url_kwarg = 'income_pk'
+    fields = ('school', 'income_head', 'payment_method', 'amount', 'date', 'note')
+
+    def form_valid(self, form):
+        income = form.save(commit=False)
+        income.save()
+        return redirect('income_list')
 
 
 def save_income_form(request, form, template_name):
@@ -4442,29 +5381,21 @@ def save_income_form(request, form, template_name):
     return JsonResponse(data)
 
 
-def income_create(request):
-    if request.method == 'POST':
-        form = IncomeForm(request.POST)
-    else:
-        form = IncomeForm()
-    return save_income_form(request, form, 'incomes/includes/partial_income_create.html')
-
-
-def income_update(request, pk):
-    income = get_object_or_404(Income, pk=pk)
+def income_view(request, income_pk):
+    income = get_object_or_404(Income, pk=income_pk)
     if request.method == 'POST':
         form = IncomeForm(request.POST, instance=income)
     else:
         form = IncomeForm(instance=income)
-    return save_income_form(request, form, 'incomes/includes/partial_income_update.html')
+    return save_income_form(request, form, 'incomes/includes/partial_income_view.html')
 
 
-def income_delete(request, pk):
-    income = get_object_or_404(Income, pk=pk)
+def income_delete(request, income_pk):
+    income = get_object_or_404(Income, pk=income_pk)
     data = dict()
     if request.method == 'POST':
         income.delete()
-        data['form_is_valid'] = True  # This is just to play along with the existing code
+        data['form_is_valid'] = True
         incomes = Income.objects.all()
         data['html_income_list'] = render_to_string('incomes/includes/partial_income_list.html', {
             'incomes': incomes
@@ -4478,9 +5409,38 @@ def income_delete(request, pk):
     return JsonResponse(data)
 
 
-def expenditure_head_list(request):
-    expenditure_heads = ExpenditureHead.objects.all()
-    return render(request, 'expenditure_heads/expenditure_head_list.html', {'expenditure_heads': expenditure_heads})
+# #######################################===>END OF INCOME MODULE<===#############################################
+
+# ###################################===>BEGINNING OF EXPENDITURE HEAD MODULE<===#####################################
+
+
+class ExpenditureHeadListView(ListView):
+    model = ExpenditureHead
+    template_name = 'expenditure_heads/expenditure_head_list.html'
+    context_object_name = 'expenditure_heads'
+
+
+class ExpenditureHeadCreateView(CreateView):
+    model = ExpenditureHead
+    template_name = 'expenditure_heads/expenditure_head_create.html'
+    fields = ('school', 'expenditure_head', 'note')
+
+    def form_valid(self, form):
+        expenditure_head = form.save(commit=False)
+        expenditure_head.save()
+        return redirect('expenditure_head_list')
+
+
+class ExpenditureHeadUpdateView(UpdateView):
+    model = ExpenditureHead
+    template_name = 'expenditure_heads/update_expenditure_head.html'
+    pk_url_kwarg = 'expenditure_head_pk'
+    fields = ('school', 'expenditure_head', 'note')
+
+    def form_valid(self, form):
+        expenditure_head = form.save(commit=False)
+        expenditure_head.save()
+        return redirect('expenditure_head_list')
 
 
 def save_expenditure_head_form(request, form, template_name):
@@ -4490,10 +5450,9 @@ def save_expenditure_head_form(request, form, template_name):
             form.save()
             data['form_is_valid'] = True
             expenditure_heads = ExpenditureHead.objects.all()
-            data['html_expenditure_head_list'] = render_to_string(
-                'expenditure_heads/includes/partial_expenditure_head_list.html', {
-                    'expenditure_heads': expenditure_heads
-                })
+            data['html_expenditure_head_list'] = render_to_string('expenditure_heads/includes/partial_expenditure_head_list.html', {
+                'expenditure_heads': expenditure_heads
+            })
         else:
             data['form_is_valid'] = False
     context = {'form': form}
@@ -4501,34 +5460,16 @@ def save_expenditure_head_form(request, form, template_name):
     return JsonResponse(data)
 
 
-def expenditure_head_create(request):
-    if request.method == 'POST':
-        form = ExpenditureHeadForm(request.POST)
-    else:
-        form = ExpenditureHeadForm()
-    return save_expenditure_head_form(request, form, 'expenditure_heads/includes/partial_expenditure_head_create.html')
-
-
-def expenditure_head_update(request, pk):
-    expenditure_head = get_object_or_404(ExpenditureHead, pk=pk)
-    if request.method == 'POST':
-        form = ExpenditureHeadForm(request.POST, instance=expenditure_head)
-    else:
-        form = ExpenditureHeadForm(instance=expenditure_head)
-    return save_expenditure_head_form(request, form, 'expenditure_heads/includes/partial_expenditure_head_update.html')
-
-
-def expenditure_head_delete(request, pk):
-    expenditure_head = get_object_or_404(ExpenditureHead, pk=pk)
+def expenditure_head_delete(request, expenditure_head_pk):
+    expenditure_head = get_object_or_404(ExpenditureHead, pk=expenditure_head_pk)
     data = dict()
     if request.method == 'POST':
         expenditure_head.delete()
-        data['form_is_valid'] = True  # This is just to play along with the existing code
+        data['form_is_valid'] = True
         expenditure_heads = ExpenditureHead.objects.all()
-        data['html_expenditure_head_list'] = render_to_string(
-            'expenditure_heads/includes/partial_expenditure_head_list.html', {
-                'expenditure_heads': expenditure_heads
-            })
+        data['html_expenditure_head_list'] = render_to_string('expenditure_heads/includes/partial_expenditure_head_list.html', {
+            'expenditure_heads': expenditure_heads
+        })
     else:
         context = {'expenditure_head': expenditure_head}
         data['html_form'] = render_to_string('expenditure_heads/includes/partial_expenditure_head_delete.html',
@@ -4538,9 +5479,38 @@ def expenditure_head_delete(request, pk):
     return JsonResponse(data)
 
 
-def expenditure_list(request):
-    expenditures = Expenditure.objects.all()
-    return render(request, 'expenditures/expenditure_list.html', {'expenditures': expenditures})
+# #######################################===>END OF EXPENDITURE HEAD MODULE<===########################################
+
+# ###################################===>BEGINNING OF EXPENDITURE MODULE<===###########################################
+
+
+class ExpenditureListView(ListView):
+    model = Expenditure
+    template_name = 'expenditures/expenditure_list.html'
+    context_object_name = 'expenditures'
+
+
+class ExpenditureCreateView(CreateView):
+    model = Expenditure
+    template_name = 'expenditures/expenditure_create.html'
+    fields = ('school', 'expenditure_head', 'expenditure_method', 'amount', 'date', 'note')
+
+    def form_valid(self, form):
+        expenditure = form.save(commit=False)
+        expenditure.save()
+        return redirect('expenditure_list')
+
+
+class ExpenditureUpdateView(UpdateView):
+    model = Expenditure
+    template_name = 'expenditures/update_expenditure.html'
+    pk_url_kwarg = 'expenditure_pk'
+    fields = ('school', 'expenditure_head', 'expenditure_method', 'amount', 'date', 'note')
+
+    def form_valid(self, form):
+        expenditure = form.save(commit=False)
+        expenditure.save()
+        return redirect('expenditure_list')
 
 
 def save_expenditure_form(request, form, template_name):
@@ -4560,29 +5530,21 @@ def save_expenditure_form(request, form, template_name):
     return JsonResponse(data)
 
 
-def expenditure_create(request):
-    if request.method == 'POST':
-        form = ExpenditureForm(request.POST)
-    else:
-        form = ExpenditureForm()
-    return save_expenditure_form(request, form, 'expenditures/includes/partial_expenditure_create.html')
-
-
-def expenditure_update(request, pk):
-    expenditure = get_object_or_404(Expenditure, pk=pk)
+def expenditure_view(request, expenditure_pk):
+    expenditure = get_object_or_404(Expenditure, pk=expenditure_pk)
     if request.method == 'POST':
         form = ExpenditureForm(request.POST, instance=expenditure)
     else:
         form = ExpenditureForm(instance=expenditure)
-    return save_expenditure_form(request, form, 'expenditures/includes/partial_expenditure_update.html')
+    return save_expenditure_form(request, form, 'expenditures/includes/partial_expenditure_view.html')
 
 
-def expenditure_delete(request, pk):
-    expenditure = get_object_or_404(Expenditure, pk=pk)
+def expenditure_delete(request, expenditure_pk):
+    expenditure = get_object_or_404(Expenditure, pk=expenditure_pk)
     data = dict()
     if request.method == 'POST':
         expenditure.delete()
-        data['form_is_valid'] = True  # This is just to play along with the existing code
+        data['form_is_valid'] = True
         expenditures = Expenditure.objects.all()
         data['html_expenditure_list'] = render_to_string('expenditures/includes/partial_expenditure_list.html', {
             'expenditures': expenditures
@@ -4829,9 +5791,33 @@ def page_delete(request, page_pk):
 # ###################################===>BEGINNING OF SLIDER MODULE<===###############################################
 
 
-def slider_list(request):
-    sliders = Slider.objects.all()
-    return render(request, 'sliders/slider_list.html', {'sliders': sliders})
+class SliderListView(ListView):
+    model = Slider
+    template_name = 'sliders/slider_list.html'
+    context_object_name = 'sliders'
+
+
+class SliderCreateView(CreateView):
+    model = Slider
+    template_name = 'sliders/slider_create.html'
+    fields = ('school', 'slider_image', 'image_title')
+
+    def form_valid(self, form):
+        slider = form.save(commit=False)
+        slider.save()
+        return redirect('slider_list')
+
+
+class SliderUpdateView(UpdateView):
+    model = Slider
+    template_name = 'sliders/update_slider.html'
+    pk_url_kwarg = 'slider_pk'
+    fields = ('school', 'slider_image', 'image_title')
+
+    def form_valid(self, form):
+        slider = form.save(commit=False)
+        slider.save()
+        return redirect('slider_list')
 
 
 def save_slider_form(request, form, template_name):
@@ -4851,25 +5837,17 @@ def save_slider_form(request, form, template_name):
     return JsonResponse(data)
 
 
-def slider_create(request):
-    if request.method == 'POST':
-        form = SliderForm(request.POST)
-    else:
-        form = SliderForm()
-    return save_slider_form(request, form, 'sliders/includes/partial_slider_create.html')
-
-
-def slider_update(request, pk):
-    slider = get_object_or_404(Slider, pk=pk)
+def slider_view(request, slider_pk):
+    slider = get_object_or_404(Slider, pk=slider_pk)
     if request.method == 'POST':
         form = SliderForm(request.POST, instance=slider)
     else:
         form = SliderForm(instance=slider)
-    return save_slider_form(request, form, 'sliders/includes/partial_slider_update.html')
+    return save_slider_form(request, form, 'sliders/includes/partial_slider_view.html')
 
 
-def slider_delete(request, pk):
-    slider = get_object_or_404(Slider, pk=pk)
+def slider_delete(request, slider_pk):
+    slider = get_object_or_404(Slider, pk=slider_pk)
     data = dict()
     if request.method == 'POST':
         slider.delete()
@@ -4886,6 +5864,87 @@ def slider_delete(request, pk):
                                              )
     return JsonResponse(data)
 
+
+# #######################################===>END OF SLIDER MODULE<===##################################################
+
+# ###################################===>BEGINNING OF SLIDER MODULE<===###############################################
+
+
+class AboutListView(ListView):
+    model = About
+    template_name = 'abouts/about_list.html'
+    context_object_name = 'abouts'
+
+
+class AboutCreateView(CreateView):
+    model = About
+    template_name = 'abouts/about_create.html'
+    fields = ('school', 'about', 'about_image')
+
+    def form_valid(self, form):
+        about = form.save(commit=False)
+        about.save()
+        return redirect('about_list')
+
+
+class AboutUpdateView(UpdateView):
+    model = About
+    template_name = 'abouts/update_about.html'
+    pk_url_kwarg = 'about_pk'
+    fields = ('school', 'about', 'about_image')
+
+    def form_valid(self, form):
+        about = form.save(commit=False)
+        about.save()
+        return redirect('about_list')
+
+
+def save_about_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            abouts = About.objects.all()
+            data['html_about_list'] = render_to_string('abouts/includes/partial_about_list.html', {
+                'abouts': abouts
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def about_view(request, about_pk):
+    about = get_object_or_404(About, pk=about_pk)
+    if request.method == 'POST':
+        form = AboutForm(request.POST, instance=about)
+    else:
+        form = AboutForm(instance=about)
+    return save_about_form(request, form, 'abouts/includes/partial_about_view.html')
+
+
+def about_delete(request, about_pk):
+    about = get_object_or_404(About, pk=about_pk)
+    data = dict()
+    if request.method == 'POST':
+        about.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        abouts = About.objects.all()
+        data['html_about_list'] = render_to_string('abouts/includes/partial_about_list.html', {
+            'abouts': abouts
+        })
+    else:
+        context = {'about': about}
+        data['html_form'] = render_to_string('abouts/includes/partial_about_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+
+# #######################################===>END OF ABOUT MODULE<===##################################################
 
 # def paypal_update(request, school_pk, paypal_id):
 #     paypal = get_object_or_404(Paypal, school_pk=school_pk, pk=paypal_id)
@@ -5045,30 +6104,34 @@ def sections_choices_ajax(request):
     return render(request, 'attendance/includes/_sections_choices.html', context)
 
 
-def invoices(request):
-    context = {}
-    school = request.GET.get('school')
-    classroom = request.GET.get('classroom')
-    context['form'] = InvoiceForm(school, classroom)
-    # Filter
-    q = request.GET.get('section')
-    if q:
-        q = q.replace('.', '')
-        students = Student.objects.filter(section=str(q))
-        context['students'] = students
-    return render(request, 'invoices/invoice_list.html', context)
-
-
 def load_classrooms(request):
     school_id = request.GET.get('school')
     classrooms = Classroom.objects.filter(school_id=school_id).order_by('classroom')
     return render(request, 'filter/classroom_dropdown_list_options.html', {'classrooms': classrooms})
 
 
+def load_exams(request):
+    school_id = request.GET.get('school')
+    exams = Exam.objects.filter(school_id=school_id).order_by('exam_title')
+    return render(request, 'filter/exam_dropdown_list_options.html', {'exams': exams})
+
+
+def load_fee_types(request):
+    school_id = request.GET.get('school')
+    fee_types = FeeType.objects.filter(school_id=school_id).order_by('fee_type')
+    return render(request, 'filter/fee_dropdown_list_options.html', {'fee_types': fee_types})
+
+
 def load_sections(request):
     classroom_id = request.GET.get('classroom')
     sections = Section.objects.filter(classroom_id=classroom_id).order_by('section')
     return render(request, 'filter/section_dropdown_list_options.html', {'sections': sections})
+
+
+def load_students(request):
+    classroom_id = request.GET.get('classroom')
+    students = Student.objects.filter(classroom_id=classroom_id).order_by('user')
+    return render(request, 'filter/student_dropdown_list_options.html', {'students': students})
 
 
 def load_roles(request):
@@ -5082,12 +6145,8 @@ def load_users(request):
     users = User.objects.filter(roles_id=role_id).order_by('full_name')
     return render(request, 'filter/user_dropdown_list_options.html', {'users': users})
 
-#class InvoiceCreateView(CreateView):
-#    model = Invoice
-#    form_class = InvoiceForm
-#    success_url = reverse_lazy('add_invoice')
 
-#def load_student_clssrooms(request):
-#    school_id = request.GET.get('school')
-#    classrooms = Classroom.objects.filter(school_id=school_id).order_by('classroom')
-#    return render(request, 'invoices/classroom_dropdown_options.html', {'classrooms': classrooms})
+def load_subjects(request):
+    classroom_id = request.GET.get('classroom')
+    subjects = Subject.objects.filter(classroom_id=classroom_id).order_by('subject_name')
+    return render(request, 'filter/subject_dropdown_list_options.html', {'subjects': subjects})

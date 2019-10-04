@@ -3,19 +3,26 @@
         <td>{{ slider.id }}</td>
         <td>{{ slider.school }}</td>
         <td>
-            <img src="#"
-                 alt="" width="80"
-                 style="background: rgba(16,67,221,0.84); padding: 5px;"/><br/><br/>
-        </td>        <td>{{ slider.image_title }}</td>
+            {% if slider.slider_image %}
+                <img src="{{ slider.slider_image.url }}"
+                     alt="" width="50"
+                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/><br/>
+            {% endif %}
+        </td>
+        <td>{{ slider.image_title }}</td>
         <td>
             <button type="button"
-                    class="btn btn-warning btn-sm js-update-slider"
-                    data-url="{% url 'slider_update' slider.id %}">
-                <span class="glyphicon glyphicon-pencil"></span> Edit
+                    class="btn btn-warning btn-sm js-view-slider"
+                    data-url="{% url 'slider_view' slider.pk %}">
+                <span class="glyphicon glyphicon-eye-open"></span> View
             </button>
+            <div class="mb-4">
+                <a href="{% url 'slider_update' slider.pk %}" class="btn btn-info btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> Edit</a>
+            </div>
             <button type="button"
                     class="btn btn-danger btn-sm js-delete-slider"
-                    data-url="{% url 'slider_delete' slider.id %}">
+                    data-url="{% url 'slider_delete' slider.pk %}">
                 <span class="glyphicon glyphicon-trash"></span> Delete
             </button>
         </td>

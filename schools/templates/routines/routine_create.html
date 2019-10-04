@@ -2,7 +2,7 @@
 
 {% block title %} Routine {% endblock title %}
 
-{% load static i18n %}
+{% load static widget_tweaks crispy_forms_tags i18n %}
 
 {% block javascript %}
     <script src="{% static 'schools/js/routines.js' %}"></script>
@@ -40,11 +40,11 @@
                     <div class="x_content">
                         <div class="" data-example-id="togglable-tabs">
 
-                             <ul class="nav nav-tabs bordered">
-                                <li role="presentation"><a href="{% url 'routine_list' school.pk %}"><i
+                            <ul class="nav nav-tabs bordered">
+                                <li role="presentation"><a href="{% url 'routine_list' %}"><i
                                         class="fa fa-list-ol"></i> Routine List</a>
                                 </li>
-                                <li role="presentation" class="active"><a href="{% url 'routine_create' school.pk %}"><i
+                                <li role="presentation" class="active"><a href="{% url 'routine_create' %}"><i
                                         class="fa fa-plus-square-o"></i> Add
                                     Routine</a>
                                 </li>
@@ -62,7 +62,44 @@
                                               enctype="multipart/form-data"
                                               accept-charset="utf-8">{% csrf_token %}
 
-                                            {% include 'home/form_template.html' %}
+
+                                             <div class="form-row">
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.school|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.classroom|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.section|as_crispy_field }}
+                                                </div>
+
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.subject_name|as_crispy_field }}
+                                                </div>
+                                            </div>
+
+                                             <div class="form-row">
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.day|as_crispy_field }}
+                                                </div>
+                                                 <div class="form-group col-md-3 mb-0">
+                                                    {{ form.teacher|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.start_time|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.end_time|as_crispy_field }}
+                                                </div>
+
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.room_no|as_crispy_field }}
+                                                </div>
+                                            </div>
+
+
+
                                             <div class="form-group">
                                                 <div class="col-sm-offset-2 col-sm-10">
                                                     <button type="submit" class="btn btn-success">Submit</button>
@@ -87,22 +124,6 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="modal fade bs-routine-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                        </button>
-                        <h4 class="modal-title">Routine Information</h4>
-                    </div>
-                    <div class="modal-body fn_routine_data">
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -168,8 +189,6 @@
     <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
     <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
     <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-
-
 
 {% endblock javascripts %}
 
