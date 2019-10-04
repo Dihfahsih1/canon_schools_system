@@ -4960,7 +4960,6 @@ class InvoiceListView(ListView):
 
 def invoice_create(request):
     form = InvoiceForm(request.POST or None, request.FILES or None)
-
     def get_form(self):
         form = super().get_form()
         form.fields['date'].widget = MonthPickerInput()
