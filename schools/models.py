@@ -1207,7 +1207,14 @@ class Slider(models.Model):
 
     def __str__(self):
         return self.image_title
+        
+class About(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    about_image = models.FileField(upload_to='about/', null=True, blank=False)
+    about = models.TextField(max_length=500)
 
+    def __str__(self):
+        return self.about
 
 class Paypal(models.Model):
     paypal_email = models.CharField(max_length=100)
