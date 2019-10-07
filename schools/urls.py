@@ -483,4 +483,6 @@ urlpatterns = [
     path('ajax/load-users/', views.load_users, name='ajax_load_users'),
     path('ajax/load-students/', views.load_students, name='ajax_load_students'),
     path('ajax/load-fee_types/', views.load_fee_types, name='ajax_load_fee_types'),
+
+    path('create_fees_type/', views.create_fees_type, name='create_fees_type'),
 ]

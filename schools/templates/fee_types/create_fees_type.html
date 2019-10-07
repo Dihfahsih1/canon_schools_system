@@ -79,8 +79,14 @@
                                               accept-charset="utf-8">
                                               {% csrf_token %}
                                               {% bootstrap_field form.school %}
-                                              {% bootstrap_field form.fee_type %}
+
                                               {% bootstrap_field form.fee_title %}
+                                               <div id="seeAnotherField">{% bootstrap_field  form.fee_type %}</div>
+                                               <div id="otherFieldDiv">
+                                                   <div id="otherField">{% bootstrap_field  form.class1 %}</div>
+                                                   <div id=otherField">{% bootstrap_field  form.class2 %}</div>
+                                                   <div id="otherField">{% bootstrap_field  form.class3 %}</div>
+                                                </div>
                                               {% bootstrap_field form.note %}
 
 
@@ -173,7 +179,19 @@
     <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
     <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
     <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-
-
-
 {% endblock javascripts %}
+
+<script>
+    $("#seeAnotherField").change(function() {
+    if ($(this).val() == "General Fee") {
+    $('#otherFieldDiv').show();
+    $('#otherField').attr('required', '');
+    $('#otherField').attr('data-error', 'This field is required.');
+    } else {
+    $('#otherFieldDiv').hide();
+    $('#otherField').removeAttr('required');
+    $('#otherField').removeAttr('data-error');
+    }
+    });
+    $("#seeAnotherField").trigger("change");
+</script>
