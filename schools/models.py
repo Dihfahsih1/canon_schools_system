@@ -1065,7 +1065,7 @@ class Discount(models.Model):
 
 class FeeType(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
-    IS = (('General Fee', 'General Fee'),
+    IS = (('GeneralFee', 'GeneralFee'),
           ('Hostel', 'Hostel'),
           ('Transport', 'Transport'))
     fee_type = models.CharField(max_length=100, blank=False, choices=IS)
