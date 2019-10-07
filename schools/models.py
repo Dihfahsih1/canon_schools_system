@@ -1072,6 +1072,9 @@ class FeeType(models.Model):
 
     fee_title = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
+    class1=models.CharField(max_length=100, default='0.0')
+    class2=models.CharField(max_length=100, default='0.0')
+    class3=models.CharField(max_length=100, default='0.0')
 
 
 class Invoice(models.Model):
@@ -1207,7 +1210,7 @@ class Slider(models.Model):
 
     def __str__(self):
         return self.image_title
-        
+
 class About(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     about_image = models.FileField(upload_to='about/', null=True, blank=False)
@@ -1332,7 +1335,7 @@ class Dispatch(models.Model):
     from_Title = models.CharField(max_length=100)
     dispatch_date = models.DateField(max_length=100)
     note = models.TextField(max_length=100)
-    postal_Attachment = models.FileField(upload_to='attachments/', max_length=100)
+    postal_Attachment = models.FileField(upload_to='attachments/', max_length=100, default='photo')
 
 class Receive(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
