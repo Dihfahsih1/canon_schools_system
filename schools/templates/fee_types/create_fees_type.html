@@ -61,7 +61,7 @@
                                       {% csrf_token %}{{ form.school |as_crispy_field}}{{form.fee_title|as_crispy_field}}
                                        <label id="seeAnotherField">{{form.fee_type|as_crispy_field}}</label>
                                         <div class="form-group" id="otherFieldDiv">
-                                          {{form.class1 |as_crispy_field}}                                             {{form.class2 |as_crispy_field}}
+                                          {{form.class1|as_crispy_field}}                                         {{form.class2 |as_crispy_field}}
                                          {{ form.class3 |as_crispy_field }}
                                         </div>{{form.note |as_crispy_field }}<div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
@@ -70,9 +70,11 @@
                                     </div></form></div></div></div></div></div>
             <script type="text/javascript">
             $("#seeAnotherField").change(function() {
-            if ($(this).val() === "GeneralFee") {
-            $('#otherFieldDiv').show();}
-            else{$('#otherFieldDiv').hide();}
+            if ($(this).val() == "GeneralFee") {
+            $('#otherFieldDiv').hide();}
+            else
+            {$('#otherFieldDiv').show();}
+            console.log($(this).val())
             });
             $("#seeAnotherField").trigger("change");
             </script>
