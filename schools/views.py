@@ -4867,72 +4867,7 @@ def discount_delete(request, discount_pk):
 
     # #######################################===>END OF DISCOUNT MODULE<===############################################
 
-    # #######################################===>BEGINNING OF FEE TYPE MODULE<===######################################
 
-
-class FeeTypeListView(ListView):
-    model = FeeType
-    template_name = 'fee_types/fee_type_list.html'
-    context_object_name = 'fee_types'
-
-
-class FeeTypeCreateView(CreateView):
-    model = FeeType
-    template_name = 'fee_types/fee_type_create.html'
-    fields = ('school', 'fee_type', 'fee_title', 'note')
-
-    def form_valid(self, form):
-        fee_type = form.save(commit=False)
-        fee_type.save()
-        return redirect('fee_type_list')
-
-
-class FeeTypeUpdateView(UpdateView):
-    model = FeeType
-    template_name = 'fee_types/update_fee_type.html'
-    pk_url_kwarg = 'fee_type_pk'
-    fields = ('school', 'fee_type', 'fee_title', 'note')
-
-    def form_valid(self, form):
-        fee_type = form.save(commit=False)
-        fee_type.save()
-        return redirect('fee_type_list')
-
-
-def save_fee_type_form(request, form, template_name):
-    data = dict()
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            data['form_is_valid'] = True
-            fee_types = FeeType.objects.all()
-            data['html_fee_type_list'] = render_to_string('fee_types/includes/partial_fee_type_list.html', {
-                'fee_types': fee_types
-            })
-        else:
-            data['form_is_valid'] = False
-    context = {'form': form}
-    data['html_form'] = render_to_string(template_name, context, request=request)
-    return JsonResponse(data)
-
-
-def fee_type_delete(request, fee_type_pk):
-    fee_type = get_object_or_404(FeeType, pk=fee_type_pk)
-    data = dict()
-    if request.method == 'POST':
-        fee_type.delete()
-        data['form_is_valid'] = True
-        fee_types = FeeType.objects.all()
-        data['html_fee_type_list'] = render_to_string('fee_types/includes/partial_fee_type_list.html', {
-            'fee_types': fee_types
-        })
-    else:
-        context = {'fee_type': fee_type}
-        data['html_form'] = render_to_string('fee_types/includes/partial_fee_type_delete.html',
-                                             context,
-                                             request=request,
-                                             )
-    return JsonResponse(data)
 
 
 # #######################################===>END OF FEE TYPE MODULE<===############################################
@@ -6149,3 +6084,81 @@ def load_subjects(request):
     classroom_id = request.GET.get('classroom')
     subjects = Subject.objects.filter(classroom_id=classroom_id).order_by('subject_name')
     return render(request, 'filter/subject_dropdown_list_options.html', {'subjects': subjects})
+
+    # #######################################===>BEGINNING OF FEE TYPE MODULE<===######################################
+
+
+class FeeTypeListView(ListView):
+    model = FeeType
+    template_name = 'fee_types/fee_type_list.html'
+    context_object_name = 'fee_types'
+
+
+class FeeTypeCreateView(CreateView):
+    model = FeeType
+    template_name = 'fee_types/fee_type_create.html'
+    fields = ('school', 'fee_type', 'fee_title', 'note')
+
+    def form_valid(self, form):
+        fee_type = form.save(commit=False)
+        fee_type.save()
+        return redirect('fee_type_list')
+
+
+class FeeTypeUpdateView(UpdateView):
+    model = FeeType
+    template_name = 'fee_types/update_fee_type.html'
+    pk_url_kwarg = 'fee_type_pk'
+    fields = ('school', 'fee_type', 'fee_title', 'note')
+
+    def form_valid(self, form):
+        fee_type = form.save(commit=False)
+        fee_type.save()
+        return redirect('fee_type_list')
+
+
+def save_fee_type_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            fee_types = FeeType.objects.all()
+            data['html_fee_type_list'] = render_to_string('fee_types/includes/partial_fee_type_list.html', {
+                'fee_types': fee_types
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def fee_type_delete(request, fee_type_pk):
+    fee_type = get_object_or_404(FeeType, pk=fee_type_pk)
+    data = dict()
+    if request.method == 'POST':
+        fee_type.delete()
+        data['form_is_valid'] = True
+        fee_types = FeeType.objects.all()
+        data['html_fee_type_list'] = render_to_string('fee_types/includes/partial_fee_type_list.html', {
+            'fee_types': fee_types
+        })
+    else:
+        context = {'fee_type': fee_type}
+        data['html_form'] = render_to_string('fee_types/includes/partial_fee_type_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)
+
+def create_fees_type(request):
+      if request.method=="POST":
+          form=AddFeeTypeForm(request.POST,request.FILES)
+          if form.is_valid():
+              form.save()
+              return redirect('create_fees_type')
+      else:
+          form = AddFeeTypeForm()
+          context = {'form': form}
+          return render(request, 'fee_types/create_fees_type.html', context)
