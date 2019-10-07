@@ -81,13 +81,23 @@
                                       {{ form.school |as_crispy_field}}
 
                                       {{form.fee_title|as_crispy_field}}
-                                       <div id="seeAnotherField">{{form.fee_type}}
-                                       </div>
-                                       <div id="otherFieldDiv">
-                                           <div id="otherField">{{form.class1 |as_crispy_field}}</div>
-                                           <div id=otherField">{{form.class2 |as_crispy_field}}</div>
-                                           <div id="otherField">{{ form.class3 |as_crispy_field }}</div>
-                                        </div>
+                                      <div class="form-group">
+                                        <label for="seeAnotherField">{{form.fee_type}}</label>
+                                        <select class="form-control" id="seeAnotherField">
+                                              <option value="{{form.General Fee}}">General Fee.</option>
+                                              <option value="{{form.Hostel}}">Hostel!</option>
+                                              <option value="{{form.Transport}}">Transport!</option>
+                                        </select>
+                                      </div>
+
+                                      <div class="form-group" id="otherFieldDiv">
+                                       <label for="otherField">Here you go!</label>
+                                       <select class="form-control" id="otherField">
+                                         <div id="otherField">{{form.class1 |as_crispy_field}}</div>
+                                         <div id=otherField">{{form.class2 |as_crispy_field}}</div>
+                                         <div id="otherField">{{ form.class3 |as_crispy_field }}</div>
+                                       </select>
+                                     </div>
                                       {{f.note }}
 
                                     <div class="form-group">
@@ -96,7 +106,20 @@
                                         </div>
                                     </div>
                                 </form>
-
+                                <script>
+                                    $("#seeAnotherField").change(function() {
+                                    if ($(this).val() == "General Fee") {
+                                    $('#otherFieldDiv').show();
+                                    $('#otherField').attr('required', '');
+                                    $('#otherField').attr('data-error', 'This field is required.');
+                                    } else {
+                                    $('#otherFieldDiv').hide();
+                                    $('#otherField').removeAttr('required');
+                                    $('#otherField').removeAttr('data-error');
+                                    }
+                                    });
+                                    $("#seeAnotherField").trigger("change");
+                                </script>
                             </div>
                         </div>
 
@@ -180,18 +203,3 @@
     <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
     <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
 {% endblock javascripts %}
-
-<script>
-    $("#seeAnotherField").change(function() {
-    if ($(this).val() == "General Fee") {
-    $('#otherFieldDiv').show();
-    $('#otherField').attr('required', '');
-    $('#otherField').attr('data-error', 'This field is required.');
-    } else {
-    $('#otherFieldDiv').hide();
-    $('#otherField').removeAttr('required');
-    $('#otherField').removeAttr('data-error');
-    }
-    });
-    $("#seeAnotherField").trigger("change");
-</script>
