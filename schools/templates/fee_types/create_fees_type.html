@@ -79,16 +79,16 @@
                                               accept-charset="utf-8">
                                               {% csrf_token %}
                                               {% for f in form %}
-                                              {% form.school %}
+                                              {{ f.school}}
 
-                                              {% form.fee_title %}
-                                               <div id="seeAnotherField">{%   form.fee_type %}</div>
+                                              {{f.fee_title}}
+                                               <div id="seeAnotherField">{{fee_type}}</div>
                                                <div id="otherFieldDiv">
-                                                   <div id="otherField">{%   form.class1 %}</div>
-                                                   <div id=otherField">{%   form.class2 %}</div>
-                                                   <div id="otherField">{%   form.class3 %}</div>
+                                                   <div id="otherField">{{f.class1}}</div>
+                                                   <div id=otherField">{{f.class2}}</div>
+                                                   <div id="otherField">{{ f.class3 }}</div>
                                                 </div>
-                                              {%  form.note %}
+                                              {{f.note }}
                                              {% endfor %}
 
                                             <div class="form-group">
