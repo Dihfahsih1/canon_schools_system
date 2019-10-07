@@ -78,17 +78,18 @@
                                               enctype="multipart/form-data"
                                               accept-charset="utf-8">
                                               {% csrf_token %}
-                                              {% bootstrap_field form.school %}
+                                              {% for f in form %}
+                                              {% form.school %}
 
-                                              {% bootstrap_field form.fee_title %}
-                                               <div id="seeAnotherField">{% bootstrap_field  form.fee_type %}</div>
+                                              {% form.fee_title %}
+                                               <div id="seeAnotherField">{%   form.fee_type %}</div>
                                                <div id="otherFieldDiv">
-                                                   <div id="otherField">{% bootstrap_field  form.class1 %}</div>
-                                                   <div id=otherField">{% bootstrap_field  form.class2 %}</div>
-                                                   <div id="otherField">{% bootstrap_field  form.class3 %}</div>
+                                                   <div id="otherField">{%   form.class1 %}</div>
+                                                   <div id=otherField">{%   form.class2 %}</div>
+                                                   <div id="otherField">{%   form.class3 %}</div>
                                                 </div>
-                                              {% bootstrap_field form.note %}
-
+                                              {%  form.note %}
+                                             {% endfor %}
 
                                             <div class="form-group">
                                                 <div class="col-sm-offset-2 col-sm-10">

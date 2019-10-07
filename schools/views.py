@@ -6154,11 +6154,11 @@ def fee_type_delete(request, fee_type_pk):
 
 def create_fees_type(request):
       if request.method=="POST":
-          form=AddFeeTypeForm(request.POST,request.FILES)
+          form=FeeTypeForm(request.POST,request.FILES)
           if form.is_valid():
               form.save()
               return redirect('create_fees_type')
       else:
-          form = AddFeeTypeForm()
+          form = FeeTypeForm()
           context = {'form': form}
           return render(request, 'fee_types/create_fees_type.html', context)
