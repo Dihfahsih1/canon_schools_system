@@ -11,16 +11,6 @@
 {% block stylesheets %}
     {{ block.super }}
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 {% endblock stylesheets %}
 
 {% block content %}
@@ -79,19 +69,15 @@
                                       accept-charset="utf-8">
                                       {% csrf_token %}
                                       {{ form.school |as_crispy_field}}
-
                                       {{form.fee_title|as_crispy_field}}
-                                      <div class="form-group">
-                                        <label for="seeAnotherField">{{form.fee_type|as_crispy_field}}</label>
-                                      </div>
-
-                                      <div class="form-group" id="otherFieldDiv">
-
-                                         <div id=otherField">{{form.class2 |as_crispy_field}}</div>
-                                         <div id="otherField">{{form.class1 |as_crispy_field}}</div>
-                                         <div id="otherField">{{ form.class3 |as_crispy_field }}</div>
-
-                                      {{form.note |as_crispy_field }}
+                                      <div class="form-group" id="seeAnotherField">
+                                       <label>{{form.fee_type|as_crispy_field}}</label> </div>
+                                        <div class="form-group" id="otherFieldDiv">
+                                           <div id=otherField">{{form.class2 |as_crispy_field}}</div>
+                                           <div id="otherField">{{form.class1 |as_crispy_field}}</div>
+                                           <div id="otherField">{{ form.class3 |as_crispy_field }}</div>
+                                        </div>
+                                        {{form.note |as_crispy_field }}
 
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
@@ -99,103 +85,32 @@
                                         </div>
                                     </div>
                                 </form>
-                                <script>
-                                    $("#seeAnotherField").change(function() {
-                                    if ($(this).val() == "GeneralFee") {
-                                    $('#otherFieldDiv').show();
-                                    $('#otherField').attr('required', '');
-                                    $('#otherField').attr('required', '');
-                                    $('#otherField').attr('data-error', 'This field is required.');
 
-                                    } else {
-                                    $('#otherFieldDiv').hide();
-                                    $('#otherField').removeAttr('required');
-                                    $('#otherField').removeAttr('required');
-                                    $('#otherField').removeAttr('data-error');
-                                    }
-                                    });
-                                    $("#seeAnotherField").trigger("change");
-                                </script>
                             </div>
                         </div>
-
-                        <!-- THE MODAL WE WILL BE USING -->
-                        <div class="modal fade" id="modal-fee_type">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
+                    <script type="text/javascript">
+                    $("#seeAnotherField").change(function() {
+                    if ($(this).val() == "GeneralFee") {
+                    $('#otherFieldDiv').show();
+                    $('#otherField').attr('required', 'This field is required.');
+                    $('#otherField').attr('required', 'This field is required.');
+                    $('#otherField').attr('data-error', 'This field is required.');
+
+                    } else {
+                    $('#otherFieldDiv').hide();
+                    $('#otherField').removeAttr('required');
+                    $('#otherField').removeAttr('required');
+                    $('#otherField').removeAttr('data-error');
+                    }
+                    });
+                    $("#seeAnotherField").trigger("change");
+                    </script>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#fee_type-table').DataTable({
-            dom: 'Bfrtip',
-            iDisplayLength: 15,
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5',
-                'print',
-                'pageLength'
-            ],
-            search: true,
-            responsive: true
-        });
-    });
-
-</script>
 </div>
 
 {% endblock content %}
-
-{% block javascripts %}
-
-    {{ block.super }}
-    <!-- Datatables -->
-    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
-    <!-- Chart.js -->
-    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
-    <!-- Skycons -->
-    <script src="/static/vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="/static/vendors/Flot/jquery.flot.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins -->
-    <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
-    <!-- DateJS -->
-    <script src="/static/vendors/DateJS/build/date.js"></script>
-    <!-- JQVMap -->
-    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-{% endblock javascripts %}
