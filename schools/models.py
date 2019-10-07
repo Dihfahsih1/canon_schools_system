@@ -1069,7 +1069,6 @@ class FeeType(models.Model):
           ('Hostel', 'Hostel'),
           ('Transport', 'Transport'))
     fee_type = models.CharField(max_length=100, blank=False, choices=IS)
-
     fee_title = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
     class1=models.CharField(max_length=100, default='0.0')

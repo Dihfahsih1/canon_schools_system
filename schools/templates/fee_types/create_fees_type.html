@@ -24,118 +24,117 @@
 {% endblock stylesheets %}
 
 {% block content %}
-    <div class="right_col" role="main">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2><i class="fa fa-calculator"></i><small> Manage Fee Type</small></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
+<div class="right_col" role="main">
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><i class="fa fa-calculator"></i><small> Manage Fee Type</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
 
-                    <div class="x_content quick-link">
-                        <span>Quick Link:</span>
-                        <a href="#">Discount</a>
-                        | <a href="#">Fee Type</a>
-                        | <a href="#">Fee Collection</a>
-                        | <a href="#">Manage Invoice</a>
-                        | <a href="#">Due Invoice</a>
-                        | <a href="#">Due Fee Email</a>
-                        | <a href="#">Due Fee SMS</a>
-                        | <a href="#">Income Head</a>
-                        | <a href="#">Income</a>
-                        | <a href="#">Expenditure Head</a>
-                        | <a href="#">Expenditure</a>
-                    </div>
+            <div class="x_content quick-link">
+                <span>Quick Link:</span>
+                <a href="#">Discount</a>
+                | <a href="#">Fee Type</a>
+                | <a href="#">Fee Collection</a>
+                | <a href="#">Manage Invoice</a>
+                | <a href="#">Due Invoice</a>
+                | <a href="#">Due Fee Email</a>
+                | <a href="#">Due Fee SMS</a>
+                | <a href="#">Income Head</a>
+                | <a href="#">Income</a>
+                | <a href="#">Expenditure Head</a>
+                | <a href="#">Expenditure</a>
+            </div>
 
 
-                    <div class="x_content">
-                        <div class="" data-example-id="togglable-tabs">
+            <div class="x_content">
+                <div class="" data-example-id="togglable-tabs">
 
-                            <ul class="nav nav-tabs bordered">
-                                 <li role="presentation"><a href="{% url 'fee_type_list' %}"><i
-                                        class="fa fa-list-ol"></i> Fee Type List</a>
-                                </li>
-                                <li role="presentation" class="active"><a href="{% url 'fee_type_create' %}"><i
-                                        class="fa fa-plus-square-o"></i> Add
-                                    Fee Type</a>
-                                </li>
-                            </ul>
-                            <br/>
+                    <ul class="nav nav-tabs bordered">
+                         <li role="presentation"><a href="{% url 'fee_type_list' %}"><i
+                                class="fa fa-list-ol"></i> Fee Type List</a>
+                        </li>
+                        <li role="presentation" class="active"><a href="{% url 'fee_type_create' %}"><i
+                                class="fa fa-plus-square-o"></i> Add
+                            Fee Type</a>
+                        </li>
+                    </ul>
+                    <br/>
 
-                            <div class="tab-content">
-                                <div class="tab-pane fade in active" id="tab_fee_type_list">
-                                    <div class="x_content">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab_fee_type_list">
+                            <div class="x_content">
+                               {% load crispy_forms_tags %}
+                                <form class="form-horizontal form-label-left"
+                                      role="form"
+                                      action=""
+                                      method="post"
+                                      enctype="multipart/form-data"
+                                      accept-charset="utf-8">
+                                      {% csrf_token %}
+                                      {{ form.school |as_crispy_field}}
 
-                                        <form class="form-horizontal form-label-left"
-                                              role="form"
-                                              action=""
-                                              method="post"
-                                              enctype="multipart/form-data"
-                                              accept-charset="utf-8">
-                                              {% csrf_token %}
-                                              {% for f in form %}
-                                              {{ f.school}}
+                                      {{form.fee_title|as_crispy_field}}
+                                       <div id="seeAnotherField">{{form.fee_type}}
+                                       </div>
+                                       <div id="otherFieldDiv">
+                                           <div id="otherField">{{form.class1 |as_crispy_field}}</div>
+                                           <div id=otherField">{{form.class2 |as_crispy_field}}</div>
+                                           <div id="otherField">{{ form.class3 |as_crispy_field }}</div>
+                                        </div>
+                                      {{f.note }}
 
-                                              {{f.fee_title}}
-                                               <div id="seeAnotherField">{{fee_type}}</div>
-                                               <div id="otherFieldDiv">
-                                                   <div id="otherField">{{f.class1}}</div>
-                                                   <div id=otherField">{{f.class2}}</div>
-                                                   <div id="otherField">{{ f.class3 }}</div>
-                                                </div>
-                                              {{f.note }}
-                                             {% endfor %}
-
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-10">
-                                                    <button type="submit" class="btn btn-success">Submit</button>
-                                                </div>
-                                            </div>
-                                        </form>
-
-                                    </div>
-                                </div>
-
-                                <!-- THE MODAL WE WILL BE USING -->
-                                <div class="modal fade" id="modal-fee_type">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-success">Submit</button>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
 
                             </div>
                         </div>
+
+                        <!-- THE MODAL WE WILL BE USING -->
+                        <div class="modal fade" id="modal-fee_type">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#fee_type-table').DataTable({
-                    dom: 'Bfrtip',
-                    iDisplayLength: 15,
-                    buttons: [
-                        'copyHtml5',
-                        'excelHtml5',
-                        'csvHtml5',
-                        'pdfHtml5',
-                        'print',
-                        'pageLength'
-                    ],
-                    search: true,
-                    responsive: true
-                });
-            });
-
-        </script>
     </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#fee_type-table').DataTable({
+            dom: 'Bfrtip',
+            iDisplayLength: 15,
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5',
+                'print',
+                'pageLength'
+            ],
+            search: true,
+            responsive: true
+        });
+    });
+
+</script>
+</div>
 
 {% endblock content %}
 
