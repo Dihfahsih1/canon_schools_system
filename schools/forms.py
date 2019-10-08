@@ -838,10 +838,10 @@ class InvoiceForm(forms.ModelForm):
         model = Invoice
         fields = ('school', 'classroom', 'student', 'fee_type', 'fee_amount', 'discount', 'month',
                   'is_discount_applicable', 'paid_status', 'gross_amount', 'invoice_number', 'note', 'date')
-
         widgets = {
             'note': Textarea(attrs={'cols': 30, 'rows': 2}),
             'month': MonthPickerInput(),
+            'gross_amount': disabled=True,
         }
 
     def __init__(self, *args, **kwargs):
