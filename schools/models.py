@@ -1071,9 +1071,9 @@ class FeeType(models.Model):
     fee_type = models.CharField(max_length=100, blank=False, choices=IS)
     fee_title = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
-    class1=models.CharField(max_length=100, default='0.0')
-    class2=models.CharField(max_length=100, default='0.0')
-    class3=models.CharField(max_length=100, default='0.0')
+    class1=models.CharField(max_length=100, default='Shs 0.0')
+    class2=models.CharField(max_length=100, default='Shs 0.0')
+    class3=models.CharField(max_length=100, default='Shs 0.0')
 
 
 class Invoice(models.Model):
