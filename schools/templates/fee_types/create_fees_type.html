@@ -55,12 +55,12 @@
 
               <div class="tab-content">
                   <div class="tab-pane fade in active" id="tab_fee_type_list">
-                      <div class="x_content">
+                      <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" >
                          {% load crispy_forms_tags %}
                           <form class="form-horizontal form-label-left"role="form" action="" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
                                 {% csrf_token %}{{ form.school |as_crispy_field}}{{form.fee_title|as_crispy_field}}
-                                 <label>{{form.fee_type|as_crispy_field}}</label>
-                                 <div id="p">
+                                 <label onchange="show_class_amount(this.value=false)" >{{form.fee_type|as_crispy_field}}</label>
+                                 <div id="p" class="bg-warning">
                                    Instruction:<br>
                                            1.  Hostel Fee Amount Will be define in Hostel Room creation time.
                                              From here must be create Hostel Fee Title to create Hostel Fee Invoice.<br>
@@ -79,12 +79,23 @@
                              </div></form></div></div></div></div></div>
          {% block javascript %}
             <script type="text/javascript">
-            $("#id_fee_type").change(function() {
-              if ($(this).val() === "GeneralFee") {
+            function show_class_amount(id_fee_type, is_edit){
+              if (id_fee_type == "GeneralFee" && is_edit == true) {
                   $('#id_class1').show();
                   $('#id_class2').show();
                   $('#id_class3').show();
                   $('#p').hide(); }
+              if (id_fee_type == "GeneralFee" && is_edit == false) {
+                  $('#id_class1').show();
+                  $('#id_class2').show();
+                  $('#id_class3').show();
+                  $('#p').hide(); }
+
+              if (id_fee_type != "GeneralFee" && id_fee_type != '') {
+                  $('#id_class1').hide();
+                  $('#id_class2').hide();
+                  $('#id_class3').hide();
+                  $('#p').show(); }
             else if ($(this).val() === "Hostel")
             {
             $('#p').show();
