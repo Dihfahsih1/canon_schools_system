@@ -63,6 +63,7 @@
                                               data-classrooms-url="{% url 'ajax_load_classrooms' %}"
                                               data-students-url="{% url 'ajax_load_students' %}"
                                               data-fee_types-url="{% url 'ajax_load_fee_types' %}"
+                                              data-fee_amount-url="{% url 'ajax_load_fee_amount' %}"
                                               method="post"
                                               enctype="multipart/form-data"
                                               accept-charset="utf-8">{% csrf_token %}
@@ -178,6 +179,21 @@
 
             });
 
+            $("#id_school").change(function () {
+                var url = $("#InvoiceForm").attr("data-fee_amount-url");
+                var feeetypeId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'fee_type': feeetypeId
+                    },
+                    success: function (data) {
+                        $("#id_fee_amount").html(data);
+                    }
+                });
+
+            });
 
             $("#id_classroom").change(function () {
                 var url = $("#InvoiceForm").attr("data-students-url");
