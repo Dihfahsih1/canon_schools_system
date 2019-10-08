@@ -6058,7 +6058,7 @@ def load_fee_types(request):
 #load fee amount depending on the selection in fee types field
 def load_fee_amount(request):
     fee_type_id = request.GET.get('fee_type')
-    fee_amounts = FeeType.objects.filter(fee_amount_id=fee_type_id).order_by('fee_amount')
+    fee_amounts = FeeType.objects.filter(Class_Amount_id=fee_type_id).order_by('Class_Amount')
     return render(request, 'filter/fee_amount_dropdown_list_options.html', {'fee_amounts': fee_amounts})
 
 def load_sections(request):
