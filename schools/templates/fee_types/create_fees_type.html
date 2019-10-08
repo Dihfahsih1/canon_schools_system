@@ -53,25 +53,23 @@
                     </ul>
                     <br/>
 
-          <div class="tab-content">
-              <div class="tab-pane fade in active" id="tab_fee_type_list">
-                  <div class="x_content">
-                     {% load crispy_forms_tags %}
-                      <form class="form-horizontal form-label-left"role="form" action="" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
-                            {% csrf_token %}{{ form.school |as_crispy_field}}{{form.fee_title|as_crispy_field}}
-                             <label>{{form.fee_type|as_crispy_field}}</label>
+              <div class="tab-content">
+                  <div class="tab-pane fade in active" id="tab_fee_type_list">
+                      <div class="x_content">
+                         {% load crispy_forms_tags %}
+                          <form class="form-horizontal form-label-left"role="form" action="" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
+                                {% csrf_token %}{{ form.school |as_crispy_field}}{{form.fee_title|as_crispy_field}}
+                                 <label>{{form.fee_type|as_crispy_field}}</label>
 
-                              {{form.class1|as_crispy_field}}
-                               {{form.class2 |as_crispy_field}}
+                                <div class="col-9">{{form.class1|as_crispy_field}}                                         {{form.class2 |as_crispy_field}}
+                                   {{ form.class3 |as_crispy_field }}</div>
+                                  {{form.note |as_crispy_field }}
+                                  <div class="form-group">
+                                  <div class="col-sm-offset-2 col-sm-10">
+                                      <button type="submit" class="btn btn-success">Submit</button>
+                                  </div>
 
-                              {{ form.class3 |as_crispy_field }}
-                              {{form.note |as_crispy_field }}
-                              <div class="form-group">
-                              <div class="col-sm-offset-2 col-sm-10">
-                                  <button type="submit" class="btn btn-success">Submit</button>
-                              </div>
-
-                         </div></form></div></div></div></div></div>
+                             </div></form></div></div></div></div></div>
          {% block javascript %}
             <script type="text/javascript">
             $("#id_fee_type").change(function() {
@@ -80,15 +78,12 @@
                   $('#id_class2').show();
                   $('#id_class3').show();}
             else
-            "{
-            $('#id_class1').hide();
+            {$('#id_class1').hide();
             $('#id_class2').hide();
-            $('#id_class3').hide();"}
+            $('#id_class3').hide();}
 
             });
-            $(document).ready(function() {
-            $('#id_fee_type').trigger('change');
-            })
+            $("#id_fee_type").trigger("change");
             </script>
           {% endblock %}
         </div>
