@@ -179,14 +179,14 @@
 
             });
 
-            $("#id_school").change(function () {
+            $("#id_classroom").change(function () {
                 var url = $("#InvoiceForm").attr("data-fee_amount-url");
-                var feeetypeId = $(this).val();
+                var classroomId = $(this).val();
 
                 $.ajax({
                     url: url,
                     data: {
-                        'fee_type': feeetypeId
+                        'classrom': classroomId
                     },
                     success: function (data) {
                         $("#id_fee_amount").html(data);
