@@ -179,21 +179,7 @@
 
             });
 
-            $("#id_classroom").change(function () {
-                var url = $("#InvoiceForm").attr("data-fee_amount-url");
-                var classroomId = $(this).val();
 
-                $.ajax({
-                    url: url,
-                    data: {
-                        'classrom': classroomId
-                    },
-                    success: function (data) {
-                        $("#id_fee_amount").html(data);
-                    }
-                });
-
-            });
 
             $("#id_classroom").change(function () {
                 var url = $("#InvoiceForm").attr("data-students-url");
@@ -208,6 +194,22 @@
                         $("#id_student").html(data);
                     }
                 });
+            });
+
+            $("#id_classroom").change(function () {
+                var url = $("#InvoiceForm").attr("data-fee_amount-url");
+                var classroomId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'classrom': classroomId
+                    },
+                    success: function (data) {
+                        $("#id_fee_amount").html(data);
+                    }
+                });
+
             });
 
         </script>
