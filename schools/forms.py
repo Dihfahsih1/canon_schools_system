@@ -670,7 +670,7 @@ class ReceiveForm(forms.ModelForm):
 class FeeTypeForm(forms.ModelForm):
     class Meta:
         model = FeeType
-        fields = ('school', 'fee_type', 'fee_title', 'note', 'class1', 'class2', 'class3')
+        fields = ('school', 'fee_type', 'fee_title', 'note', 'Class', 'Class_Ammount')
 
 
 class BulkInvoiceForm(forms.ModelForm):
