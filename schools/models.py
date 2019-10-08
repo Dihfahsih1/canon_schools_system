@@ -1088,7 +1088,7 @@ class Invoice(models.Model):
           ('No', 'No'))
     is_discount_applicable = models.CharField(max_length=100, blank=False, choices=IS)
     STATUS = (('Paid', 'Paid'),
-              ('Pending', 'Pending'))
+              ('Unpaid', 'Unpaid'))
     paid_status = models.CharField(max_length=100, blank=False, choices=STATUS)
     gross_amount = models.CharField(max_length=100)
     invoice_number = models.CharField(max_length=100)
