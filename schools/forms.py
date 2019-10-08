@@ -841,7 +841,6 @@ class InvoiceForm(forms.ModelForm):
         widgets = {
             'note': Textarea(attrs={'cols': 30, 'rows': 2}),
             'month': MonthPickerInput(),
-            'gross_amount': disabled=True,
         }
 
     def __init__(self, *args, **kwargs):
