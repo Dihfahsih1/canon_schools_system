@@ -6162,3 +6162,33 @@ def create_fees_type(request):
           form = FeeTypeForm()
           context = {'form': form}
           return render(request, 'fee_types/create_fees_type.html', context)
+
+def create_invoice (request):
+    form = InvoiceForm(request.POST or None, request.FILES or None)
+    def get_form(self):
+        form = super().get_form()
+        form.fields['date'].widget = MonthPickerInput()
+        return form
+    if form.is_valid():
+        invoice = form.save(commit=False)
+        invoice.save()
+        invoice.school = form.cleaned_data.get('school')
+        invoice.classroom = form.cleaned_data.get('classroom')
+        invoice.student = form.cleaned_data.get('student')
+        invoice.fee_type = form.cleaned_data.get('fee_type')
+        invoice.fee_amount = form.cleaned_data.get('fee_amount')
+        invoice.discount = form.cleaned_data.get('discount')
+        invoice.month = form.cleaned_data.get('month')
+        invoice.is_discount_applicable = form.cleaned_data.get('is_discount_applicable')
+        invoice.paid_status = form.cleaned_data.get('paid_status')
+        invoice.gross_amount = form.cleaned_data.get('gross_amount')
+        invoice.invoice_number = form.cleaned_data.get('invoice_number')
+        invoice.note = form.cleaned_data.get('note')
+        invoice.date = form.cleaned_data.get('date')
+        invoice.save()
+        invoice_url = reverse('invoice_list')
+        return redirect(invoice_url)
+    context = {
+        'form': form,
+    }
+    return render(request, 'invoices/create_invoice.html', context)
