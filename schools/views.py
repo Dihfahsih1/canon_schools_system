@@ -6164,6 +6164,7 @@ def create_fees_type(request):
           return render(request, 'fee_types/create_fees_type.html', context)
 
 def create_invoice (request):
+    amount = 
     form = InvoiceForm(request.POST or None, request.FILES or None)
     def get_form(self):
         form = super().get_form()

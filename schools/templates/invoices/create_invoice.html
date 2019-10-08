@@ -1,0 +1,215 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Invoice {% endblock title %}
+
+{% load static i18n %}
+
+{% load widget_tweaks %}
+
+{% block javascript %}
+    <script src="{% static 'schools/js/invoices.js' %}"></script>
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2><i class="fa fa fa-calendar-check-o"></i><small> Manage Invoice</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content quick-link">
+                        <span>Quick Link:</span>
+                        <a href="#">Discount</a>
+                        | <a href="#">Fee Type</a>
+                        | <a href="#">Fee Collection</a>
+                        | <a href="#">Manage Invoice</a>
+                        | <a href="#">Due Invoice</a>
+                        | <a href="#">Due Free Email</a>
+                        | <a href="#">Due Free SMS</a>
+                        | <a href="#">Income Head</a>
+                        | <a href="#">Income</a>
+                        | <a href="#">Expenditure Head</a>
+                        | <a href="#">Expenditure</a>
+                    </div>
+
+
+                    <div class="x_content">
+                        <div class="" data-example-id="togglable-tabs">
+
+                            <ul class="nav nav-tabs bordered">
+                                <li role="presentation"><a href="{% url 'invoice_list' %}"><i
+                                        class="fa fa-list-ol"></i> Invoice List</a>
+                                </li>
+                                <li role="presentation" class="active"><a href="{% url 'invoice_create' %}"><i
+                                        class="fa fa-plus-square-o"></i> Create Invoice</a>
+                                </li>
+                            </ul>
+                            <br/>
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab_invoice_list">
+                                    <div class="x_content">
+
+                                        <form class="form-horizontal form-label-left"
+                                              id="InvoiceForm"
+                                              data-classrooms-url="{% url 'ajax_load_classrooms' %}"
+                                              data-students-url="{% url 'ajax_load_students' %}"
+                                              data-fee_types-url="{% url 'ajax_load_fee_types' %}"
+                                              method="post"
+                                              enctype="multipart/form-data"
+                                              accept-charset="utf-8">{% csrf_token %}
+
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.school|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.classroom|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.student|as_crispy_field }}
+                                                </div>
+
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.fee_type|as_crispy_field }}
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.fee_amount|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.month|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.is_discount_applicable|as_crispy_field }}
+                                                </div>
+
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.paid_status|as_crispy_field }}
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12 mb-0">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.note|as_crispy_field }}
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#invoice-table').DataTable({
+                    dom: 'Bfrtip',
+                    iDisplayLength: 15,
+                    buttons: [
+                        'copyHtml5',
+                        'excelHtml5',
+                        'csvHtml5',
+                        'pdfHtml5',
+                        'print',
+                        'pageLength'
+                    ],
+                    search: true,
+                    responsive: true
+                });
+            });
+
+            $("#id_school").change(function () {
+                var url = $("#InvoiceForm").attr("data-classrooms-url");
+                var schoolId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_classroom").html(data);
+                    }
+                });
+
+            });
+
+            $("#id_school").change(function () {
+                var url = $("#InvoiceForm").attr("data-fee_types-url");
+                var schoolId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_fee_type").html(data);
+                    }
+                });
+
+            });
+
+
+            $("#id_classroom").change(function () {
+                var url = $("#InvoiceForm").attr("data-students-url");
+                var classroomId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'classroom': classroomId
+                    },
+                    success: function (data) {
+                        $("#id_student").html(data);
+                    }
+                });
+            });
+
+        </script>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    {{ block.super }}
+    <!-- Datatables -->
+  <!-- DateJS -->
+    <script src="/static/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+
+
+
+{% endblock javascripts %}
