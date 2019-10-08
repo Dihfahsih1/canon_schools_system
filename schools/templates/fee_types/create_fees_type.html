@@ -60,10 +60,17 @@
                           <form class="form-horizontal form-label-left"role="form" action="" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
                                 {% csrf_token %}{{ form.school |as_crispy_field}}{{form.fee_title|as_crispy_field}}
                                  <label>{{form.fee_type|as_crispy_field}}</label>
-
-                                <div class="col-9">{{form.class1|as_crispy_field}}                                         {{form.class2 |as_crispy_field}}
-                                   {{ form.class3 |as_crispy_field }}</div>
+                                 <div id="p">
+                                   Instruction:<br>
+                                           1.  Hostel Fee Amount Will be define in Hostel Room creation time.
+                                             From here must be create Hostel Fee Title to create Hostel Fee Invoice.<br>
+                                           2.  Transport Fee Amount Will be define in Transport Route creation time.<br>
+                                           3.  From here must be create Transport Fee Title to create Transport Fee Invoice.<br>
+                                 </div>
+                              {{form.class1|as_crispy_field}}                                            {{form.class2 |as_crispy_field}}
+                                   {{ form.class3 |as_crispy_field }}
                                   {{form.note |as_crispy_field }}
+
                                   <div class="form-group">
                                   <div class="col-sm-offset-2 col-sm-10">
                                       <button type="submit" class="btn btn-success">Submit</button>
@@ -76,12 +83,28 @@
               if ($(this).val() === "GeneralFee") {
                   $('#id_class1').show();
                   $('#id_class2').show();
-                  $('#id_class3').show();}
-            else
-            {$('#id_class1').hide();
+                  $('#id_class3').show();
+                  $('#p').hide(); }
+            else if ($(this).val() === "Hostel")
+            {
+            $('#p').show();
+            $('#id_class1').hide();
             $('#id_class2').hide();
             $('#id_class3').hide();}
 
+            else if ($(this).val() === "Transport")
+            {
+            $('#p').show();
+            $('#id_class1').hide();
+            $('#id_class2').hide();
+            $('#id_class3').hide();}
+
+            else
+            {
+            $('#p').hide();
+            $('#id_class1').hide();
+            $('#id_class2').hide();
+            $('#id_class3').hide();}
             });
             $("#id_fee_type").trigger("change");
             </script>
