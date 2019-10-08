@@ -55,11 +55,11 @@
 
               <div class="tab-content">
                   <div class="tab-pane fade in active" id="tab_fee_type_list">
-                      <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" >
+                      <div class="col-lg-6" style="margin-left:25%">
                          {% load crispy_forms_tags %}
                           <form class="form-horizontal form-label-left"role="form" action="" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
                                 {% csrf_token %}{{ form.school |as_crispy_field}}{{form.fee_title|as_crispy_field}}
-                                 <label onchange="show_class_amount(this.value=false)" >{{form.fee_type|as_crispy_field}}</label>
+                                 <label>{{form.fee_type|as_crispy_field}}</label>
                                  <div id="p" class="bg-warning">
                                    Instruction:<br>
                                            1.  Hostel Fee Amount Will be define in Hostel Room creation time.
@@ -67,8 +67,8 @@
                                            2.  Transport Fee Amount Will be define in Transport Route creation time.<br>
                                            3.  From here must be create Transport Fee Title to create Transport Fee Invoice.<br>
                                  </div>
-                              {{form.class1|as_crispy_field}}                                            {{form.class2 |as_crispy_field}}
-                                   {{ form.class3 |as_crispy_field }}
+                              <div class="hiding" >{{form.class1|as_crispy_field}}                                            {{form.class2 |as_crispy_field}}
+                                   {{ form.class3 |as_crispy_field }}</div>
                                   {{form.note |as_crispy_field }}
 
                                   <div class="form-group">
@@ -79,23 +79,12 @@
                              </div></form></div></div></div></div></div>
          {% block javascript %}
             <script type="text/javascript">
-            function show_class_amount(id_fee_type, is_edit){
-              if (id_fee_type == "GeneralFee" && is_edit == true) {
+            $("#id_fee_type").change(function() {
+              if ($(this).val() === "GeneralFee") {
                   $('#id_class1').show();
                   $('#id_class2').show();
                   $('#id_class3').show();
                   $('#p').hide(); }
-              if (id_fee_type == "GeneralFee" && is_edit == false) {
-                  $('#id_class1').show();
-                  $('#id_class2').show();
-                  $('#id_class3').show();
-                  $('#p').hide(); }
-
-              if (id_fee_type != "GeneralFee" && id_fee_type != '') {
-                  $('#id_class1').hide();
-                  $('#id_class2').hide();
-                  $('#id_class3').hide();
-                  $('#p').show(); }
             else if ($(this).val() === "Hostel")
             {
             $('#p').show();
@@ -112,6 +101,7 @@
 
             else
             {
+            $('.hiding').hide();  
             $('#p').hide();
             $('#id_class1').hide();
             $('#id_class2').hide();
