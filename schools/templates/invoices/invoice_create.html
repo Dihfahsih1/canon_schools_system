@@ -163,7 +163,6 @@
             $("#id_school").change(function () {
                 var url = $("#InvoiceForm").attr("data-classrooms-url");
                 var schoolId = $(this).val();
-
                 $.ajax({
                     url: url,
                     data: {
@@ -258,4 +257,3 @@
 
 
 {% endblock javascripts %}
-

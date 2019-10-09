@@ -57,8 +57,15 @@
                   <div class="tab-pane fade in active" id="tab_fee_type_list">
                       <div class="col-lg-6" style="margin-left:25%">
                          {% load crispy_forms_tags %}
-                          <form class="form-horizontal form-label-left"role="form" action="" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
-                                {% csrf_token %}{{ form.school |as_crispy_field}}{{form.fee_title|as_crispy_field}}
+                          <form class="form-horizontal form-label-left"role="form" action="" method="post"
+                          id="FeeTypeForm"
+                          data-classrooms-url="{% url 'ajax_Feesload_classrooms' %}"
+                          data-students-url="{% url 'ajax_Feesload_students' %}"
+                          data-fee_types-url="{% url 'ajax_Feesload_fee_types' %}"
+                            enctype="multipart/form-data" accept-charset="utf-8">
+                                {% csrf_token %}
+                                {{ form.school |as_crispy_field}}
+                                {{form.fee_title|as_crispy_field}}
                                  <label>{{form.fee_type|as_crispy_field}}</label><br><br>
                                  <div id="p" class="bg-warning">
                                    Instruction:<br>
@@ -85,10 +92,8 @@
                                       <td>{{ fee_type.note }}</td>
                                     </tbody>
                                 </table>
-
                                 </div>
                                   {{form.note |as_crispy_field }}
-
                                   <div class="form-group">
                                   <div class="col-sm-offset-2 col-sm-10">
                                       <button type="submit" class="btn btn-success">Submit</button>
@@ -100,6 +105,21 @@
             {% endcomment %}
          {% block javascript %}
             <script type="text/javascript">
+              $("#id_school").change(function () {
+                  var url = $("#FeeTypeForm").attr("data-classrooms-url");
+                  var schoolId = $(this).val();
+                  $.ajax({
+                      url: url,
+                      data: {
+                          'school': schoolId
+                      },
+                      success: function (data) {
+                          $("#id_classroom").html(data);
+                      }
+                  });
+
+              });
+
             $("#id_fee_type").change(function() {
               if ($(this).val() === "GeneralFee") {
                   $('.hiding').show();
