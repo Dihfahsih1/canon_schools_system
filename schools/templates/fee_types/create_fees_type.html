@@ -107,32 +107,29 @@
                   $('#id_Class_Amount').show();
                   $('#p').hide();
                   $('#r').hide(); }
-            else if ($(this).val() === "Hostel")
-            {
-            $('#p').show();
-            $('#r').hide();
-            $('.hiding').hide();
-            $('#id_Class').hide();
-            $('#id_Class_Amount').hide();}
-
-            else if ($(this).val() === "Transport")
-            {
-
-            $('#r').show();
-            $('#p').hide();
-            $('.hiding').hide();
-            $('#id_Class').hide();
-            $('#id_Class_Amount').hide();}
-
-            else
-            {
-            $('.hiding').hide();
-            $('#p').hide();
-            $('#r').hide();
-            $('#id_Class').hide();
-            $('#id_Class_Amount').hide();}
-            });
-            $("#id_fee_type").trigger("change");
+             else if ($(this).val() === "Hostel")
+                  {
+                  $('#p').show();
+                  $('#r').hide();
+                  $('.hiding').hide();
+                  $('#id_Class').hide();
+                  $('#id_Class_Amount').hide();}
+              else if ($(this).val() === "Transport")
+                  {
+                  $('#r').show();
+                  $('#p').hide();
+                  $('.hiding').hide();
+                  $('#id_Class').hide();
+                  $('#id_Class_Amount').hide();}
+              else
+                  {
+                  $('.hiding').hide();
+                  $('#p').hide();
+                  $('#r').hide();
+                  $('#id_Class').hide();
+                  $('#id_Class_Amount').hide();}
+                  });
+                  $("#id_fee_type").trigger("change");
             </script>
           {% endblock %}
         </div>
