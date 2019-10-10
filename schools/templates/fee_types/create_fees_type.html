@@ -58,10 +58,6 @@
                       <div class="col-lg-6" style="margin-left:25%">
                          {% load crispy_forms_tags %}
                           <form class="form-horizontal form-label-left"role="form" action="" method="post"
-                          id="FeeTypeForm"
-                          data-classrooms-url="{% url 'ajax_Feesload_classrooms' %}"
-                          data-students-url="{% url 'ajax_Feesload_students' %}"
-                          data-fee_types-url="{% url 'ajax_Feesload_fee_types' %}"
                             enctype="multipart/form-data" accept-charset="utf-8">
                                 {% csrf_token %}
                                 {{ form.school |as_crispy_field}}
@@ -105,21 +101,6 @@
             {% endcomment %}
          {% block javascript %}
             <script type="text/javascript">
-              $("#id_school").change(function () {
-                  var url = $("#FeeTypeForm").attr("data-classrooms-url");
-                  var schoolId = $(this).val();
-                  $.ajax({
-                      url: url,
-                      data: {
-                          'school': schoolId
-                      },
-                      success: function (data) {
-                          $("#id_classroom").html(data);
-                      }
-                  });
-
-              });
-
             $("#id_fee_type").change(function() {
               if ($(this).val() === "GeneralFee") {
                   $('.hiding').show();
