@@ -6049,7 +6049,6 @@ def load_exams(request):
     exams = Exam.objects.filter(school_id=school_id).order_by('exam_title')
     return render(request, 'filter/exam_dropdown_list_options.html', {'exams': exams})
 
-
 def load_fee_types(request):
     school_id = request.GET.get('school')
     fee_types = FeeType.objects.filter(school_id=school_id).order_by('fee_type')
@@ -6066,29 +6065,26 @@ def load_sections(request):
     sections = Section.objects.filter(classroom_id=classroom_id).order_by('section')
     return render(request, 'filter/section_dropdown_list_options.html', {'sections': sections})
 
-
 def load_students(request):
     classroom_id = request.GET.get('classroom')
     students = Student.objects.filter(classroom_id=classroom_id).order_by('user')
     return render(request, 'filter/student_dropdown_list_options.html', {'students': students})
-
 
 def load_roles(request):
     school_id = request.GET.get('school')
     roles = Role.objects.filter(school_id=school_id).order_by('role_name')
     return render(request, 'filter/role_dropdown_list_options.html', {'roles': roles})
 
-
 def load_users(request):
     role_id = request.GET.get('user_type')
     users = User.objects.filter(roles_id=role_id).order_by('full_name')
     return render(request, 'filter/user_dropdown_list_options.html', {'users': users})
 
-
 def load_subjects(request):
     classroom_id = request.GET.get('classroom')
     subjects = Subject.objects.filter(classroom_id=classroom_id).order_by('subject_name')
     return render(request, 'filter/subject_dropdown_list_options.html', {'subjects': subjects})
+
 
     # #######################################===>BEGINNING OF FEE TYPE MODULE<===######################################
 
@@ -6197,26 +6193,3 @@ def create_invoice (request):
         'form': form,
     }
     return render(request, 'invoices/create_invoice.html', context)
-#keeping track of the school id on the invoice being created
-def load_fee_types(request):
-    school_id = request.GET.get('school')
-    fee_types = FeeType.objects.filter(school_id=school_id).order_by('fee_type')
-    return render(request, 'filter/fee_dropdown_list_options.html', {'fee_types': fee_types})
-
-#load fee amount depending on the school selected  while creating feetype
-def load_ft_amount(request):
-    classroom_id = request.GET.get('classroom')
-    fee_amounts = FeeType.objects.filter(Class_id=classroom_id).order_by('Class_Amount')
-    return render(request, 'filter/fee_amount_dropdown_list_options.html', {'fee_amounts': fee_amounts})
-
-#load classrooms of a certain school depending on the selection in fee types field while creating feetype
-def load_ft_classrooms(request):
-    classroom_id = request.GET.get('classroom')
-    sections = Section.objects.filter(classroom_id=classroom_id).order_by('section')
-    return render(request, 'filter/section_dropdown_list_options.html', {'sections': sections})
-
-#load students of a classroom of a certain school depending on the selection in fee types field while creating feetype
-def load_ft_students(request):
-    classroom_id = request.GET.get('classroom')
-    students = Student.objects.filter(classroom_id=classroom_id).order_by('user')
-    return render(request, 'filter/student_dropdown_list_options.html', {'students': students})
