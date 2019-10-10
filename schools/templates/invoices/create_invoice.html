@@ -163,23 +163,6 @@
 
             });
 
-            $("#id_school").change(function () {
-                var url = $("#InvoiceForm").attr("data-fee_types-url");
-                var schoolId = $(this).val();
-
-                $.ajax({
-                    url: url,
-                    data: {
-                        'school': schoolId
-                    },
-                    success: function (data) {
-                        $("#id_fee_type").html(data);
-                    }
-                });
-
-            });
-
-
 
             $("#id_classroom").change(function () {
                 var url = $("#InvoiceForm").attr("data-students-url");
@@ -196,14 +179,30 @@
                 });
             });
 
-            $("#id_classroom").change(function () {
-                var url = $("#InvoiceForm").attr("data-fee_amount-url");
-                var classroomId = $(this).val();
+            $("#id_school").change(function () {
+                var url = $("#InvoiceForm").attr("data-fee_types-url");
+                var schoolId = $(this).val();
 
                 $.ajax({
                     url: url,
                     data: {
-                        'classroom': classroomId
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_fee_type").html(data);
+                    }
+                });
+
+            });
+
+            $("#id_fee_type").change(function () {
+                var url = $("#InvoiceForm").attr("data-fee_amount-url");
+                var FeesTypeId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'FeesTypeID': FeesTypeId
                     },
                     success: function (data) {
                         $("#id_fee_amount").html(data);
