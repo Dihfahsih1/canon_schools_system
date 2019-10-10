@@ -57,7 +57,9 @@
                   <div class="tab-pane fade in active" id="tab_fee_type_list">
                       <div class="col-lg-6" style="margin-left:25%">
                          {% load crispy_forms_tags %}
-                          <form class="form-horizontal form-label-left"role="form" action="" method="post"
+                          <form class="form-horizontal form-label-left"role="form"
+                          id="FeeTypeForm"
+                          method="post"
                           data-classes-url="{% url 'ajax_fee_type_load_classes' %}"
                             enctype="multipart/form-data" accept-charset="utf-8">
                                 {% csrf_token %}
@@ -86,7 +88,6 @@
                                     <tbody>
                                       <td>{{form.Class|as_crispy_field}}</td>
                                       <td>{{form.Class_Amount |as_crispy_field}}</td>
-                                      <td>{{ fee_type.note }}</td>
                                     </tbody>
                                 </table>
                                 </div>
