@@ -197,12 +197,12 @@
 
             $("#id_fee_type").change(function () {
                 var url = $("#InvoiceForm").attr("data-fee_amount-url");
-                var FeesTypeId = $(this).val();
+                var d = $(this).val();
 
                 $.ajax({
                     url: url,
                     data: {
-                        'FeesTypeID': FeesTypeId
+                        'FeesTypeID': d
                     },
                     success: function (data) {
                         $("#id_fee_amount").html(data);
