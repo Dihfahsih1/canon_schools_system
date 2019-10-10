@@ -58,7 +58,7 @@
                       <div class="col-lg-6" style="margin-left:25%">
                          {% load crispy_forms_tags %}
                           <form class="form-horizontal form-label-left"role="form" action="" method="post"
-                          data-classrooms-url="{% url 'ajax_load_classrooms' %}"
+                          data-classes-url="{% url 'ajax_fee_type_load_classes' %}"
                             enctype="multipart/form-data" accept-charset="utf-8">
                                 {% csrf_token %}
                                 {{ form.school |as_crispy_field}}
@@ -104,7 +104,7 @@
             <script type="text/javascript">
 
               $("#id_school").change(function () {
-                  var url = $("#FeeTypeForm").attr("data-classrooms-url");
+                  var url = $("#FeeTypeForm").attr("data-classes-url");
                   var schoolId = $(this).val();
                   $.ajax({
                       url: url,
