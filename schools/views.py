@@ -6157,7 +6157,7 @@ def fee_type_delete(request, fee_type_pk):
                                              )
     return JsonResponse(data)
 
-def create_fees_type(request):
+    def create_fees_type(request):
       if request.method=="POST":
           form=FeeTypeForm(request.POST,request.FILES)
           if form.is_valid():
@@ -6197,3 +6197,25 @@ def create_invoice (request):
         'form': form,
     }
     return render(request, 'invoices/create_invoice.html', context)
+#keeping track of the school id on the invoice being created
+def load_fee_types(request):
+    school_id = request.GET.get('school')
+    fee_types = FeeType.objects.filter(school_id=school_id).order_by('fee_type')
+    return render(request, 'filter/fee_dropdown_list_options.html', {'fee_types': fee_types})
+
+#load fee amount depending on the selection in fee types field
+def load_ft_amount(request):
+    classroom_id = request.GET.get('classroom')
+    fee_amounts = FeeType.objects.filter(Class_id=classroom_id).order_by('Class_Amount')
+    return render(request, 'filter/fee_amount_dropdown_list_options.html', {'fee_amounts': fee_amounts})
+
+def load_ft_classrooms(request):
+    classroom_id = request.GET.get('classroom')
+    sections = Section.objects.filter(classroom_id=classroom_id).order_by('section')
+    return render(request, 'filter/section_dropdown_list_options.html', {'sections': sections})
+
+
+def load_ft_students(request):
+    classroom_id = request.GET.get('classroom')
+    students = Student.objects.filter(classroom_id=classroom_id).order_by('user')
+    return render(request, 'filter/student_dropdown_list_options.html', {'students': students})
