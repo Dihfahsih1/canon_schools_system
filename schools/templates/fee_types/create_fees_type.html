@@ -60,7 +60,7 @@
                           <form class="form-horizontal form-label-left"role="form"
                           id="FeeTypeForm"
                           method="post"
-                          data-classes-url="{% url 'ajax_fee_type_load_classes' %}"
+                          data-classes-url="{% url 'ajax_load_classrooms' %}"
                             enctype="multipart/form-data" accept-charset="utf-8">
                                 {% csrf_token %}
                                 {{ form.school |as_crispy_field}}

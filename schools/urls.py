@@ -487,7 +487,7 @@ urlpatterns = [
     path('create_fees_type/', views.create_fees_type, name='create_fees_type'),
     path('ajax/load_fee_amount/', views.load_fee_amount, name='ajax_load_fee_amount'),
     path('create_invoice/', views.create_invoice, name='create_invoice'),
-    path('ajax/load-Classes/', views.fee_type_load_classrooms, name='ajax_fee_type_load_classes'),
+
 
 
 
