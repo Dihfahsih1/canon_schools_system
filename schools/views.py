@@ -6152,7 +6152,6 @@ def fee_type_delete(request, fee_type_pk):
                                              request=request,
                                              )
     return JsonResponse(data)
-
 def create_fees_type(request):
   if request.method=="POST":
       form=FeeTypeForm(request.POST,request.FILES)
