@@ -6192,5 +6192,5 @@ def load_classrooms(request):
 
 def fee_type_load_classrooms(request):
     school_id = request.GET.get('school')
-    classrooms = FeeType.objects.filter(school_id=school_id).order_by('Class')
+    classrooms = Classroom.objects.filter(school_id=school_id).order_by('classroom')
     return render(request, 'filter/feetype_classroom_dropdown_list_options.html', {'classrooms': classrooms})
