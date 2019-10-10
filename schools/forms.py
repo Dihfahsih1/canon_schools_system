@@ -833,7 +833,7 @@ class AttendanceForm(forms.Form):
                 classroom=classroom)
 
 
-class (forms.ModelForm):
+class InvoiceForm(forms.ModelForm):
     class Meta:
         model = Invoice
         fields = ('school', 'classroom', 'student', 'fee_type', 'fee_amount', 'discount', 'month',
