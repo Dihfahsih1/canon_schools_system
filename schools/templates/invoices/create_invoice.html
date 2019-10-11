@@ -192,14 +192,14 @@
                     success: function (data) {
                         $("#id_fee_type").html(data);
                     }});});
-
+//ajax for loading fee type amount depending on the fee type selected
             $("#id_fee_type").change(function () {
                 var url = $("#InvoiceForm").attr("data-fee_amount-url");
-                var d = $(this).val();
+                var fee_type_id = $(this).val();
                 $.ajax({
                     url: url,
                     data: {
-                        'fee_type': d
+                        'fee_type': fee_type_id
                     },
                     success: function (data) {
                         $("#id_fee_amount").html(data);
