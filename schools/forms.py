@@ -837,7 +837,8 @@ class InvoiceForm(forms.ModelForm):
     class Meta:
         model = Invoice
         fields = ('school', 'classroom', 'student', 'fee_type', 'fee_amount', 'month',
-                  'is_discount_applicable', 'paid_status','note')
+                  'is_discount_applicable', 'paid_status', 'Payment_Method',
+                   'Cheque_Number','Bank_Name','note')
         widgets = {
             'note': Textarea(attrs={'cols': 30, 'rows': 2}),
             'month': MonthPickerInput(),
