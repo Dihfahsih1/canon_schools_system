@@ -848,12 +848,14 @@ class InvoiceForm(forms.ModelForm):
         self.fields['classroom'].queryset = Classroom.objects.none()
         self.fields['fee_type'].queryset = FeeType.objects.none()
         self.fields['student'].queryset = Student.objects.none()
+        self.fields['fee_amount'].queryset = FeeType.objects.none()
 
         if 'school' in self.data:
             try:
                 school_id = int(self.data.get('school'))
                 self.fields['fee_type'].queryset = FeeType.objects.filter(school_id=school_id).order_by('school')
                 self.fields['classroom'].queryset = Classroom.objects.filter(school_id=school_id).order_by('school')
+                self.fields['fee_amount'].queryset = FeeType.objects.filter(id=fee_type_id).order_by('Class_Amount')
             except (ValueError, TypeError):
                 pass
 
@@ -870,7 +872,7 @@ class InvoiceForm(forms.ModelForm):
             if 'fee_type' in self.data:
                 try:
                     fee_type_id = int(self.data.get('fee_type'))
-                    self.fields['fee_amount'].queryset = fee_amounts = FeeType.objects.filter(fee_type_id=fee_type_id).order_by('Class_Amount')
+                    self.fields['fee_amount'].queryset = FeeType.objects.filter(id=fee_type_id).order_by('Class_Amount')
                 except (ValueError, TypeError):
                     pass
             elif self.instance.pk:
