@@ -1081,7 +1081,7 @@ class Invoice(models.Model):
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=False, null=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=False, null=True)
     fee_type = models.ForeignKey(FeeType, on_delete=models.CASCADE, blank=False, null=True, related_name='fee')
-    fee_amount = models.CharField(max_length=100)
+    fee_amount = models.ForeignKey(FeeType, on_delete=models.CASCADE, blank=False, null=True, related_name='fee_am')
     discount = models.CharField(max_length=100)
     month = models.DateField(max_length=100)
     IS = (('Yes', 'Yes'),
