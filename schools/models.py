@@ -1071,8 +1071,8 @@ class FeeType(models.Model):
     fee_type = models.CharField(max_length=100, blank=False, choices=IS)
     fee_title = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
-    Class =models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=False, null=True)
-    Class_Amount=models.CharField(max_length=100, default='Shs 0.0')
+    Class =models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=True, null=True)
+    Class_Amount=models.CharField(max_length=100, default='Shs 0.0', blank=True, null=True)
     def __str__(self):
         return self.fee_title
 
