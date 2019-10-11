@@ -83,7 +83,7 @@
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.fee_type|as_crispy_field }}
                                                 </div>
-                                                
+
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.fee_amount|as_crispy_field }}
                                                 </div>
@@ -193,13 +193,13 @@
                         $("#id_fee_type").html(data);
                     }});});
 
-            $("#id_school").change(function () {
+            $("#id_fee_type").change(function () {
                 var url = $("#InvoiceForm").attr("data-fee_amount-url");
                 var d = $(this).val();
                 $.ajax({
                     url: url,
                     data: {
-                        'school': d
+                        'fee_type': d
                     },
                     success: function (data) {
                         $("#id_fee_amount").html(data);
