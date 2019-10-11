@@ -867,6 +867,15 @@ class InvoiceForm(forms.ModelForm):
             elif self.instance.pk:
                 self.fields['student'].queryset = self.instance.classroom.student_set.order_by('student')
 
+            if 'fee_type' in self.data:
+                try:
+                    fee_type_id = int(self.data.get('fee_type'))
+                    self.fields['fee_amount'].queryset = fee_amounts = FeeType.objects.filter(fee_type_id=fee_type_id).order_by('Class_Amount')
+                except (ValueError, TypeError):
+                    pass
+            elif self.instance.pk:
+                self.fields['fee_amount'].queryset = self.instance.fee_title.Class_Amount_set.order_by('Class_Amount')
+
             # if 'fee_type' in self.data:
             #     try:
             #         fee_type_id = int(self.data.get('fee_type'))
