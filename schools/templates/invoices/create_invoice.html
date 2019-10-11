@@ -61,9 +61,9 @@
                                         <form class="form-horizontal form-label-left"
                                               id="InvoiceForm"
                                               data-classrooms-url="{% url 'ajax_load_classrooms' %}"
+                                              data-fee_amount-url="{% url 'ajax_load_fee_amount' %}"
                                               data-students-url="{% url 'ajax_load_students' %}"
                                               data-fee_types-url="{% url 'ajax_load_fee_types' %}"
-                                              data-fee_amount-url="{% url 'ajax_load_fee_amount' %}"
                                               method="post"
                                               enctype="multipart/form-data"
                                               accept-charset="utf-8">{% csrf_token %}
@@ -83,12 +83,13 @@
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.fee_type|as_crispy_field }}
                                                 </div>
-                                            </div>
-
-                                            <div class="form-row">
+                                                
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.fee_amount|as_crispy_field }}
                                                 </div>
+                                            </div>
+
+                                            <div class="form-row">
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.month|as_crispy_field }}
                                                 </div>
