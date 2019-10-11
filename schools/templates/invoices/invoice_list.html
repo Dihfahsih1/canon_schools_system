@@ -70,7 +70,7 @@
                                 <li role="presentation" class="active"><a href="{% url 'invoice_list' %}"><i
                                         class="fa fa-list-ol"></i> Invoice List</a>
                                 </li>
-                                <li role="presentation"><a href="{% url 'invoice_create' %}"><i
+                                <li role="presentation"><a href="{% url 'create_invoice' %}"><i
                                         class="fa fa-plus-square-o"></i> Add Invoice</a>
                                 </li>
                             </ul>
@@ -87,14 +87,12 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>School</th>
-                                                <th>Invoice <wbr> Number</th>
                                                 <th>Student</th>
                                                 <th>Class</th>
                                                 <th>Fee Type</th>
-                                                <th>Gross <br> Amount</th>
-                                                <th>Discount</th>
-                                                <th>Net Amount</th>
-                                                <th>Payment <wbr> Status</th>
+                                                <th>Fee <br> Amount</th>
+                                                <th>Discount Allowed</th>
+                                                <th> Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                             </thead>
@@ -190,4 +188,3 @@
 
 
 {% endblock javascripts %}
-
