@@ -101,7 +101,7 @@
                                                     {{ form.paid_status|as_crispy_field }}
                                                 </div>
 
-                                                <div class="payment_method">
+                                                <div class="payment_method form-group col-md-3 mb-0">
                                                     {{ form.Payment_Method|as_crispy_field }}
                                                 </div>
                                             </div>
@@ -216,6 +216,11 @@
                           {
                           $('.payment_method').hide();
                           }
+                    else{
+                      $('.payment_method').hide();
+                    }
+                   });
+                  $("#id_paid_status").trigger("change");
         </script>
     </div>
 
