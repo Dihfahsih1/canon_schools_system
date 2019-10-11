@@ -1095,7 +1095,6 @@ class Invoice(models.Model):
     Cheque_Number = models.CharField(max_length=100, default='Shs 0.0', blank=True, null=True)
     note = models.TextField(max_length=300)
 
-
 class BulkInvoice(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=False, null=True)
