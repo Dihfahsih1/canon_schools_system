@@ -836,8 +836,8 @@ class AttendanceForm(forms.Form):
 class InvoiceForm(forms.ModelForm):
     class Meta:
         model = Invoice
-        fields = ('school', 'classroom', 'student', 'fee_type', 'fee_amount', 'discount', 'month',
-                  'is_discount_applicable', 'paid_status', 'gross_amount', 'invoice_number', 'note', 'date')
+        fields = ('school', 'classroom', 'student', 'fee_type', 'fee_amount', 'month',
+                  'is_discount_applicable', 'paid_status','note')
         widgets = {
             'note': Textarea(attrs={'cols': 30, 'rows': 2}),
             'month': MonthPickerInput(),
@@ -853,6 +853,7 @@ class InvoiceForm(forms.ModelForm):
         if 'school' in self.data:
             try:
                 school_id = int(self.data.get('school'))
+                fee_type_id = int(self.data.get('fee_type'))
                 self.fields['fee_type'].queryset = FeeType.objects.filter(school_id=school_id).order_by('school')
                 self.fields['classroom'].queryset = Classroom.objects.filter(school_id=school_id).order_by('school')
                 self.fields['fee_amount'].queryset = FeeType.objects.filter(id=fee_type_id).order_by('Class_Amount')
@@ -877,16 +878,6 @@ class InvoiceForm(forms.ModelForm):
                     pass
             elif self.instance.pk:
                 self.fields['fee_amount'].queryset = self.instance.fee_title.Class_Amount_set.order_by('Class_Amount')
-
-            # if 'fee_type' in self.data:
-            #     try:
-            #         fee_type_id = int(self.data.get('fee_type'))
-            #         self.fields['fee_amount'].queryset = F.objects.filter(classroom_id=classroom_id).order_by(
-            #             'classroom')
-            #     except (ValueError, TypeError):
-            #         pass
-            # elif self.instance.pk:
-            #     self.fields['student'].queryset = self.instance.classroom.student_set.order_by('student')
 
         elif self.instance.pk:
             self.fields['classroom'].queryset = self.instance.school.classroom_set.order_by('classroom')

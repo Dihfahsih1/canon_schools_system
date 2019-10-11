@@ -1082,7 +1082,6 @@ class Invoice(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=False, null=True)
     fee_type = models.ForeignKey(FeeType, on_delete=models.CASCADE, blank=False, null=True, related_name='fee')
     fee_amount = models.ForeignKey(FeeType, on_delete=models.CASCADE, blank=False, null=True, related_name='fee_am')
-    discount = models.CharField(max_length=100)
     month = models.DateField(max_length=100)
     IS = (('Yes', 'Yes'),
           ('No', 'No'))
@@ -1090,10 +1089,7 @@ class Invoice(models.Model):
     STATUS = (('Paid', 'Paid'),
               ('Unpaid', 'Unpaid'))
     paid_status = models.CharField(max_length=100, blank=False, choices=STATUS)
-    gross_amount = models.CharField(max_length=100)
-    invoice_number = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
-    date = models.DateField(null=True)
 
 
 class BulkInvoice(models.Model):
