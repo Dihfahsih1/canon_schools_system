@@ -1073,6 +1073,7 @@ class FeeType(models.Model):
     note = models.TextField(max_length=300)
     Class =models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=True, null=True)
     Class_Amount=models.CharField(max_length=100, default='Shs 0.0', blank=True, null=True)
+
     def __str__(self):
         return self.fee_title
 
@@ -1089,6 +1090,9 @@ class Invoice(models.Model):
     STATUS = (('Paid', 'Paid'),
               ('Unpaid', 'Unpaid'))
     paid_status = models.CharField(max_length=100, blank=False, choices=STATUS)
+    Payment_Method = models.CharField(max_length=100, default='Shs 0.0', blank=True, null=True)
+    Bank_Name = models.CharField(max_length=100, default='Shs 0.0', blank=True, null=True)
+    Cheque_Number = models.CharField(max_length=100, default='Shs 0.0', blank=True, null=True)
     note = models.TextField(max_length=300)
 
 
