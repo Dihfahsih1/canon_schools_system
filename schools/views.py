@@ -6049,7 +6049,7 @@ def load_fee_types(request):
 
 #load fee amount depending on the selection in fee types field
 def load_fee_amount(request):
-    feetype_id = request.GET.get('FeesTypeID')
+    feetype_id = request.GET.get('FeesTypeId')
     fee_amounts = FeeType.objects.filter(fee_type_id=feetype_id).order_by('Class_Amount')
     for i in fee_amounts:
         print(i.Class_Amount)
