@@ -6041,7 +6041,7 @@ def load_exams(request):
     school_id = request.GET.get('school')
     exams = Exam.objects.filter(school_id=school_id).order_by('exam_title')
     return render(request, 'filter/exam_dropdown_list_options.html', {'exams': exams})
-
+#load fee type depending on a particular school selected.
 def load_fee_types(request):
     school_id = request.GET.get('school')
     fee_types = FeeType.objects.filter(school_id=school_id).order_by('fee_type')
