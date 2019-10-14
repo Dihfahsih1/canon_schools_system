@@ -51,7 +51,6 @@
                                 </li>
                             </ul>
                             <br/>
-something is wrong today
                             <div class="tab-content">
                                 <div class="tab-pane fade in active" id="tab_income_list">
                                     <div class="x_content">
@@ -59,36 +58,35 @@ something is wrong today
                                         <form class="form-verticle form-label-left"
                                             id="IncomeForm"
                                             data-incomeheads-url="{% url 'ajax_load_income_heads' %}"
+                                            data-payment-url="{% url 'ajax_load_income_payment' %}"
                                             method="post"
                                             enctype="multipart/form-data"
                                             accept-charset="utf-8">{% csrf_token %}
-                                          <div class="form-row">
-                                              <div class="form-group col-md-3 mb-0">
+                                          <div class="col-lg-12">
+                                              <div class=" col-md-3 mb-0">
                                                   {{ form.school|as_crispy_field }}
                                               </div>
-                                              <div class="form-group col-md-3 mb-0">
+                                              <div class="col-md-3 mb-0">
                                                   {{ form.income_head|as_crispy_field }}
                                               </div>
-                                              <div class="form-group col-md-3 mb-0">
+                                              <div class="col-md-3 mb-0">
                                                   {{ form.payment_method|as_crispy_field }}
                                               </div>
-                                              <div class="bank_name form-group col-md-3 mb-0">
+                                              <div class="bank_name col-md-3 mb-0">
                                                   {{ form.Bank_Name|as_crispy_field }}
                                               </div>
-                                              <div class="cheque_number form-group col-md-3 mb-0">
+                                              <div class="cheque_number col-md-3 mb-0">
                                                   {{ form.Cheque_Number|as_crispy_field }}
                                               </div>
 
-                                              <div class="form-group col-md-3 mb-0">
-                                                  {{ form.amount|as_crispy_field }}
-                                              </div>
-
-
                                           </div>
-
-                                          <div class="form-row">
+<br><br>
+                                          <div class="row">
                                             <div class="form-group col-md-3 mb-0">
                                                 {{ form.date|as_crispy_field }}
+                                            </div>
+                                            <div class="form-group col-md-3 mb-0">
+                                                {{ form.amount|as_crispy_field }}
                                             </div>
                                               <div class="form-group col-md-3 mb-0">
                                                   {{ form.note|as_crispy_field }}
@@ -104,15 +102,6 @@ something is wrong today
 
                                     </div>
                                 </div>
-
-                                <!-- THE MODAL WE WILL BE USING -->
-                                <div class="modal fade" id="modal-income">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -154,8 +143,23 @@ something is wrong today
 
             });
 
+            $("#id_school").change(function () {
+                var url = $("#IncomeForm").attr("data-payment-url");
+                var schoolId = $(this).val();
+                $.ajax({
+                    url: url,
+                    data: {
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_payment_method").html(data);
+                    }
+                });
+
+            });
+
                     //choosing the payment method
-                    $("#id_Payment_Method").change(function() {
+                    $("#id_payment_method").change(function() {
                       if ($(this).val() === "Cheque") {
                         $('.bank_name').show();
                         $('.cheque_number').show();}
@@ -169,7 +173,7 @@ something is wrong today
                       $('.cheque_number').hide();
                     }
                    });
-                  $("#id_Payment_Method").trigger("change");
+                  $("#id_payment_method").trigger("change");
         </script>
     </div>
 

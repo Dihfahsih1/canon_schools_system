@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for method in methods %}
+<option value="{{ method.pk }}">{{ method.payment_method }}</option>
+{% endfor %}
