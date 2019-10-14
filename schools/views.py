@@ -5277,7 +5277,7 @@ class IncomeListView(ListView):
 class IncomeCreateView(CreateView):
     model = Income
     template_name = 'incomes/income_create.html'
-    fields = ('school', 'income_head', 'payment_method', 'amount', 'date', 'note')
+    fields = ('school', 'income_head', 'payment_method', 'amount', 'date', 'note', 'Bank_Name', 'Cheque_Number')
 
     def form_valid(self, form):
         income = form.save(commit=False)
