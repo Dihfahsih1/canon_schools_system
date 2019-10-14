@@ -1142,7 +1142,8 @@ class IncomeHead(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     income_head = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
-
+    def __str__(self):
+        return self.income_head
 
 class Income(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)

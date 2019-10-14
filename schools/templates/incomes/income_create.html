@@ -71,7 +71,7 @@
                                 <div class="tab-pane fade in active" id="tab_income_list">
                                     <div class="x_content">
 
-                                        <form class="form-horizontal form-label-left"
+                                        <form class="form-verticle form-label-left"
                                             id="IncomeForm"
                                             data-incomeheads-url="{% url 'ajax_load_income_heads' %}"
                                             method="post"
@@ -87,16 +87,17 @@
                                               <div class="payment_method form-group col-md-3 mb-0">
                                                   {{ form.payment_method|as_crispy_field }}
                                               </div>
-
-                                              <div class="form-group col-md-3 mb-0">
-                                                  {{ form.amount|as_crispy_field }}
-                                              </div>
                                               <div class="bank_name form-group col-md-3 mb-0">
                                                   {{ form.Bank_Name|as_crispy_field }}
                                               </div>
                                               <div class="cheque_number form-group col-md-3 mb-0">
                                                   {{ form.Cheque_Number|as_crispy_field }}
                                               </div>
+
+                                              <div class="form-group col-md-3 mb-0">
+                                                  {{ form.amount|as_crispy_field }}
+                                              </div>
+
 
                                           </div>
 
@@ -241,5 +242,9 @@
 {% block javascripts %}
 
     {{ block.super }}
-    <!-- Datatables -->
+    <script src="/static/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
 {% endblock javascripts %}
