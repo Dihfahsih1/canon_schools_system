@@ -6164,13 +6164,13 @@ def load_classrooms(request):
     classrooms = Classroom.objects.filter(school_id=school_id).order_by('classroom')
     return render(request, 'filter/classroom_dropdown_list_options.html', {'classrooms': classrooms})
 
-def Addincomehead(request):
+def Addincomehead (request):
     if request.method=="POST":
         form=IncomeHeadForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
             return redirect('Addincomehead')
     else:
-        form = Addincomehead()
+        form = IncomeHeadForm()
         context = {'form': form}
         return render(request, 'income/Addincomehead.html', context)
