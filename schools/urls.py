@@ -487,6 +487,8 @@ urlpatterns = [
 #
     path('create_fees_type/', views.create_fees_type, name='create_fees_type'),
     path('create_invoice/', views.create_invoice, name='create_invoice'),
+    path('Addincomehead/', views.Addincomehead, name='Addincomehead'),
+
 
 
 

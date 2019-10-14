@@ -5204,7 +5204,6 @@ class IncomeHeadListView(ListView):
     template_name = 'income_heads/income_head_list.html'
     context_object_name = 'income_heads'
 
-
 class IncomeHeadCreateView(CreateView):
     model = IncomeHead
     template_name = 'income_heads/income_head_create.html'
@@ -6164,3 +6163,14 @@ def load_classrooms(request):
     school_id = request.GET.get('school')
     classrooms = Classroom.objects.filter(school_id=school_id).order_by('classroom')
     return render(request, 'filter/classroom_dropdown_list_options.html', {'classrooms': classrooms})
+
+def Addincomehead(request):
+    if request.method=="POST":
+        form=IncomeHeadForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('Addincomehead')
+    else:
+        form = Addincomehead()
+        context = {'form': form}
+        return render(request, 'income/Addincomehead.html', context)
