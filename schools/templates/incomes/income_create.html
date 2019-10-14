@@ -58,7 +58,7 @@
                                         <form class="form-verticle form-label-left"
                                             id="IncomeForm"
                                             data-incomeheads-url="{% url 'ajax_load_income_heads' %}"
-                                            data-payment-url="{% url 'ajax_load_income_payment' %}"
+                                            
                                             method="post"
                                             enctype="multipart/form-data"
                                             accept-charset="utf-8">{% csrf_token %}
@@ -138,21 +138,6 @@
                     },
                     success: function (data) {
                         $("#id_income_head").html(data);
-                    }
-                });
-
-            });
-
-            $("#id_school").change(function () {
-                var url = $("#IncomeForm").attr("data-payment-url");
-                var schoolId = $(this).val();
-                $.ajax({
-                    url: url,
-                    data: {
-                        'school': schoolId
-                    },
-                    success: function (data) {
-                        $("#id_payment_method").html(data);
                     }
                 });
 

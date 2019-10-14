@@ -6185,7 +6185,4 @@ def load_income_heads(request):
     school_id = request.GET.get('school')
     income = IncomeHead.objects.filter(school_id=school_id).order_by('income_head')
     return render(request, 'filter/income_heads_dropdown_list_options.html', {'income': income})
-def load_income_payment(request):
-    school_id = request.GET.get('school')
-    methods = Income.objects.filter(school_id=school_id).order_by('payment_method')
-    return render(request, 'filter/income_payment_dropdown_list_options.html', {'methods': methods})    
+  
