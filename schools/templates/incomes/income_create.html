@@ -24,6 +24,7 @@
 {% endblock stylesheets %}
 
 {% block content %}
+{% load crispy_forms_tags %}
     <div class="right_col" role="main">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -72,10 +73,7 @@
 
                                         <form class="form-horizontal form-label-left"
                                             id="IncomeForm"
-                                            data-classrooms-url="{% url 'ajax_load_income_heads' %}"
-                                            data-fee_amount-url="{% url 'ajax_load_fee_amount' %}"
-                                            data-students-url="{% url 'ajax_load_students' %}"
-                                            data-fee_types-url="{% url 'ajax_load_fee_types' %}"
+                                            data-incomeheads-url="{% url 'ajax_load_income_heads' %}"
                                             method="post"
                                             enctype="multipart/form-data"
                                             accept-charset="utf-8">{% csrf_token %}
@@ -93,25 +91,18 @@
                                               <div class="form-group col-md-3 mb-0">
                                                   {{ form.amount|as_crispy_field }}
                                               </div>
-
-                                              <div class="form-group col-md-3 mb-0">
-                                                  {{ form.date|as_crispy_field }}
+                                              <div class="bank_name form-group col-md-3 mb-0">
+                                                  {{ form.Bank_Name|as_crispy_field }}
                                               </div>
+                                              <div class="cheque_number form-group col-md-3 mb-0">
+                                                  {{ form.Cheque_Number|as_crispy_field }}
+                                              </div>
+
                                           </div>
 
                                           <div class="form-row">
-                                              <div class="form-group col-md-3 mb-0">
-                                                  {{ form.note|as_crispy_field }}
-                                              </div>
-                                          </div>
-
-                                          <div class="form-row">
-
-                                            <div class="bank_name form-group col-md-3 mb-0">
-                                                {{ form.Bank_Name|as_crispy_field }}
-                                            </div>
-                                            <div class="cheque_number form-group col-md-3 mb-0">
-                                                {{ form.Cheque_Number|as_crispy_field }}
+                                            <div class="form-group col-md-3 mb-0">
+                                                {{ form.date|as_crispy_field }}
                                             </div>
                                               <div class="form-group col-md-3 mb-0">
                                                   {{ form.note|as_crispy_field }}
@@ -163,9 +154,8 @@
             });
 
             $("#id_school").change(function () {
-                var url = $("#IncomeForm").attr("data-classrooms-url");
+                var url = $("#IncomeForm").attr("data-incomeheads-url");
                 var schoolId = $(this).val();
-
                 $.ajax({
                     url: url,
                     data: {
