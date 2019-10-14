@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for income in income_heads %}
+<option value="{{ income.pk }}">{{ income.income_head }}</option>
+{% endfor %}

@@ -71,8 +71,8 @@
                                     <div class="x_content">
 
                                         <form class="form-horizontal form-label-left"
-                                            id="InvoiceForm"
-                                            data-classrooms-url="{% url 'ajax_load_classrooms' %}"
+                                            id="IncomeForm"
+                                            data-classrooms-url="{% url 'ajax_load_income_heads' %}"
                                             data-fee_amount-url="{% url 'ajax_load_fee_amount' %}"
                                             data-students-url="{% url 'ajax_load_students' %}"
                                             data-fee_types-url="{% url 'ajax_load_fee_types' %}"
@@ -146,7 +146,7 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#income-table').DataTable({
+                $('#invoice-table').DataTable({
                     dom: 'Bfrtip',
                     iDisplayLength: 15,
                     buttons: [
@@ -162,6 +162,98 @@
                 });
             });
 
+            $("#id_school").change(function () {
+                var url = $("#IncomeForm").attr("data-classrooms-url");
+                var schoolId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_classroom").html(data);
+                    }
+                });
+
+            });
+//loading classrooms depending on a specific school selected
+
+            $("#id_classroom").change(function () {
+                var url = $("#InvoiceForm").attr("data-students-url");
+                var classroomId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'classroom': classroomId
+                    },
+                    success: function (data) {
+                        $("#id_student").html(data);
+                    }
+                });
+            });
+//loading feetype depending on a specific school selected
+            $("#id_school").change(function () {
+                var url = $("#InvoiceForm").attr("data-fee_types-url");
+                var schoolId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_fee_type").html(data);
+                    }});});
+//ajax for loading fee type amount depending on the fee type selected
+            $("#id_fee_type").change(function () {
+                var url = $("#InvoiceForm").attr("data-fee_amount-url");
+                var fee_type_id = $(this).val();
+                $.ajax({
+                    url: url,
+                    data: {
+                        'fee_type': fee_type_id
+                    },
+                    success: function (data) {
+                        $("#id_fee_amount").html(data);
+                    }});});
+                    //choosing the payment method
+                    $("#id_paid_status").change(function() {
+                      if ($(this).val() === "Paid") {
+                          $('.payment_method').show();
+                           }
+                     else if ($(this).val() === "Unpaid")
+                          {
+                          $('.payment_method').hide();
+                          $('.bank_name').hide();
+                          $('.cheque_number').hide();
+                          }
+                    else{
+                      $('.payment_method').hide();
+                      $('.bank_name').hide();
+                      $('.cheque_number').hide();
+                    }
+                   });
+                  $("#id_paid_status").trigger("change");
+              //if the user selects payment by cheque
+              $("#id_Payment_Method").change(function() {
+                if ($(this).val() === "Cheque") {
+                    $('.bank_name').show();
+                    $('.cheque_number').show();
+                     }
+               else if ($(this).val() === "Cash")
+                    {
+                    $('.bank_name').hide();
+                    $('.cheque_number').hide();
+                    }
+              else{
+                $('.bank_name').hide();
+                $('.cheque_number').hide();
+              }
+             });
+            $("#id_Payment_Method").trigger("change");
+
         </script>
     </div>
 
@@ -171,43 +263,4 @@
 
     {{ block.super }}
     <!-- Datatables -->
-    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
-    <!-- Chart.js -->
-    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
-    <!-- Skycons -->
-    <script src="/static/vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="/static/vendors/Flot/jquery.flot.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins -->
-    <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
-    <!-- DateJS -->
-    <script src="/static/vendors/DateJS/build/date.js"></script>
-    <!-- JQVMap -->
-    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-
-
 {% endblock javascripts %}

@@ -6177,5 +6177,11 @@ def Addincomehead (request):
         return render(request, 'income_heads/Addincomehead.html', context)
 def list_incomeheads(request):
     income_heads = IncomeHead.objects.all()
-    context = {'income_heads':income_heads} 
+    context = {'income_heads':income_heads}
     return render(request,'income_heads/income_head_list.html',context)
+
+#load fincome heads depending on a particular school selected.
+def load_income_heads(request):
+    school_id = request.GET.get('school')
+    income = IncomeHead.objects.filter(school_id=school_id).order_by('income_head')
+    return render(request, 'filter/fee_dropdown_list_options.html', {'income': income})
