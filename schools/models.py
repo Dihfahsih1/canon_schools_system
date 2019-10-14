@@ -1148,6 +1148,8 @@ class Income(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     income_head = models.ForeignKey(IncomeHead, on_delete=models.CASCADE, blank=False, null=True)
     payment_method = models.CharField(max_length=100)
+    Bank_Name = models.CharField(max_length=100, default='bank name', blank=True, null=True)
+    Cheque_Number = models.CharField(max_length=100, default='cheque number', blank=True, null=True)
     amount = models.CharField(max_length=100)
     date = models.DateField(null=True)
     note = models.TextField(max_length=300)

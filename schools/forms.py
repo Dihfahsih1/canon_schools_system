@@ -703,7 +703,7 @@ class IncomeHeadForm(forms.ModelForm):
 class IncomeForm(forms.ModelForm):
     class Meta:
         model = Income
-        fields = ('school', 'income_head', 'payment_method', 'amount', 'date', 'note')
+        fields = ('school', 'income_head', 'payment_method', 'amount', 'date', 'note', 'Bank_Name', 'Cheque_Number')
 
         widgets = {
             'date': DatePickerInput(),
