@@ -6164,6 +6164,7 @@ def load_classrooms(request):
     classrooms = Classroom.objects.filter(school_id=school_id).order_by('classroom')
     return render(request, 'filter/classroom_dropdown_list_options.html', {'classrooms': classrooms})
 
+#creating adding income head view using a function based view
 def Addincomehead (request):
     if request.method=="POST":
         form=IncomeHeadForm(request.POST,request.FILES)
@@ -6173,4 +6174,8 @@ def Addincomehead (request):
     else:
         form = IncomeHeadForm()
         context = {'form': form}
-        return render(request, 'incomes/Addincomehead.html', context)
+        return render(request, 'income_heads/Addincomehead.html', context)
+def list_incomeheads(request):
+    income_heads = IncomeHead.objects.all()
+    context = {'income_heads':income_heads} 
+    return render(request,'income_heads/income_head_list.html',context)
