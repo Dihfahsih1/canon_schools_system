@@ -6173,4 +6173,4 @@ def Addincomehead (request):
     else:
         form = IncomeHeadForm()
         context = {'form': form}
-        return render(request, 'income/includes/Addincomehead.html', context)
+        return render(request, 'incomes/Addincomehead.html', context)
