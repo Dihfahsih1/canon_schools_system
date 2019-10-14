@@ -881,24 +881,3 @@ class IncomeForm(forms.ModelForm):
         widgets = {
             'date': DatePickerInput(),
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['income_head'].queryset = IncomeHead.objects.none()
-        #self.fields['payment_method'].queryset = Income.objects.none()
-
-        if 'school' in self.data:
-            try:
-                school_id = int(self.data.get('school'))
-                self.fields['income_head'].queryset = IncomeHead.objects.filter(school_id=school_id).order_by('school')
-            #    self.fields['payment_method'].queryset = Income.objects.filter(school_id=school_id).order_by('school')
-            except (ValueError, TypeError):
-                pass
-            if 'income_head' in self.data:
-                try:
-                    school_id = int(self.data.get('school'))
-                    self.fields['income_head'].queryset = IncomeHead.objects.filter(school_id=school_id).order_by('school')
-                except (ValueError, TypeError):
-                    pass
-            elif self.instance.pk:
-                self.fields['income_head'].queryset = self.instance.income_head.income_head_set.order_by('income_head')
