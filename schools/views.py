@@ -5913,8 +5913,7 @@ class PaystackView(UpdateView):
         paystack = form.save(commit=False)
         paystack.save()
         return redirect('index')
-
-
+        
 class PayTMView(UpdateView):
     model = PayTM
     template_name = 'payments/payTM_update.html'
@@ -5928,7 +5927,6 @@ class PayTMView(UpdateView):
         payTM.save()
         return redirect('index')
 
-
 class PayUMoneyView(UpdateView):
     model = PayUMoney
     template_name = 'payments/payUMoney_update.html'
@@ -5941,18 +5939,14 @@ class PayUMoneyView(UpdateView):
         payumoney.save()
         return redirect('index')
 
-
 def settings(request):
     return render(request, 'home/settings.html')
-
 
 def theme(request):
     return render(request, 'home/theme.html')
 
-
 def language(request):
     return render(request, 'home/language.html')
-
 
 def student_attendance(request):
     context = {}
@@ -5981,7 +5975,6 @@ def present(request, student_id):
     else:
         return JsonResponse({'success': True})
 
-
 def absent(request, student_id):
     student = get_object_or_404(Student, pk=student_id)
     try:
@@ -5995,7 +5988,6 @@ def absent(request, student_id):
     else:
         return JsonResponse({'success': True})
 
-
 def late(request, student_id):
     student = get_object_or_404(Student, pk=student_id)
     try:
@@ -6008,7 +6000,6 @@ def late(request, student_id):
         return JsonResponse({'success': False})
     else:
         return JsonResponse({'success': True})
-
 
 def classrooms_ajax(request):
     school = request.GET.get('school')
