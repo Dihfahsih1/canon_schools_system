@@ -5809,7 +5809,6 @@ class AboutListView(ListView):
     template_name = 'abouts/about_list.html'
     context_object_name = 'abouts'
 
-
 class AboutCreateView(CreateView):
     model = About
     template_name = 'abouts/about_create.html'
@@ -5819,7 +5818,6 @@ class AboutCreateView(CreateView):
         about = form.save(commit=False)
         about.save()
         return redirect('about_list')
-
 
 class AboutUpdateView(UpdateView):
     model = About
@@ -5831,7 +5829,6 @@ class AboutUpdateView(UpdateView):
         about = form.save(commit=False)
         about.save()
         return redirect('about_list')
-
 
 def save_about_form(request, form, template_name):
     data = dict()
@@ -5848,7 +5845,6 @@ def save_about_form(request, form, template_name):
     context = {'form': form}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
-
 
 def about_view(request, about_pk):
     about = get_object_or_404(About, pk=about_pk)
@@ -5877,18 +5873,6 @@ def about_delete(request, about_pk):
                                              )
     return JsonResponse(data)
 
-
-# #######################################===>END OF ABOUT MODULE<===##################################################
-
-# def paypal_update(request, school_pk, paypal_id):
-#     paypal = get_object_or_404(Paypal, school_pk=school_pk, pk=paypal_id)
-#     if request.method == 'POST':
-#         form = PaypalForm(request.POST, instance=paypal)
-#     else:
-#         form = PaypalForm(instance=paypal)
-#     return render(request, 'payments/paypal_update.html', {'paypal': paypal, 'form': form})
-#
-
 class PaypalView(UpdateView):
     model = Paypal
     template_name = 'payments/paypal_update.html'
@@ -5913,7 +5897,7 @@ class PaystackView(UpdateView):
         paystack = form.save(commit=False)
         paystack.save()
         return redirect('index')
-        
+
 class PayTMView(UpdateView):
     model = PayTM
     template_name = 'payments/payTM_update.html'
