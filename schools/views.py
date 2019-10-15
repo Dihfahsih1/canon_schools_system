@@ -6179,3 +6179,5 @@ def list_incomeheads(request):
     income_heads = IncomeHead.objects.all()
     context = {'income_heads':income_heads}
     return render(request,'income_heads/income_head_list.html',context)
+
+######################pay salary module#######################################
