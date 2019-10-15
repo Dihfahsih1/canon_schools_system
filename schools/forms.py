@@ -597,6 +597,12 @@ class VisitorForm(forms.ModelForm):
 class SalaryGradeForm(forms.ModelForm):
     class Meta:
         model = SalaryGrade
+        def __init__(self, *args, **kwargs):
+          super(SalaryGradeForm, self).__init__(*args, **kwargs)
+          self.fields['total_allowance'].widget.attrs['readonly'] = True
+          self.fields['total_deduction'].widget.attrs['readonly'] = True
+          self.fields['gross_salary'].widget.attrs['readonly'] = True
+          self.fields['net_salary'].widget.attrs['readonly'] = True
         fields = ('school', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
                   'over_time_hourly_pay', 'provident_fund', 'hourly_rate', 'total_allowance', 'total_deduction',
                   'gross_salary', 'net_salary', 'note')
@@ -604,12 +610,7 @@ class SalaryGradeForm(forms.ModelForm):
         widgets = {
             'note': Textarea(attrs={'cols': 30, 'rows': 2}),
         }
-    def __init__(self, *args, **kwargs):
-      super(SalaryGradeForm, self).__init__(*args, **kwargs)
-      self.fields['total_allowance'].widget.attrs['readonly'] = True
-      self.fields['total_deduction'].widget.attrs['readonly'] = True
-      self.fields['gross_salary'].widget.attrs['readonly'] = True
-      self.fields['net_salary'].widget.attrs['readonly'] = True
+
 
 class PurposeForm(forms.ModelForm):
     class Meta:
