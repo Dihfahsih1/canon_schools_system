@@ -823,7 +823,7 @@ class AttendanceForm(forms.Form):
             self.fields['section'].queryset = Section.objects.filter(
                 classroom=classroom)
 
-
+#creating the invoice table model with the fields
 class InvoiceForm(forms.ModelForm):
     class Meta:
         model = Invoice
@@ -881,6 +881,3 @@ class IncomeForm(forms.ModelForm):
         widgets = {
             'date': DatePickerInput(),
         }
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['income_head'].queryset = Income.objects.none()

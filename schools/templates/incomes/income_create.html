@@ -57,8 +57,6 @@
 
                                         <form class="form-verticle form-label-left"
                                             id="IncomeForm"
-                                            data-incomeheads-url="{% url 'ajax_load_income_heads' %}"
-                                            
                                             method="post"
                                             enctype="multipart/form-data"
                                             accept-charset="utf-8">{% csrf_token %}
@@ -127,22 +125,6 @@
                     responsive: true
                 });
             });
-
-            $("#id_school").change(function () {
-                var url = $("#IncomeForm").attr("data-incomeheads-url");
-                var schoolId = $(this).val();
-                $.ajax({
-                    url: url,
-                    data: {
-                        'school': schoolId
-                    },
-                    success: function (data) {
-                        $("#id_income_head").html(data);
-                    }
-                });
-
-            });
-
                     //choosing the payment method
                     $("#id_payment_method").change(function() {
                       if ($(this).val() === "Cheque") {
