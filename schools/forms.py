@@ -595,6 +595,11 @@ class VisitorForm(forms.ModelForm):
 
 
 class SalaryGradeForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SalaryGradeForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['total_allowance'].widget.attrs['readonly'] = True    
     class Meta:
         model = SalaryGrade
         fields = ('school', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',

@@ -4725,17 +4725,7 @@ class SalaryGradeListView(ListView):
     context_object_name = 'salary_grades'
 
 
-class SalaryGradeCreateView(CreateView):
-    model = SalaryGrade
-    template_name = 'salary_grades/salary_grade_create.html'
-    fields = ('school', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
-              'over_time_hourly_pay', 'provident_fund', 'hourly_rate', 'total_allowance', 'total_deduction',
-              'gross_salary', 'net_salary', 'note')
 
-    def form_valid(self, form):
-        school = form.save(commit=False)
-        school.save()
-        return redirect('salary_grade_list')
 
 
 class SalaryGradeUpdateView(UpdateView):
@@ -6181,3 +6171,24 @@ def list_incomeheads(request):
     return render(request,'income_heads/income_head_list.html',context)
 
 ######################pay salary module#######################################
+class SalaryGradeCreateView(CreateView):
+    model = SalaryGrade
+    template_name = 'salary_grades/salary_grade_create.html'
+    fields = ('school', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
+              'over_time_hourly_pay', 'provident_fund', 'hourly_rate', 'total_allowance', 'total_deduction',
+              'gross_salary', 'net_salary', 'note')
+
+    def form_valid(self, form):
+        school = form.save(commit=False)
+        school.save()
+        return redirect('salary_grade_list')
+def addSalaryGrade(request):
+    if request.method=="POST":
+        form=SalaryGradeForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('salary_grade_list')
+    else:
+        form = SalaryGradeForm()
+        context = {'form': form}
+        return render(request, 'salary_grade/salary_grade_create.html', context)
