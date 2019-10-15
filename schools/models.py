@@ -1046,10 +1046,10 @@ class SalaryGrade(models.Model):
     over_time_hourly_pay = models.CharField(max_length=100)
     provident_fund = models.CharField(max_length=100)
     hourly_rate = models.CharField(max_length=100)
-    total_allowance = models.CharField(max_length=100)
-    total_deduction = models.CharField(max_length=100)
-    gross_salary = models.CharField(max_length=100)
-    net_salary = models.CharField(max_length=100)
+    total_allowance = models.CharField(max_length=100, blank=True, null=True)
+    total_deduction = models.CharField(max_length=100, blank=True, null=True)
+    gross_salary = models.CharField(max_length=100, blank=True, null=True)
+    net_salary = models.CharField(max_length=100, blank=True, null=True)
     note = models.TextField(null=True, blank=False)
 
     def __str__(self):

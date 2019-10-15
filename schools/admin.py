@@ -56,6 +56,8 @@ admin.site.register(News)
 admin.site.register(Holiday)
 admin.site.register(Event)
 admin.site.register(Visitor)
+class SalaryGradeAdmin(admin.ModelAdmin):
+    readonly_fields=('total_allowance',)
 admin.site.register(SalaryGrade)
 admin.site.register(Discount)
 admin.site.register(FeeType)
@@ -74,7 +76,7 @@ admin.site.register(Page)
 admin.site.register(Slider)
 admin.site.register(Role)
 admin.site.register(Feedback)
-
-
 admin.site.unregister(Group)
-
+class ItemAdmin(admin.ModelAdmin):
+    exclude=("total_allowance ",)
+    readonly_fields=('total_allowance', )
