@@ -489,6 +489,6 @@ urlpatterns = [
     path('create_invoice/', views.create_invoice, name='create_invoice'),
     path('Incomes/index/Add/', views.Addincomehead, name='Addincomehead'),
     path('Incomes/index/List/', views.list_incomeheads, name='list_incomeheads'),
-    url(r'^payroll/grade/index/$', views.addSalaryGrade, name='addSalaryGrade'),
+    url(r'^payroll/grade/index/Add/', views.addSalaryGrade, name='addSalaryGrade'),
 
 ]

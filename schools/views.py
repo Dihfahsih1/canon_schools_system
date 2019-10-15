@@ -6182,6 +6182,7 @@ class SalaryGradeCreateView(CreateView):
         school = form.save(commit=False)
         school.save()
         return redirect('salary_grade_list')
+
 def addSalaryGrade(request):
     if request.method=="POST":
         form=SalaryGradeForm(request.POST,request.FILES)
@@ -6191,4 +6192,4 @@ def addSalaryGrade(request):
     else:
         form = SalaryGradeForm()
         context = {'form': form}
-        return render(request, 'salary_grade/salary_grade_create.html', context)
+        return render(request, 'salary_grades/salary_grade_create.html', context)
