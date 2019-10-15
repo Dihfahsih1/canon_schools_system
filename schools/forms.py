@@ -604,7 +604,12 @@ class SalaryGradeForm(forms.ModelForm):
         widgets = {
             'note': Textarea(attrs={'cols': 30, 'rows': 2}),
         }
-
+    def __init__(self, *args, **kwargs):
+      super(SalaryGradeForm, self).__init__(*args, **kwargs)
+      self.fields['total_allowance'].widget.attrs['readonly'] = True
+      self.fields['total_deduction'].widget.attrs['readonly'] = True
+      self.fields['gross_salary'].widget.attrs['readonly'] = True
+      self.fields['net_salary'].widget.attrs['readonly'] = True
 
 class PurposeForm(forms.ModelForm):
     class Meta:
