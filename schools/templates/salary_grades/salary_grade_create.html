@@ -264,6 +264,10 @@
                   $("#id_gross_salary").val(parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) + parseInt($("#id_basic_salary").val()) +  parseInt($("#id_medical_allowance").val()));
                   }
             });
+            document.getElementById('id_total_deduction').readOnly = true;
+            document.getElementById('id_total_allowance').readOnly = true;
+            document.getElementById('id_net_salary').readOnly = true;
+            document.getElementById('id_gross_salary').readOnly = true;
         </script>
     </div>
 
