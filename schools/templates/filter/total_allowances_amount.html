@@ -1,0 +1,4 @@
+
+{% for allowance in allowances %}
+<option value="{{ allowance.pk }}">{{ allowance.total_allowance }}</option>
+{% endfor %}

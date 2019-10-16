@@ -594,22 +594,6 @@ class VisitorForm(forms.ModelForm):
                   'check_in', 'check_out', 'note')
 
 
-class SalaryGradeForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(SalaryGradeForm, self).__init__(*args, **kwargs)
-        instance = getattr(self, 'instance', None)
-        if instance and instance.pk:
-            self.fields['total_allowance'].widget.attrs['readonly'] = True    
-    class Meta:
-        model = SalaryGrade
-        fields = ('school', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
-                  'over_time_hourly_pay', 'provident_fund', 'hourly_rate', 'total_allowance', 'total_deduction',
-                  'gross_salary', 'net_salary', 'note')
-
-        widgets = {
-            'note': Textarea(attrs={'cols': 30, 'rows': 2}),
-        }
-
 class PurposeForm(forms.ModelForm):
     class Meta:
         model = Purpose
@@ -885,3 +869,22 @@ class IncomeForm(forms.ModelForm):
         widgets = {
             'date': DatePickerInput(),
         }
+class SalaryGradeForm(forms.ModelForm):
+    class Meta:
+        model = SalaryGrade
+        fields = ('school', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
+                  'over_time_hourly_pay', 'provident_fund', 'hourly_rate', 'total_allowance', 'total_deduction',
+                  'gross_salary', 'net_salary', 'note')
+
+        widgets = {
+            'note': Textarea(attrs={'cols': 30, 'rows': 2}),
+        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['total_allowance'].queryset = SalaryGrade.objects.none()
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['total_deduction'].queryset = SalaryGrade.objects.filter(id=school_id).order_by('school')
+            except (ValueError, TypeError):
+                pass

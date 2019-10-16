@@ -6193,3 +6193,7 @@ def addSalaryGrade(request):
         form = SalaryGradeForm()
         context = {'form': form}
         return render(request, 'salary_grades/salary_grade_create.html', context)
+def load_total_allowances(request):
+    school_id = request.GET.get('school')
+    allowances = SalaryGrade.objects.filter(school_id=school_id).order_by('total_allowance')
+    return render(request, 'filter/total_allowances_amount.html', {'allowances': allowances})
