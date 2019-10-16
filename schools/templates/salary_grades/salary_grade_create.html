@@ -169,8 +169,6 @@
                 </div>
             </div>
         </div>
-
-
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#salary_grade-table').DataTable({
@@ -188,19 +186,72 @@
                     responsive: true
                 });
             });
-
+//make claculations before submiting data
             $(document).ready(function () {
-            	var sum = 0;
-            	$('.add').change(function() {
-                    sum = 0;
-            		$('.textInput ').each(function() {
-                        if($(this).val()){
-                           sum += parseFloat($(this).val());
-                       }
-            		});
-            		$('#id_total_allowance').val(sum);
-            		alert(sum);
-            	});
+              $( "#id_house_rent" ).keyup(function()
+                  {
+                     $.sum();
+                  }
+              );
+              $( "#id_transport_allowance" ).keyup(function()
+                  {
+                     $.sum();
+                  }
+              );
+              $( "#id_medical_allowance" ).keyup(function()
+                  {
+                     $.sum();
+                  }
+              );
+              $.sum = function()
+                  {
+                  $("#id_total_allowance").val(parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) +   parseInt($("#id_medical_allowance").val()));
+                  }
+            });
+//function for subtracting provident fund from basic salary
+          $(document).ready(function () {
+            $( "#id_basic_salary" ).keyup(function()
+                {
+                   $.dif();
+                }
+            );
+            $( "#id_provident_fund" ).keyup(function()
+                {
+                   $.dif();
+                }
+            );
+            $.dif = function()
+                {
+                $("#id_net_salary").val(parseInt($("#id_basic_salary").val())  -    parseInt($("#id_provident_fund").val()));
+                }
+          });
+
+//function to calculate gross salary
+            $(document).ready(function () {
+              $( "#id_basic_salary" ).keyup(function()
+                  {
+                     $.total();
+                  }
+              );
+              $( "#id_house_rent" ).keyup(function()
+                  {
+                     $.total();
+                  }
+              );
+              $( "#id_transport_allowance" ).keyup(function()
+                  {
+                     $.total();
+                  }
+              );
+              $( "#id_medical_allowance" ).keyup(function()
+                  {
+                     $.total();
+                  }
+              );
+              $.total = function()
+                  {
+                  $("#id_gross_salary").val(parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) + parseInt($("#id_basic_salary").val()) +  parseInt($("#id_medical_allowance").val()));
+                  }
             });
         </script>
     </div>
