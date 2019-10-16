@@ -879,12 +879,3 @@ class SalaryGradeForm(forms.ModelForm):
         widgets = {
             'note': Textarea(attrs={'cols': 30, 'rows': 2}),
         }
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['total_allowance'].queryset = SalaryGrade.objects.none()
-        if 'school' in self.data:
-            try:
-                school_id = int(self.data.get('school'))
-                self.fields['total_deduction'].queryset = SalaryGrade.objects.filter(id=school_id).order_by('school')
-            except (ValueError, TypeError):
-                pass

@@ -1051,6 +1051,9 @@ class SalaryGrade(models.Model):
     gross_salary = models.CharField(max_length=100, blank=True, null=True)
     net_salary = models.CharField(max_length=100, blank=True, null=True)
     note = models.TextField(null=True, blank=False)
+    def save(self, *args, **kwargs):
+        self.total_allowance = self.house_rent + self.transport_allowance + self.medical_allowance
+        return super(SalaryGrade, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.grade_name

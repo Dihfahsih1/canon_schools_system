@@ -94,8 +94,6 @@
                                                     {{ form.provident_fund|as_crispy_field }}
                                                 </div>
                                             </div>
-
-
                                             <div class="form-row">
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.hourly_rate|as_crispy_field }}
@@ -191,17 +189,6 @@
                     responsive: true
                 });
             });
-            $("#id_school").change(function () {
-                var url = $("#SalaryGradeForm").attr("data-total_allowances-url");
-                var schoolId = $(this).val();
-                $.ajax({
-                    url: url,
-                    data: {
-                        'school': schoolId
-                    },
-                    success: function (data) {
-                        $("#id_total_allowance").html(data);
-                    }});});
         </script>
     </div>
 
