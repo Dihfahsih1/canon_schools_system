@@ -225,7 +225,18 @@
                 $("#id_net_salary").val(parseInt($("#id_basic_salary").val())  -    parseInt($("#id_provident_fund").val()));
                 }
           });
-
+  //function for finding total deductions
+          $(document).ready(function () {
+            $( "#id_provident_fund" ).keyup(function()
+                {
+                   $.deduct();
+                }
+            );
+            $.deduct = function()
+                {
+                $("#id_total_deduction").val(parseInt($("#id_provident_fund").val())  - 0);
+                }
+          });
 //function to calculate gross salary
             $(document).ready(function () {
               $( "#id_basic_salary" ).keyup(function()
