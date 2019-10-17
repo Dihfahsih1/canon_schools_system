@@ -6204,7 +6204,10 @@ def SalaryPayment(request):
     q = request.GET.get('teacher')
     print(q)
     if q:
-        payee = Teacher.objects.filter(user=str(q))
+        payee = Teacher.objects.filter(user_id=str(q))
+        for i in payee:
+            print(i.user)
+
         context['payee'] = payee
         return render(request, 'payroll/salary_payment_details.html', context)
 
