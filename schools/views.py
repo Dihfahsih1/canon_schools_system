@@ -6225,6 +6225,6 @@ def load_employee_designation(request):
     return render(request, 'filter/designation_dropdown_list_options.html', {'designations': designations})
 
 def load_employee_salary_grade(request):
-    school_id = request.GET.get('salary_grade')
+    school_id = request.GET.get('school')
     salarygrades = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
     return render(request, 'filter/salarygrade_dropdown_list_options.html', {'salarygrades': salarygrades})
