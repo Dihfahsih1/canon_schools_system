@@ -118,21 +118,7 @@
                 });
 
             });
-//function to load salary_payee
-            $("#id_role").change(function () {
-                var url = $("#SalaryPaymentForm").attr("data-employees-url");
-                var roleId = $(this).val();
 
-                $.ajax({
-                    url: url,
-                    data: {
-                        'role': roleId
-                    },
-                    success: function (data) {
-                        $("#id_employee").html(data);
-                    }
-                });
-            });
             $("#id_role").change(function () {
                 var url = $("#SalaryPaymentForm").attr("data-teachers-url");
                 var roleId = $(this).val();

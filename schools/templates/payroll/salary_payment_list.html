@@ -48,7 +48,6 @@
                           id="SalaryPaymentForm"
                           data-roles-url="{% url 'ajax_load_roles' %}"
                           data-teachers-url="{% url 'ajax_load_teachers' %}"
-                          data-employees-url="{% url 'ajax_load_employees' %}"
                           method="GET"
                           enctype="multipart/form-data"
                           accept-charset="utf-8"
@@ -60,9 +59,6 @@
                             </div>
                             <div class="form-group col-md-2 mb-0">
                                 {{ form.role|as_crispy_field }}
-                            </div>
-                            <div class="employee form-group col-md-2 mb-0">
-                                {{ form.employee|as_crispy_field }}
                             </div>
                             <div class="teacher form-group col-md-2 mb-0">
                                 {{ form.teacher|as_crispy_field }}
@@ -132,21 +128,7 @@
                 });
 
             });
-//function to load salary_payee
-            $("#id_role").change(function () {
-                var url = $("#SalaryPaymentForm").attr("data-employees-url");
-                var roleId = $(this).val();
 
-                $.ajax({
-                    url: url,
-                    data: {
-                        'role': roleId
-                    },
-                    success: function (data) {
-                        $("#id_employee").html(data);
-                    }
-                });
-            });
             $("#id_role").change(function () {
                 var url = $("#SalaryPaymentForm").attr("data-teachers-url");
                 var teacherId = $(this).val();

@@ -6223,8 +6223,3 @@ def load_teachers(request):
     for i in teachers:
         print(i.user)
     return render(request, 'filter/teachers_dropdown_list_options.html', {'teachers': teachers})
-
-def load_employees(request):
-    school_id = request.GET.get('school')
-    employees = Employee.objects.filter(school_id=school_id).order_by('user')
-    return render(request, 'filter/roles_dropdown_list_options.html', {'employees': employees})

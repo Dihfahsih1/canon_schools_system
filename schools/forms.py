@@ -882,12 +882,11 @@ class SalaryGradeForm(forms.ModelForm):
 class SalaryPaymentForm(forms.ModelForm):
     class Meta:
         model = SalaryPayment
-        fields = ('school','role','teacher','employee')
+        fields = ('school','role','teacher')
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['role'].queryset = Role.objects.none()
         self.fields['teacher'].queryset = Teacher.objects.none()
-        self.fields['employee'].queryset = Employee.objects.none()
 
         if 'school' in self.data:
             try:
@@ -903,14 +902,10 @@ class SalaryPaymentForm(forms.ModelForm):
                         self.fields['teacher'].queryset = Teacher.objects.filter(teacher_id=teacher_id).order_by(
                             'user')
 
-                        employee_id = int(self.data.get('role'))
-                        self.fields['employee'].queryset = Employee.objects.filter(employee_id=employee_id).order_by(
-                            'user')
                     except (ValueError, TypeError):
                         pass
                 elif self.instance.pk:
                     self.fields['teacher'].queryset = self.instance.role.teacher_set.order_by('user')
-                    self.fields['employee'].queryset = self.instance.role.employee_set.order_by('user')
 
         elif self.instance.pk:
             self.fields['role'].queryset = self.instance.school.role_set.order_by('role_name')

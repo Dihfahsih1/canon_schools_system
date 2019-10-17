@@ -486,7 +486,6 @@ urlpatterns = [
     path('ajax/load_fee_amount/', views.load_fee_amount, name='ajax_load_fee_amount'),
     path('ajax/load-roles/', views.load_roles, name='ajax_load_roles'),
     path('ajax/load-teachers/', views.load_teachers, name='ajax_load_teachers'),
-    path('ajax/load_employees/', views.load_employees, name='ajax_load_employees'),
     #path('ajax/load-total-allowances/', views.load_total_allowances, name='ajax_load_total_allowances'),
 #
     path('create_fees_type/', views.create_fees_type, name='create_fees_type'),
