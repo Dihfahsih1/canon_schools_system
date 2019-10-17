@@ -6218,12 +6218,13 @@ def load_teachers(request):
     teachers = Teacher.objects.filter(roles_id=role_id).order_by('user')
     return render(request, 'filter/teachers_dropdown_list_options.html', {'teachers': teachers})
 
-#loading employee designation and salary grade depending on the school selected.
+#loading employee designation depending on the school selected.
 def load_employee_designation(request):
     school_id = request.GET.get('school')
     designations = Designation.objects.filter(school_id=school_id).order_by('designation')
     return render(request, 'filter/designation_dropdown_list_options.html', {'designations': designations})
-
+    
+#loading employee salary grade depending on the school selected.
 def load_employee_salary_grade(request):
     school_id = request.GET.get('school')
     salarygrades = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
