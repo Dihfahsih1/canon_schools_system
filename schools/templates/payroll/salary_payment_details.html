@@ -67,8 +67,8 @@
                                 {% for pay in payee %}
                                     <tr>
 
-                                        <td>{{ pay.basic_salary }}</td>
-                                        <td>{{ pay.net_salary }}</td>
+                                        <td>{{ pay.salary_grade.basic_salary }}</td>
+                                        <td>{{ pay.salary_grade.net_salary }}</td>
 
                                     </tr>
                                 {% empty %}

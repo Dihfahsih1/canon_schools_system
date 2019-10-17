@@ -6204,14 +6204,9 @@ def SalaryPayment(request):
     q = request.GET.get('teacher')
     if q:
         q = q.replace('.', '')
-        payee = SalaryGrade.objects.filter(grade_name=str(q))
+        payee = Teacher.objects.filter(user=str(q))
         context['payee'] = payee
         return render(request, 'payroll/salary_payment_details.html', context)
-    q = request.GET.get('employee')
-    if q:
-        q = q.replace('.', '')
-        payee = SalaryGrade.objects.filter(grade_name=str(q))
-        context['payee'] = payee
 
     return render(request, 'payroll/salary_payment_list.html', context)
 #load role types i.e teacher or employees
@@ -6221,8 +6216,8 @@ def load_roles(request):
     return render(request, 'filter/roles_dropdown_list_options.html', {'roles': roles})
 
 def load_teachers(request):
-    school_id = request.GET.get('role')
-    teachers = Teacher.objects.filter(school_id=school_id).order_by('user')
+    role_id = request.GET.get('role')
+    teachers = Teacher.objects.filter(school_id=role_id).order_by('user')
     return render(request, 'filter/teachers_dropdown_list_options.html', {'teachers': teachers})
 
 def load_employees(request):
