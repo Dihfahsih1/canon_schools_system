@@ -6212,4 +6212,4 @@ def SalaryPayment(request):
 def load_roles(request):
     school_id = request.GET.get('school')
     roles = Role.objects.filter(school_id=school_id).order_by('role_name')
-    return render(request, 'filter/role_dropdown_list_options.html', {'roles': roles})
+    return render(request, 'filter/roles_dropdown_list_options.html', {'roles': roles})
