@@ -149,12 +149,12 @@
             });
             $("#id_role").change(function () {
                 var url = $("#SalaryPaymentForm").attr("data-teachers-url");
-                var roleId = $(this).val();
+                var teacherId = $(this).val();
 
                 $.ajax({
                     url: url,
                     data: {
-                        'role': roleId
+                        'teacher': teacherId
                     },
                     success: function (data) {
                         $("#id_teacher").html(data);
