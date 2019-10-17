@@ -893,19 +893,24 @@ class SalaryPaymentForm(forms.ModelForm):
             try:
                 school_id = int(self.data.get('school'))
                 self.fields['role'].queryset = Role.objects.filter(school_id=school_id).order_by(
-                    'classroom')
+                    'role_name')
             except (ValueError, TypeError):
                 pass
 
-                if 'classroom' in self.data:
+                if 'role' in self.data:
                     try:
-                        classroom_id = int(self.data.get('classroom'))
-                        self.fields['section'].queryset = Section.objects.filter(classroom_id=classroom_id).order_by(
-                            'section')
+                        teacher_id = int(self.data.get('role'))
+                        self.fields['teacher'].queryset = Teacher.objects.filter(teacher_id=teacher_id).order_by(
+                            'user')
+
+                        employee_id = int(self.data.get('role'))
+                        self.fields['employee'].queryset = Employee.objects.filter(employee_id=employee_id).order_by(
+                            'user')
                     except (ValueError, TypeError):
                         pass
                 elif self.instance.pk:
-                    self.fields['section'].queryset = self.instance.classroom.section_set.order_by('section')
+                    self.fields['teacher'].queryset = self.instance.role.teacher_set.order_by('user')
+                    self.fields['employee'].queryset = self.instance.role.employee_set.order_by('user')
 
         elif self.instance.pk:
-            self.fields['classroom'].queryset = self.instance.school.classroom_set.order_by('classroom')
+            self.fields['role'].queryset = self.instance.school.role_set.order_by('role_name')
