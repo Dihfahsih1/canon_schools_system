@@ -45,7 +45,7 @@
                     </div>
 
                     <form class="form-horizontal form-label-left"
-                          id="StudentForm"
+                          id="SalaryPaymentForm"
                           data-roles-url="{% url 'ajax_load_roles' %}"
                           data-teachers-url="{% url 'ajax_load_teachers' %}"
                           data-employees-url="{% url 'ajax_load_employees' %}"
@@ -59,10 +59,13 @@
                                 {{ form.school|as_crispy_field }}
                             </div>
                             <div class="form-group col-md-2 mb-0">
-                                {{ form.roles|as_crispy_field }}
+                                {{ form.role|as_crispy_field }}
                             </div>
-                            <div class="form-group col-md-2 mb-0">
+                            <div class="employee form-group col-md-2 mb-0">
                                 {{ form.employee|as_crispy_field }}
+                            </div>
+                            <div class="teacher form-group col-md-2 mb-0">
+                                {{ form.teacher|as_crispy_field }}
                             </div>
                             <div class="form-group col-md-1 mb-0">
                                 <br>
@@ -96,7 +99,7 @@
 
 //function to load salary_payee roles
              $("#id_school").change(function () {
-                var url = $("#StudentForm").attr("data-classrooms-url");
+                var url = $("#SalaryPaymentForm").attr("data-roles-url");
                 var schoolId = $(this).val();
 
                 $.ajax({
@@ -105,26 +108,57 @@
                         'school': schoolId
                     },
                     success: function (data) {
-                        $("#id_classroom").html(data);
+                        $("#id_role").html(data);
                     }
                 });
 
             });
 //function to load salary_payee
-            $("#id_classroom").change(function () {
-                var url = $("#StudentForm").attr("data-sections-url");
-                var classroomId = $(this).val();
+            $("#id_role").change(function () {
+                var url = $("#SalaryPaymentForm").attr("data-employees-url");
+                var roleId = $(this).val();
 
                 $.ajax({
                     url: url,
                     data: {
-                        'classroom': classroomId
+                        'role': roleId
                     },
                     success: function (data) {
-                        $("#id_section").html(data);
+                        $("#id_employee").html(data);
                     }
                 });
             });
+            $("#id_role").change(function () {
+                var url = $("#SalaryPaymentForm").attr("data-teachers-url");
+                var roleId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'role': roleId
+                    },
+                    success: function (data) {
+                        $("#id_teacher").html(data);
+                    }
+                });
+            });
+//show or hide employee and teacher dropdown depending on user selection.
+            $("#id_role").change(function() {
+              if ($(this).val() === "teacher") {
+                  $('.teacher').show();
+                  $('.employee').hide();
+                   }
+             else if ($(this).val() === "employee")
+                  {
+                  $('.employee').hide();
+                  $('.teacher').hide();
+                  }
+            else{
+              $('.employee').show();
+              $('.teacher').hide();
+            }
+           });
+          $("#id_role").trigger("change");
 
 
         </script>
