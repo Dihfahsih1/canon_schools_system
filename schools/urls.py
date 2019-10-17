@@ -494,5 +494,6 @@ urlpatterns = [
     path('Incomes/index/Add/', views.Addincomehead, name='Addincomehead'),
     path('Incomes/index/List/', views.list_incomeheads, name='list_incomeheads'),
     url(r'^payroll/grade/index/Add/', views.addSalaryGrade, name='addSalaryGrade'),
+    path('SalaryPayment', views.SalaryPayment, name='SalaryPayment')
 
 ]
