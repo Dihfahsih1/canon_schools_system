@@ -6221,5 +6221,5 @@ def load_teachers(request):
 
 def load_employees(request):
     school_id = request.GET.get('school')
-    roles = Role.objects.filter(school_id=school_id).order_by('role_name')
-    return render(request, 'filter/roles_dropdown_list_options.html', {'roles': roles})
+    employees = Employee.objects.filter(school_id=school_id).order_by('user')
+    return render(request, 'filter/roles_dropdown_list_options.html', {'employees': employees})
