@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for salarygrade in salarygrades %}
+<option value="{{ salarygrade.pk }}">{{ salarygrade.grade_name }}</option>
+{% endfor %}
