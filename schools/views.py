@@ -6213,3 +6213,13 @@ def load_roles(request):
     school_id = request.GET.get('school')
     roles = Role.objects.filter(school_id=school_id).order_by('role_name')
     return render(request, 'filter/roles_dropdown_list_options.html', {'roles': roles})
+
+def load_teachers(request):
+    school_id = request.GET.get('school')
+    teachers = Teacher.objects.filter(school_id=school_id).order_by('user')
+    return render(request, 'filter/teachers_dropdown_list_options.html', {'teachers': teachers})
+
+def load_employees(request):
+    school_id = request.GET.get('school')
+    roles = Role.objects.filter(school_id=school_id).order_by('role_name')
+    return render(request, 'filter/roles_dropdown_list_options.html', {'roles': roles})
