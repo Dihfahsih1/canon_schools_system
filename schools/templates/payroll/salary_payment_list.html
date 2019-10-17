@@ -1,0 +1,258 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Users {% endblock title %}
+
+{% load static i18n %}
+
+{% load widget_tweaks %}
+
+{% block javascript %}
+    <script src="{% static 'schools/js/users.js' %}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui-1.12.1/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+    <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet">
+    <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.structure.min.css' %}" rel="stylesheet">
+    <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.theme.min.css' %}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2><i class="fa fa-check-square-o"></i><small> Student Attendance</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content quick-link">
+                        <span>Quick Link:</span>
+                        <a href="#">Student Attendance</a>
+                        | <a href="#">Teacher Attendance</a>
+                        | <a href="#">Employee Attendance</a>
+                        | <a href="#">Absent Email</a>
+                        | <a href="#">Absent SMS</a>
+                    </div>
+
+                    <form class="form-horizontal form-label-left"
+                          id="StudentForm"
+                          data-classrooms-url="{% url 'ajax_load_classrooms' %}"
+                          data-sections-url="{% url 'ajax_load_sections' %}"
+                          method="GET"
+                          enctype="multipart/form-data"
+                          accept-charset="utf-8"
+                          novalidate>{% csrf_token %}
+
+                        <div class="form-row">
+                            <div class="form-group col-md-3 mb-0">
+                                {{ form.school|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-2 mb-0">
+                                {{ form.classroom|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-2 mb-0">
+                                {{ form.section|as_crispy_field }}
+                            </div>
+                             <div class="form-group col-md-2 mb-0">
+                                {{ form.date|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-1 mb-0">
+                                <br>
+                                 <button type="submit" class="btn btn-warning">Find</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                    <div class="x_content">
+                            <table id="datatable-responsive"
+                                   class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#SL</th>
+                                    <th>Photo</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Roll No</th>
+                                    <th><input type="checkbox" value="P" name="present" id="fn_present"
+                                               class="fn_all_attendnce"/> Present All
+                                    </th>
+                                    <th><input type="checkbox" value="L" name="late" id="fn_late"
+                                               class="fn_all_attendnce"/> Late All
+                                    </th>
+                                    <th><input type="checkbox" value="A" name="absent" id="fn_absent"
+                                               class="fn_all_attendnce"/> Absent All
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="fn_attendance">
+                                {% for student in students %}
+                                    <tr>
+                                        <td>{{ student.id }}</td>
+                                        <td>
+                                            {% if student.user.photo %}
+                                                <img src="{{ student.user.photo.url }}"
+                                                     alt="" width="50"
+                                                     style="background: rgba(15,174,221,0.97); padding: 2px;"/><br/>
+                                                <br/>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ student.user.full_name }}</td>
+                                        <td>{{ student.user.email }}</td>
+                                        <td>{{ student.user.phone }}</td>
+                                        <td>{{ student.roll_no }}</td>
+                                        <td>
+                                            <a href="{% url 'present' student.id %}" class="btn-favorite"><span
+                                                    class="glyphicon glyphicon-star {% if student.is_present %}active{% endif %}"></span></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'late' student.id %}" class="btn-favorite"><span
+                                                    class="glyphicon glyphicon-star {% if student.is_late %}active{% endif %}"></span></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'absent' student.id %}" class="btn-favorite"><span
+                                                    class="glyphicon glyphicon-star {% if student.is_absent %}active{% endif %}"></span></a>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="9" class="text-center bg-warning">No Data</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#year-table').DataTable({
+                    dom: 'Bfrtip',
+                    iDisplayLength: 15,
+                    buttons: [
+                        'copyHtml5',
+                        'excelHtml5',
+                        'csvHtml5',
+                        'pdfHtml5',
+                        'print',
+                        'pageLength'
+                    ],
+                    search: true,
+                    responsive: true
+                });
+            });
+
+             $("#id_school").change(function () {
+                var url = $("#StudentForm").attr("data-classrooms-url");
+                var schoolId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_classroom").html(data);
+                    }
+                });
+
+            });
+
+            $("#id_classroom").change(function () {
+                var url = $("#StudentForm").attr("data-sections-url");
+                var classroomId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'classroom': classroomId
+                    },
+                    success: function (data) {
+                        $("#id_section").html(data);
+                    }
+                });
+            });
+
+
+        </script>
+
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    {{ block.super }}
+    <!-- Datatables -->
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Chart.js -->
+    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- Skycons -->
+    <script src="/static/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/static/vendors/Flot/jquery.flot.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/static/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="/static/vendors/moment/min/moment.min.js"></script>
+    <script src="/static/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+{% endblock javascripts %}
