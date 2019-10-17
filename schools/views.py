@@ -6202,15 +6202,10 @@ def SalaryPayment(request):
     context['form'] = SalaryPaymentForm(school, role)
     # Filter
     q = request.GET.get('teacher')
-    print(q)
     if q:
-        payee = Teacher.objects.filter(user_id=str(q))
-        for i in payee:
-            print(i.user)
-
+        payee = Teacher.objects.filter(id__in =q)
         context['payee'] = payee
         return render(request, 'payroll/salary_payment_details.html', context)
-
     return render(request, 'payroll/salary_payment_list.html', context)
 #load role types i.e teacher or employees
 def load_roles(request):

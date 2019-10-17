@@ -128,6 +128,21 @@ class EmployeeForm(forms.ModelForm):
         fields = ['school', 'designation', 'salary_grade', 'salary_type', 'resume', 'Is_View_on_Web', 'roles',
                   'facebook_url', 'linkedIn_url', 'twitter_url', 'google_plus_url', 'instagram_url', 'youtube_url',
                   'pinterest_url']
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['designation'].queryset = Designation.objects.none()
+            self.fields['salary_grade'].queryset = SalaryGrade.objects.none()
+
+            if 'school' in self.data:
+                try:
+                    school_id = int(self.data.get('school'))
+                    self.fields['designation'].queryset = Designation.objects.filter(school_id=school_id).order_by('designation')
+                    self.fields['salary_grade'].queryset = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
+                except (ValueError, TypeError):
+                    pass
+            elif self.instance.pk:
+                self.fields['designation'].queryset = self.instance.school.designation_set.order_by('designation')
+                self.fields['salary_grade'].queryset = self.instance.school.salary_grade_set.order_by('grade_name')
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -203,36 +218,6 @@ class StudentTypeForm(forms.ModelForm):
         model = StudentType
         fields = ('school', 'student_type', 'note')
 
-
-class ManageUserForm(forms.ModelForm):
-    class Meta:
-        model = ManageUser
-        fields = ('school', 'user_type', 'user',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['user_type'].queryset = Role.objects.none()
-        self.fields['user'].queryset = User.objects.none()
-
-        if 'school' in self.data:
-            try:
-                school_id = int(self.data.get('school'))
-                self.fields['user_type'].queryset = Role.objects.filter(school_id=school_id).order_by('role_name')
-            except (ValueError, TypeError):
-                pass
-
-                if 'user_type' in self.data:
-                    try:
-                        user_type_id = int(self.data.get('user_type'))
-                        self.fields['user'].queryset = User.objects.filter(roles_id=user_type_id).order_by(
-                            'full_name')
-                    except (ValueError, TypeError):
-                        pass
-                elif self.instance.pk:
-                    self.fields['user'].queryset = self.instance.role.user_set.order_by('full_name')
-
-        elif self.instance.pk:
-            self.fields['user_type'].queryset = self.instance.school.role_set.order_by('role_name')
 
 
 class ClassroomForm(forms.ModelForm):
@@ -879,6 +864,37 @@ class SalaryGradeForm(forms.ModelForm):
         widgets = {
             'note': Textarea(attrs={'cols': 30, 'rows': 2}),
         }
+class ManageUserForm(forms.ModelForm):
+    class Meta:
+        model = ManageUser
+        fields = ('school', 'user_type', 'user',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['user_type'].queryset = Role.objects.none()
+        self.fields['user'].queryset = User.objects.none()
+
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['user_type'].queryset = Role.objects.filter(school_id=school_id).order_by('role_name')
+            except (ValueError, TypeError):
+                pass
+
+                if 'user_type' in self.data:
+                    try:
+                        user_type_id = int(self.data.get('user_type'))
+                        self.fields['user'].queryset = User.objects.filter(roles_id=user_type_id).order_by(
+                            'full_name')
+                    except (ValueError, TypeError):
+                        pass
+                elif self.instance.pk:
+                    self.fields['user'].queryset = self.instance.role.user_set.order_by('full_name')
+
+        elif self.instance.pk:
+            self.fields['user_type'].queryset = self.instance.school.role_set.order_by('role_name')
+
+
 class SalaryPaymentForm(forms.ModelForm):
     class Meta:
         model = SalaryPayment
