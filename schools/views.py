@@ -6221,6 +6221,7 @@ def load_teachers(request):
     role_id = request.GET.get('role')
     teachers = Teacher.objects.filter(school_id=role_id).order_by('user')
     for i in teachers:
+        print(i.user)
     return render(request, 'filter/teachers_dropdown_list_options.html', {'teachers': teachers})
 
 def load_employees(request):
