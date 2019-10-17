@@ -177,12 +177,12 @@
                    }
              else if ($(this).val() === "employee")
                   {
-                  $('.employee').hide();
+                  $('.employee').show();
                   $('.teacher').hide();
                   }
             else{
-              $('.employee').show();
-              $('.teacher').hide();
+              $('.employee').hide();
+              $('.teacher').show();
             }
            });
           $("#id_role").trigger("change");
