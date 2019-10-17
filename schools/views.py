@@ -6194,7 +6194,7 @@ def addSalaryGrade(request):
         context = {'form': form}
         return render(request, 'salary_grades/salary_grade_create.html', context)
 
-##################pay salary module##########################
+##################PAY SALARY MODULE##########################
 def SalaryPayment(request):
     context = {}
     school = request.GET.get('school')
@@ -6208,3 +6208,8 @@ def SalaryPayment(request):
         context['students'] = students
 
     return render(request, 'attendance/student_list.html', context)
+#load role types i.e teacher or employees
+def load_roles(request):
+    school_id = request.GET.get('school')
+    roles = Role.objects.filter(school_id=school_id).order_by('role_name')
+    return render(request, 'filter/role_dropdown_list_options.html', {'roles': roles})
