@@ -898,8 +898,8 @@ class SalaryPaymentForm(forms.ModelForm):
 
                 if 'role' in self.data:
                     try:
-                        teacher_id = int(self.data.get('role'))
-                        self.fields['teacher'].queryset = Teacher.objects.filter(teacher_id=teacher_id).order_by(
+                        rolesId = int(self.data.get('role'))
+                        self.fields['teacher'].queryset = Teacher.objects.filter(roles_id=rolesId).order_by(
                             'user')
 
                     except (ValueError, TypeError):
