@@ -6202,6 +6202,7 @@ def SalaryPayment(request):
     context['form'] = SalaryPaymentForm(school, role)
     # Filter
     q = request.GET.get('teacher')
+    print(q)
     if q:
         payee = Teacher.objects.filter(user=str(q))
         context['payee'] = payee
