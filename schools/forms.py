@@ -136,8 +136,8 @@ class EmployeeForm(forms.ModelForm):
             if 'school' in self.data:
                 try:
                     school_id = int(self.data.get('school'))
-                    self.fields['designation'].queryset = Designation.objects.filter(school_id=school_id).order_by('designation')
-                    self.fields['salary_grade'].queryset = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
+                    self.fields['designation'].queryset = Designation.objects.filter(school_id=school_id).order_by('school')
+                    self.fields['salary_grade'].queryset = SalaryGrade.objects.filter(school_id=school_id).order_by('school')
                 except (ValueError, TypeError):
                     pass
             elif self.instance.pk:
