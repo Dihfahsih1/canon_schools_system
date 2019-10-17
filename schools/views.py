@@ -6205,6 +6205,8 @@ def SalaryPayment(request):
     if q:
         q = q.replace('.', '')
         payee = Teacher.objects.filter(user=str(q))
+        for i in payee:
+            print(i.salary_grade)
         context['payee'] = payee
         return render(request, 'payroll/salary_payment_details.html', context)
 
@@ -6218,6 +6220,7 @@ def load_roles(request):
 def load_teachers(request):
     role_id = request.GET.get('role')
     teachers = Teacher.objects.filter(school_id=role_id).order_by('user')
+    for i in teachers:
     return render(request, 'filter/teachers_dropdown_list_options.html', {'teachers': teachers})
 
 def load_employees(request):
