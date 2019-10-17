@@ -6193,3 +6193,18 @@ def addSalaryGrade(request):
         form = SalaryGradeForm()
         context = {'form': form}
         return render(request, 'salary_grades/salary_grade_create.html', context)
+
+##################pay salary module##########################
+def SalaryPayment(request):
+    context = {}
+    school = request.GET.get('school')
+    classroom = request.GET.get('classroom')
+    context['form'] = StudentAttendanceForm(school, classroom)
+    # Filter
+    q = request.GET.get('section')
+    if q:
+        q = q.replace('.', '')
+        students = Student.objects.filter(section=str(q))
+        context['students'] = students
+
+    return render(request, 'attendance/student_list.html', context)
