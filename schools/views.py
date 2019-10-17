@@ -6198,16 +6198,22 @@ def addSalaryGrade(request):
 def SalaryPayment(request):
     context = {}
     school = request.GET.get('school')
-    classroom = request.GET.get('classroom')
-    context['form'] = StudentAttendanceForm(school, classroom)
+    role = request.GET.get('role')
+    context['form'] = SalaryPaymentForm(school, role)
     # Filter
-    q = request.GET.get('section')
+    q = request.GET.get('teacher')
     if q:
         q = q.replace('.', '')
-        students = Student.objects.filter(section=str(q))
-        context['students'] = students
+        payee = SalaryGrade.objects.filter(grade_name=str(q))
+        context['payee'] = payee
 
-    return render(request, 'attendance/student_list.html', context)
+    q = request.GET.get('employee')
+    if q:
+        q = q.replace('.', '')
+        payee = SalaryGrade.objects.filter(grade_name=str(q))
+        context['payee'] = payee
+
+    return render(request, 'payroll/salary_payment_list.html', context)
 #load role types i.e teacher or employees
 def load_roles(request):
     school_id = request.GET.get('school')
