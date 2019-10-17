@@ -667,6 +667,12 @@ class StudentAttendance(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, blank=False, null=True)
     date = models.DateField(null=True)
 
+class SalaryPayment(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, blank=False, null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, blank=False, null=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=False, null=True)
+    date = models.DateField(null=True)
 
 class TeacherAttendance(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)

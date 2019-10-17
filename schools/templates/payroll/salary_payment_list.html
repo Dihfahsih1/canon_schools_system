@@ -46,8 +46,9 @@
 
                     <form class="form-horizontal form-label-left"
                           id="StudentForm"
-                          data-classrooms-url="{% url 'ajax_load_roles' %}"
-                          data-sections-url="{% url 'ajax_load_salary_payee' %}"
+                          data-roles-url="{% url 'ajax_load_roles' %}"
+                          data-teachers-url="{% url 'ajax_load_teachers' %}"
+                          data-employees-url="{% url 'ajax_load_employees' %}"
                           method="GET"
                           enctype="multipart/form-data"
                           accept-charset="utf-8"
@@ -92,7 +93,7 @@
                     responsive: true
                 });
             });
-            
+
 //function to load salary_payee roles
              $("#id_school").change(function () {
                 var url = $("#StudentForm").attr("data-classrooms-url");

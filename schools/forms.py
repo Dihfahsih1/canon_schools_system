@@ -879,3 +879,33 @@ class SalaryGradeForm(forms.ModelForm):
         widgets = {
             'note': Textarea(attrs={'cols': 30, 'rows': 2}),
         }
+class SalaryPaymentForm(forms.ModelForm):
+    class Meta:
+        model = SalaryPayment
+        fields = ('school','role','teacher','employee')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['role'].queryset = Role.objects.none()
+        self.fields['teacher'].queryset = Teacher.objects.none()
+        self.fields['employee'].queryset = Employee.objects.none()
+
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['role'].queryset = Role.objects.filter(school_id=school_id).order_by(
+                    'classroom')
+            except (ValueError, TypeError):
+                pass
+
+                if 'classroom' in self.data:
+                    try:
+                        classroom_id = int(self.data.get('classroom'))
+                        self.fields['section'].queryset = Section.objects.filter(classroom_id=classroom_id).order_by(
+                            'section')
+                    except (ValueError, TypeError):
+                        pass
+                elif self.instance.pk:
+                    self.fields['section'].queryset = self.instance.classroom.section_set.order_by('section')
+
+        elif self.instance.pk:
+            self.fields['classroom'].queryset = self.instance.school.classroom_set.order_by('classroom')
