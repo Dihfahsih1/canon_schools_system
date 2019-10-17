@@ -6206,7 +6206,7 @@ def SalaryPayment(request):
         q = q.replace('.', '')
         payee = SalaryGrade.objects.filter(grade_name=str(q))
         context['payee'] = payee
-
+        return render(request, 'payroll/salary_payment_details.html', context)
     q = request.GET.get('employee')
     if q:
         q = q.replace('.', '')
