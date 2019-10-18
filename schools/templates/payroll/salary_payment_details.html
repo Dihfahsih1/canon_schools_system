@@ -45,7 +45,6 @@
                     </div>
 
                     <div class="x_content">
-                      {% for pay in payee %}
                             <ul class="nav nav-tabs bordered">
                                 <li role="presentation"><a href="#"><i
                                         class="fa fa-list-ol"></i> Salary Paid List</a>
@@ -54,98 +53,34 @@
                                         class="fa fa-plus-square-o"></i> Pay Salary</a>
                                 </li>
                             </ul>
+                            <table id="datatable-responsive"
+                                   class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Basic Salary</th>
+                                    <th>Net Salary</th>
+                                    <th>Pay Salary</th>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-3 mb-0">
-                                    {{ form.school|as_crispy_field }}
-                                </div>
-                                <div class="form-group col-md-3 mb-0">
-                                    {{ form.grade_name|as_crispy_field }}
-                                </div>
-                                <div class="form-group col-md-3 mb-0">
-                                    {{ form.basic_salary|as_crispy_field }}
-                                </div>
-                                <div class="add form-group col-md-3 mb-0">
-                                    {{ form.house_rent|as_crispy_field }}
-                                </div>
-                            </div>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for pay in payee %}
+                                    <tr>
+                                         <td>{{ pay.user }}</td>
+                                        <td>{{ pay.salary_grade.basic_salary }}</td>
+                                        <td>{{ pay.salary_grade.net_salary }}</td>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-12 mb-0">
-
-                                </div>
-                            </div>
-
-
-                            <div class="form-row">
-                                <div class="add form-group col-md-3 mb-0">
-                                    {{ form.transport_allowance|as_crispy_field }}
-                                </div>
-                                <div class="add form-group col-md-3 mb-0">
-                                    {{ form.medical_allowance|as_crispy_field }}
-                                </div>
-                                <div class="form-group col-md-3 mb-0">
-                                    {{ form.over_time_hourly_pay|as_crispy_field }}
-                                </div>
-                                <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ form.over_time_total_hour|as_crispy_field }}
-                                </div>
-                                <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ form.over_time_amount|as_crispy_field }}
-                                </div>
-                                <div class="form-group col-md-3 mb-0">
-                                    {{ form.provident_fund|as_crispy_field }}
-                                </div>
-                                <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ form.Bonus|as_crispy_field }}
-                                </div>
-                                <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ form.Penalty|as_crispy_field }}
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-3 mb-0">
-                                    {{ form.hourly_rate|as_crispy_field }}
-                                </div>
-                                <div class="form-group col-md-3 mb-0">
-                                    {{ form.total_allowance|as_crispy_field }}
-                                </div>
-                                <div class="form-group col-md-3 mb-0">
-                                    {{ form.total_deduction|as_crispy_field }}
-                                </div>
-                                <div class="form-group col-md-3 mb-0">
-                                    {{ form.gross_salary|as_crispy_field }}
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-3 mb-0">
-                                    {{ form.net_salary|as_crispy_field }}
-                                </div>
-                                <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ form.Month|as_crispy_field }}
-                                </div>
-                                <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ form.Payment_Method|as_crispy_field }}
-                                </div>
-                                <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ form.Expenditure_Head|as_crispy_field }}
-                                </div>
-                                <div class="form-group col-md-6 mb-0">
-                                    {{ form.note|as_crispy_field }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <a href="{% url 'salary_grade_list' %}"
-                                       class="btn btn-outline-secondary" type="button">Cancel</a>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                            
-                    </div>
-
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="9" class="text-center bg-warning">No Data</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
             </div>
         </div>

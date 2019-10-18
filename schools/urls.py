@@ -496,6 +496,6 @@ urlpatterns = [
     path('Incomes/index/List/', views.list_incomeheads, name='list_incomeheads'),
     url(r'^payroll/grade/index/Add/', views.addSalaryGrade, name='addSalaryGrade'),
     path('SalaryPayment', views.SalaryPayment, name='SalaryPayment'),
-    url(r'^Payroll/Employee/Pay-Salary/(?P<employee_pk>\d+)/$', views.EmployeeUpdateView.as_view(), name='EmployeeUpdateView'),
+    
 
 ]
