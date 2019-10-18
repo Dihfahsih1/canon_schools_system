@@ -71,6 +71,11 @@
                                          <td>{{ pay.user }}</td>
                                         <td>{{ pay.salary_grade.basic_salary }}</td>
                                         <td>{{ pay.salary_grade.net_salary }}</td>
+                                        <td><div class="mb-4">
+                                            <a href="{% url 'addSalaryGrade' pay.pk %}"
+                                               class="btn btn-warning btn-sm">
+                                                <span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                                        </div></td>
 
                                     </tr>
                                 {% empty %}

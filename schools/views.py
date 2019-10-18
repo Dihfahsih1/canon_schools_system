@@ -6229,3 +6229,14 @@ def load_employee_salary_grade(request):
     school_id = request.GET.get('school')
     salarygrades = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
     return render(request, 'filter/salarygrade_dropdown_list_options.html', {'salarygrades': salarygrades})
+
+def Pay_Employee(request, pk):
+    item = get_object_or_404(SalaryGrade, id=pk)
+    if request.method == "POST":
+        form =  SalaryGradeForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('SalaryPayment')
+    else:
+        form =  SalaryGradeForm(instance=item)
+        return render(request, 'payroll/pay_employee.html', {'form': form})
