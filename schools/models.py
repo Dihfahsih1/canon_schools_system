@@ -670,8 +670,8 @@ class StudentAttendance(models.Model):
 class SalaryPayment(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     role = models.ForeignKey(Role, on_delete=models.CASCADE, blank=False, null=True)
-    employee = models.ForeignKey(EmployeeTeacher, on_delete=models.CASCADE, blank=False, null=True)
-    
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, blank=False, null=True)
+
 
 class TeacherAttendance(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
