@@ -6239,4 +6239,4 @@ def Pay_Employee(request, pk):
             return redirect('SalaryPayment')
     else:
         form =  SalaryGradeForm(instance=item)
-        return render(request, 'payroll/pay_employee.html', {'form': form})
+        return render(request, 'payroll/pay_employees.html', {'form': form})
