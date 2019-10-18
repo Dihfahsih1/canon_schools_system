@@ -1040,6 +1040,12 @@ class Event(models.Model):
           ('No', 'No'))
     Is_View_on_Web = models.CharField(max_length=100, blank=False, choices=IS)
 
+class ExpenditureHead(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    expenditure_head = models.CharField(max_length=100)
+    note = models.TextField(max_length=300)
+    def __str__(self):
+        return self.expenditure_head
 
 class SalaryGrade(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
@@ -1061,8 +1067,10 @@ class SalaryGrade(models.Model):
     Bonus = models.CharField(max_length=100, blank=True, null=True)
     Penalty = models.CharField(max_length=100, blank=True, null=True)
     Month = models.CharField(max_length=100, blank=True, null=True)
-    method =(('Cash', 'Cash'),('Cheque','Cheque'))
-    Payment_Method = models.CharField(max_length=100, choices="method", blank=True, null=True)
+    pay = (('Cheque','Cheque'),
+           ('MobileMoney','MobileMoney'),
+          ('Cash','Cash'))
+    Payment_Method = models.CharField(max_length=100,choices=pay, blank=True, null=True)
     Expenditure_Head = models.ForeignKey(ExpenditureHead, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
@@ -1169,14 +1177,6 @@ class Income(models.Model):
     amount = models.CharField(max_length=100)
     date = models.DateField(null=True)
     note = models.TextField(max_length=300)
-
-
-class ExpenditureHead(models.Model):
-    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
-    expenditure_head = models.CharField(max_length=100)
-    note = models.TextField(max_length=300)
-    def __str__(self):
-        return self.expenditure_head
 
 
 class Expenditure(models.Model):
