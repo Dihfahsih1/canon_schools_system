@@ -6201,9 +6201,9 @@ def SalaryPayment(request):
     role = request.GET.get('role')
     context['form'] = SalaryPaymentForm(school, role)
     # Filter
-    q = request.GET.get('teacher')
+    q = request.GET.get('employee')
     if q:
-        payee = Teacher.objects.filter(id__in =q)
+        payee = Employee.objects.filter(id__in =q)
         context['payee'] = payee
         return render(request, 'payroll/salary_payment_details.html', context)
     return render(request, 'payroll/salary_payment_list.html', context)
@@ -6223,7 +6223,7 @@ def load_employee_designation(request):
     school_id = request.GET.get('school')
     designations = Designation.objects.filter(school_id=school_id).order_by('designation')
     return render(request, 'filter/designation_dropdown_list_options.html', {'designations': designations})
-    
+
 #loading employee salary grade depending on the school selected.
 def load_employee_salary_grade(request):
     school_id = request.GET.get('school')
