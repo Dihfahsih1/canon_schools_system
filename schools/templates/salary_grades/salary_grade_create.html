@@ -90,7 +90,19 @@
                                                     {{ form.over_time_hourly_pay|as_crispy_field }}
                                                 </div>
                                                 <div class="form-group col-md-3 mb-0">
+                                                    {{ form.over_time_total_hour|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.over_time_amount|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
                                                     {{ form.provident_fund|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.Bonus|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.Penalty|as_crispy_field }}
                                                 </div>
                                             </div>
                                             <div class="form-row">
@@ -111,6 +123,15 @@
                                             <div class="form-row">
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.net_salary|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.Month|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.Payment_Method|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group col-md-3 mb-0">
+                                                    {{ form.Expenditure_Head|as_crispy_field }}
                                                 </div>
                                                 <div class="form-group col-md-6 mb-0">
                                                     {{ form.note|as_crispy_field }}

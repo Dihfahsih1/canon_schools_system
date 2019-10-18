@@ -1056,6 +1056,14 @@ class SalaryGrade(models.Model):
     gross_salary = models.CharField(max_length=100, blank=True, null=True)
     net_salary = models.CharField(max_length=100, blank=True, null=True)
     note = models.TextField(null=True, blank=False)
+    over_time_total_hour = models.CharField(max_length=100, blank=True, null=True)
+    over_time_amount = models.CharField(max_length=100, blank=True, null=True)
+    Bonus = models.CharField(max_length=100, blank=True, null=True)
+    Penalty = models.CharField(max_length=100, blank=True, null=True)
+    Month = models.CharField(max_length=100, blank=True, null=True)
+    method =(('Cash', 'Cash'),('Cheque','Cheque'))
+    Payment_Method = models.CharField(max_length=100, choices="method", blank=True, null=True)
+    Expenditure_Head = models.ForeignKey(ExpenditureHead, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.grade_name
@@ -1167,6 +1175,8 @@ class ExpenditureHead(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     expenditure_head = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
+    def __str__(self):
+        return self.expenditure_head
 
 
 class Expenditure(models.Model):
