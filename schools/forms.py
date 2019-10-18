@@ -868,11 +868,11 @@ class ManageUserForm(forms.ModelForm):
 class SalaryPaymentForm(forms.ModelForm):
     class Meta:
         model = SalaryPayment
-        fields = ('school','role','teacher')
+        fields = ('school','role','employee')
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['role'].queryset = Role.objects.none()
-        self.fields['teacher'].queryset = Teacher.objects.none()
+        self.fields['employee'].queryset = Employee.objects.none()
 
         if 'school' in self.data:
             try:
