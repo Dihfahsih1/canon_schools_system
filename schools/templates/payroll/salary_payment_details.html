@@ -57,16 +57,16 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-3 mb-0">
-                                    {{ pay.school}}
+                                    {{ form.school|as_crispy_field }}
                                 </div>
                                 <div class="form-group col-md-3 mb-0">
-                                    {{ pay.grade_name}}
+                                    {{ form.grade_name|as_crispy_field }}
                                 </div>
                                 <div class="form-group col-md-3 mb-0">
-                                    {{ pay.basic_salary}}
+                                    {{ form.basic_salary|as_crispy_field }}
                                 </div>
                                 <div class="add form-group col-md-3 mb-0">
-                                    {{ pay.house_rent}}
+                                    {{ form.house_rent|as_crispy_field }}
                                 </div>
                             </div>
 
@@ -79,60 +79,60 @@
 
                             <div class="form-row">
                                 <div class="add form-group col-md-3 mb-0">
-                                    {{ pay.transport_allowance}}
+                                    {{ form.transport_allowance|as_crispy_field }}
                                 </div>
                                 <div class="add form-group col-md-3 mb-0">
-                                    {{ pay.medical_allowance}}
+                                    {{ form.medical_allowance|as_crispy_field }}
                                 </div>
                                 <div class="form-group col-md-3 mb-0">
-                                    {{ pay.over_time_hourly_pay}}
+                                    {{ form.over_time_hourly_pay|as_crispy_field }}
                                 </div>
                                 <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ pay.over_time_total_hour}}
+                                    {{ form.over_time_total_hour|as_crispy_field }}
                                 </div>
                                 <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ pay.over_time_amount}}
+                                    {{ form.over_time_amount|as_crispy_field }}
                                 </div>
                                 <div class="form-group col-md-3 mb-0">
-                                    {{ pay.provident_fund}}
+                                    {{ form.provident_fund|as_crispy_field }}
                                 </div>
                                 <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ pay.Bonus}}
+                                    {{ form.Bonus|as_crispy_field }}
                                 </div>
                                 <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ pay.Penalty}}
+                                    {{ form.Penalty|as_crispy_field }}
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-3 mb-0">
-                                    {{ pay.hourly_rate}}
+                                    {{ form.hourly_rate|as_crispy_field }}
                                 </div>
                                 <div class="form-group col-md-3 mb-0">
-                                    {{ pay.total_allowance}}
+                                    {{ form.total_allowance|as_crispy_field }}
                                 </div>
                                 <div class="form-group col-md-3 mb-0">
-                                    {{ form.total_deduction}}
+                                    {{ form.total_deduction|as_crispy_field }}
                                 </div>
                                 <div class="form-group col-md-3 mb-0">
-                                    {{ pay.gross_salary}}
+                                    {{ form.gross_salary|as_crispy_field }}
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-3 mb-0">
-                                    {{ pay.net_salary}}
+                                    {{ form.net_salary|as_crispy_field }}
                                 </div>
                                 <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ pay.Month}}
+                                    {{ form.Month|as_crispy_field }}
                                 </div>
                                 <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ pay.Payment_Method}}
+                                    {{ form.Payment_Method|as_crispy_field }}
                                 </div>
                                 <div class="hidden_fields form-group col-md-3 mb-0">
-                                    {{ pay.Expenditure_Head}}
+                                    {{ form.Expenditure_Head|as_crispy_field }}
                                 </div>
                                 <div class="form-group col-md-6 mb-0">
-                                    {{ pay.note}}
+                                    {{ form.note|as_crispy_field }}
                                 </div>
                             </div>
 
@@ -143,7 +143,7 @@
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
-                    {% endfor %}
+                            
                     </div>
 
                 </div>
