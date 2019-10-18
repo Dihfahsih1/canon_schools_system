@@ -885,16 +885,11 @@ class SalaryPaymentForm(forms.ModelForm):
                 if 'role' in self.data:
                     try:
                         rolesId = int(self.data.get('role'))
-                        self.fields['teacher'].queryset = Teacher.objects.filter(roles_id=rolesId).order_by(
-                            'user.full_name')
+                        self.fields['employee'].queryset = Employee.objects.filter(roles_id=rolesId).order_by(
+                            'user')
 
                     except (ValueError, TypeError):
                         pass
-                elif self.instance.pk:
-                    self.fields['teacher'].queryset = self.instance.role.teacher_set.order_by('user')
-
-        elif self.instance.pk:
-            self.fields['role'].queryset = self.instance.school.role_set.order_by('role_name')
 
 
 
