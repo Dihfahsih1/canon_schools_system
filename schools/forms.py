@@ -122,36 +122,6 @@ class TeacherForm(forms.ModelForm):
         return user
 
 
-class EmployeeForm(forms.ModelForm):
-    class Meta:
-        model = Employee
-        fields = ['school', 'designation', 'salary_grade', 'salary_type', 'resume', 'Is_View_on_Web', 'roles',
-                  'facebook_url', 'linkedIn_url', 'twitter_url', 'google_plus_url', 'instagram_url', 'youtube_url',
-                  'pinterest_url']
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.fields['designation'].queryset = Designation.objects.none()
-            self.fields['salary_grade'].queryset = SalaryGrade.objects.none()
-
-            if 'school' in self.data:
-                try:
-                    school_id = int(self.data.get('school'))
-                    self.fields['designation'].queryset = Designation.objects.filter(school_id=school_id).order_by('school')
-                    self.fields['salary_grade'].queryset = SalaryGrade.objects.filter(school_id=school_id).order_by('school')
-                except (ValueError, TypeError):
-                    pass
-            elif self.instance.pk:
-                self.fields['designation'].queryset = self.instance.school.designation_set.order_by('designation')
-                self.fields['salary_grade'].queryset = self.instance.school.salary_grade_set.order_by('grade_name')
-
-    def save(self, commit=True):
-        # Save the provided password in hashed format
-        user = super(EmployeeForm, self).save(commit=False)
-        user.is_employee = True
-        if commit:
-            user.save()
-        return user
-
 
 class GuardianForm(forms.ModelForm):
     class Meta:
@@ -925,3 +895,31 @@ class SalaryPaymentForm(forms.ModelForm):
 
         elif self.instance.pk:
             self.fields['role'].queryset = self.instance.school.role_set.order_by('role_name')
+
+
+
+class EmployeeForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = ['school', 'designation', 'salary_grade', 'salary_type', 'resume', 'Is_View_on_Web', 'roles',
+                  'facebook_url', 'linkedIn_url', 'twitter_url', 'google_plus_url', 'instagram_url', 'youtube_url',
+                  'pinterest_url']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['designation'].queryset = Designation.objects.none()
+        self.fields['salary_grade'].queryset = SalaryGrade.objects.none()
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['designation'].queryset = Designation.objects.filter(school_id=school_id).order_by('designation')
+                self.fields['salary_grade'].queryset = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
+            except (ValueError, TypeError):
+                pass
+
+    def save(self, commit=True):
+        # Save the provided password in hashed format
+        user = super(EmployeeForm, self).save(commit=False)
+        user.is_employee = True
+        if commit:
+            user.save()
+        return user
