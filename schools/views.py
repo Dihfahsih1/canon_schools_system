@@ -6229,3 +6229,16 @@ def load_employee_salary_grade(request):
     school_id = request.GET.get('school')
     salarygrades = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
     return render(request, 'filter/salarygrade_dropdown_list_options.html', {'salarygrades': salarygrades})
+#update employee infor when paying
+class EmployeeUpdateView(UpdateView):
+    model = SalaryGrade
+    template_name = 'payroll/salary_payment_details.html'
+    pk_url_kwarg = 'employee_pk'
+    fields =  ('school', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
+              'over_time_hourly_pay', 'provident_fund', 'hourly_rate', 'total_allowance', 'total_deduction',
+              'gross_salary', 'net_salary','over_time_total_hour','over_time_amount','Bonus','Penalty','Month','Payment_Method','Expenditure_Head', 'note')
+
+    def form_valid(self, form):
+        payee = form.save(commit=False)
+        payee.save()
+        return redirect('SalaryPayment')
