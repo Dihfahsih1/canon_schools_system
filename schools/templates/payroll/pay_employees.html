@@ -133,7 +133,7 @@
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.Expenditure_Head|as_crispy_field }}
                                                 </div>
-                                                <div class="form-group col-md-6 mb-0">
+                                                <div class="notes form-group col-md-6 mb-0">
                                                     {{ form.note|as_crispy_field }}
                                                 </div>
                                             </div>
@@ -209,15 +209,8 @@
             });
 //hiding the fields that don't require input by this form but will be used at a later input
 //choosing the payment method
-      $(".hidden_fields").hide();
-
-      $('#id_over_time_total_hour').hide();
-      $('#id_over_time_amount').hide();
-      $('#id_Bonus').hide();
-      $('#id_Penalty').hide();
-      $('#id_Month').hide();
-      $('#id_Payment_Method').hide();
-      $('#id_Expenditure_Head').hide()
+      $(".notes").hide();
+      $('#id_note').hide()
 
 //make claculations before submiting data
             $(document).ready(function () {
@@ -298,10 +291,19 @@
                   }
             });
 
-            document.getElementById('id_total_deduction').readOnly = true;
-            document.getElementById('id_basic_salary').readOnly = true;
-            document.getElementById('id_net_salary').readOnly = true;
-            document.getElementById('id_gross_salary').readOnly = true;
+            document.getElementById('school').readOnly = true;
+            document.getElementById('grade_name').readOnly = true;
+            document.getElementById('basic_salary').readOnly = true;
+            document.getElementById('house_rent').readOnly = true;
+            document.getElementById('transport_allowance').readOnly = true;
+            document.getElementById('medical_allowance').readOnly = true;
+            document.getElementById('over_time_hourly_pay').readOnly = true;
+            document.getElementById('provident_fund').readOnly = true;
+            document.getElementById('hourly_rate').readOnly = true;
+            document.getElementById('total_allowance').readOnly = true;
+            document.getElementById('total_deduction').readOnly = true;
+            document.getElementById('gross_salary').readOnly = true;
+            document.getElementById('net_salary').readOnly = true;
         </script>
     </div>
 
