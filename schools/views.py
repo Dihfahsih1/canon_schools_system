@@ -6212,7 +6212,7 @@ def load_roles(request):
     school_id = request.GET.get('school')
     roles = Role.objects.filter(school_id=school_id).order_by('role_name')
     return render(request, 'filter/roles_dropdown_list_options.html', {'roles': roles})
-
+#load employees depending on role selected
 def load_employees(request):
     role_id = request.GET.get('role')
     employees = Employee.objects.filter(roles_id=role_id).order_by('user')
