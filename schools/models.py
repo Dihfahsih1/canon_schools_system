@@ -1071,6 +1071,8 @@ class SalaryGrade(models.Model):
            ('MobileMoney','MobileMoney'),
           ('Cash','Cash'))
     Payment_Method = models.CharField(max_length=100,choices=pay, blank=True, null=True)
+    Bank_Name = models.CharField(max_length=100, blank=True, null=True)
+    Cheque_Number = models.CharField(max_length=100, blank=True, null=True)
     Expenditure_Head = models.ForeignKey(ExpenditureHead, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
