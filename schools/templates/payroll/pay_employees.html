@@ -256,7 +256,7 @@
               $.sum = function()
                   {
                   $("#id_total_allowance").val(
-                  (parseInt($("#id_over_time_hourly_pay").val())* parseInt($("#id_over_time_total_hour").val()))+
+                  (parseInt($("#id_over_time_hourly_pay").val()) * parseInt($("#id_over_time_total_hour").val()))+
                   (parseInt($("#id_house_rent").val())+ parseInt($("#id_transport_allowance").val())+ parseInt($("#id_medical_allowance").val())+ parseInt($("#id_Bonus").val()))
                    );
                   }
@@ -296,7 +296,7 @@
             $.dif = function()
                 {
                 $("#id_net_salary").val(
-               (parseInt($("#id_over_time_hourly_pay").val())* parseInt($("#id_over_time_total_hour").val()))+ (parseInt($("#id_basic_salary").val()) + parseInt($("#id_Bonus").val()))  -
+               (parseInt($("#id_over_time_hourly_pay").val()) * parseInt($("#id_over_time_total_hour").val()))+ (parseInt($("#id_basic_salary").val()) + parseInt($("#id_Bonus").val()))  -
                (parseInt($("#id_provident_fund").val()) +(-parseInt($("#id_Penalty").val())))
 
                 )
@@ -360,7 +360,7 @@
               $.total = function()
                   {
                   $("#id_gross_salary").val(
-                  (parseInt($("#id_over_time_hourly_pay").val())* parseInt($("#id_over_time_total_hour").val()))+
+                  parseInt($("#id_over_time_hourly_pay").val()) * parseInt($("#id_over_time_total_hour").val())+
                   (parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) + parseInt($("#id_basic_salary").val()) +  parseInt($("#id_medical_allowance").val())+ parseInt($("#id_Bonus").val()))
 
                   );
@@ -381,13 +381,12 @@
                   );
                   $.product = function()
                       {
-                      $("#id_over_time_amount").val(parseInt($("#id_over_time_hourly_pay").val())
-                       * parseInt($("#id_over_time_total_hour").val())
+                      $("#id_over_time_amount").val(parseInt($("#id_over_time_hourly_pay").val()) * parseInt($("#id_over_time_total_hour").val())
                       );
                       }
                 });
             //if the user selects payment by cheque
-            $("#id_Payment_Method").change(function() {
+          $("#id_Payment_Method").change(function() {
               if ($(this).val() === "Cheque") {
                   $('.bank_name').show();
                   $('.cheque_number').show();
