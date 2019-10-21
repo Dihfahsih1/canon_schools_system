@@ -236,9 +236,17 @@
                      $.sum();
                   }
               );
+              $( "#id_Bonus" ).keyup(function()
+                  {
+                     $.sum();
+                  }
+              );
               $.sum = function()
                   {
-                  $("#id_total_allowance").val(parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) +   parseInt($("#id_medical_allowance").val()));
+                  $("#id_total_allowance").val(parseInt($("#id_house_rent").val())
+                   + parseInt($("#id_transport_allowance").val())
+                   + parseInt($("#id_medical_allowance").val())
+                   + parseInt($("#id_Bonus").val()));
                   }
             });
 //function for subtracting provident fund from basic salary
@@ -321,6 +329,7 @@
             document.getElementById('id_transport_allowance').readOnly = true;
             document.getElementById('id_medical_allowance').readOnly = true;
             document.getElementById('id_over_time_hourly_pay').readOnly = true;
+            document.getElementById('id_over_time_amount').readOnly = true;
             document.getElementById('id_provident_fund').readOnly = true;
             document.getElementById('id_hourly_rate').readOnly = true;
             document.getElementById('id_total_allowance').readOnly = true;
