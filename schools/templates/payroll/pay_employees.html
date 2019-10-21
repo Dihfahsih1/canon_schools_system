@@ -273,9 +273,14 @@
                    $.deduct();
                 }
             );
+            $( "#id_Penalty" ).keyup(function()
+                {
+                   $.deduct();
+                }
+            );
             $.deduct = function()
                 {
-                $("#id_total_deduction").val(parseInt($("#id_provident_fund").val())  - 0);
+                $("#id_total_deduction").val(parseInt($("#id_provident_fund").val())  + parseInt($("#id_Penalty").val()));
                 }
           });
 //function to calculate gross salary
