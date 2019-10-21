@@ -347,15 +347,20 @@
                      $.total();
                   }
               );
-              $( "#id_provident_fund" ).keyup(function()
+              $( "#id_over_time_hourly_pay" ).keyup(function()
+                  {
+                     $.total();
+                  }
+              );
+              $( "#id_over_time_total_hour" ).keyup(function()
                   {
                      $.total();
                   }
               );
               $.total = function()
                   {
-
-                  $("#id_gross_salary").val(parseInt($("#id_provident_fund").val()) + parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) + parseInt($("#id_basic_salary").val()) +  parseInt($("#id_medical_allowance").val()) + parseInt($("#id_Bonus").val())
+                  $("#id_gross_salary").val(
+                  parseInt($("#id_over_time_total_hour").val()) * parseInt($("#id_over_time_hourly_pay").val()) + parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) + parseInt($("#id_basic_salary").val()) +  parseInt($("#id_medical_allowance").val()) + parseInt($("#id_Bonus").val())
                   );
                   }
             });
