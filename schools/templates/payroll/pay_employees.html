@@ -307,7 +307,7 @@
               );
               $( "#id_Bonus" ).keyup(function()
                   {
-                     $.dif();
+                     $.total();
                   }
               );
               $( "#id_transport_allowance" ).keyup(function()
@@ -325,6 +325,27 @@
                   $("#id_gross_salary").val(parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) + parseInt($("#id_basic_salary").val()) +  parseInt($("#id_medical_allowance").val())+ parseInt($("#id_Bonus").val()));
                   }
             });
+
+            //make claculations for overtime computation
+                        $(document).ready(function () {
+                          $( "#over_time_hourly_pay" ).keyup(function()
+                              {
+                                 $.product();
+                              }
+                          );
+                          $( "#id_over_time_total_hour" ).keyup(function()
+                              {
+                                 $.product();
+                              }
+                          );
+
+                          $.product = function()
+                              {
+                              $("#id_over_time_amount").val(parseInt($("#over_time_hourly_pay").val())
+                               * parseInt($("#id_over_time_total_hour").val())
+                              );
+                              }
+                        });
             //if the user selects payment by cheque
             $("#id_Payment_Method").change(function() {
               if ($(this).val() === "Cheque") {
