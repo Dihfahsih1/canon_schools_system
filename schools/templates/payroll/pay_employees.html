@@ -261,9 +261,19 @@
                    $.dif();
                 }
             );
+            $( "#id_Penalty" ).keyup(function()
+                {
+                   $.dif();
+                }
+            );
+            $( "#id_Bonus" ).keyup(function()
+                {
+                   $.dif();
+                }
+            );
             $.dif = function()
                 {
-                $("#id_net_salary").val(parseInt($("#id_basic_salary").val())  -    parseInt($("#id_provident_fund").val()));
+                $("#id_net_salary").val(parseInt(($("#id_basic_salary").val()) + parseInt($("#id_Bonus").val()))  - (   parseInt($("#id_provident_fund").val()) +(-parseInt($("#id_Penalty").val()))));
                 }
           });
 //function for finding total deductions
@@ -295,6 +305,11 @@
                      $.total();
                   }
               );
+              $( "#id_Bonus" ).keyup(function()
+                  {
+                     $.dif();
+                  }
+              );
               $( "#id_transport_allowance" ).keyup(function()
                   {
                      $.total();
@@ -307,7 +322,7 @@
               );
               $.total = function()
                   {
-                  $("#id_gross_salary").val(parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) + parseInt($("#id_basic_salary").val()) +  parseInt($("#id_medical_allowance").val()));
+                  $("#id_gross_salary").val(parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) + parseInt($("#id_basic_salary").val()) +  parseInt($("#id_medical_allowance").val())+ parseInt($("#id_Bonus").val()));
                   }
             });
             //if the user selects payment by cheque
