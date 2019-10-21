@@ -219,7 +219,7 @@
       $('#id_note').hide()
       $('.school').hide()
 
-//make claculations before submiting data
+//make claculations allowances
             $(document).ready(function () {
               $( "#id_house_rent" ).keyup(function()
                   {
@@ -241,12 +241,24 @@
                      $.sum();
                   }
               );
+              $( "#id_over_time_hourly_pay" ).keyup(function()
+                  {
+                     $.sum();
+                  }
+              );
+              $( "#id_over_time_total_hour" ).keyup(function()
+                  {
+                     $.sum();
+                  }
+              );
+
+
               $.sum = function()
                   {
-                  $("#id_total_allowance").val(parseInt($("#id_house_rent").val())
-                   + parseInt($("#id_transport_allowance").val())
-                   + parseInt($("#id_medical_allowance").val())
-                   + parseInt($("#id_Bonus").val()));
+                  $("#id_total_allowance").val(
+                  (parseInt($("#id_over_time_hourly_pay").val())* parseInt($("#id_over_time_total_hour").val()))+
+                  (parseInt($("#id_house_rent").val())+ parseInt($("#id_transport_allowance").val())+ parseInt($("#id_medical_allowance").val())+ parseInt($("#id_Bonus").val()))
+                   );
                   }
             });
 //function for subtracting provident fund from basic salary
@@ -271,9 +283,24 @@
                    $.dif();
                 }
             );
+            $( "#id_over_time_hourly_pay" ).keyup(function()
+                {
+                   $.dif();
+                }
+            );
+            $( "#id_over_time_total_hour" ).keyup(function()
+                {
+                   $.dif();
+                }
+            );
             $.dif = function()
                 {
-                $("#id_net_salary").val(parseInt(($("#id_basic_salary").val()) + parseInt($("#id_Bonus").val()))  - (   parseInt($("#id_provident_fund").val()) +(-parseInt($("#id_Penalty").val()))));
+                $("#id_net_salary").val(
+               (parseInt($("#id_over_time_hourly_pay").val())* parseInt($("#id_over_time_total_hour").val()))+ (parseInt($("#id_basic_salary").val()) + parseInt($("#id_Bonus").val()))  -
+               (parseInt($("#id_provident_fund").val()) +(-parseInt($("#id_Penalty").val())))
+
+                )
+                ;
                 }
           });
 //function for finding total deductions
@@ -320,32 +347,45 @@
                      $.total();
                   }
               );
+              $( "#id_over_time_hourly_pay" ).keyup(function()
+                  {
+                     $.total();
+                  }
+              );
+              $( "#id_over_time_total_hour" ).keyup(function()
+                  {
+                     $.total();
+                  }
+              );
               $.total = function()
                   {
-                  $("#id_gross_salary").val(parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) + parseInt($("#id_basic_salary").val()) +  parseInt($("#id_medical_allowance").val())+ parseInt($("#id_Bonus").val()));
+                  $("#id_gross_salary").val(
+                  (parseInt($("#id_over_time_hourly_pay").val())* parseInt($("#id_over_time_total_hour").val()))+
+                  (parseInt($("#id_house_rent").val())  + parseInt($("#id_transport_allowance").val()) + parseInt($("#id_basic_salary").val()) +  parseInt($("#id_medical_allowance").val())+ parseInt($("#id_Bonus").val()))
+
+                  );
                   }
             });
 
-            //make claculations for overtime computation
-                        $(document).ready(function () {
-                          $( "#id_over_time_hourly_pay" ).keyup(function()
-                              {
-                                 $.product();
-                              }
-                          );
-                          $( "#id_over_time_total_hour" ).keyup(function()
-                              {
-                                 $.product();
-                              }
-                          );
-
-                          $.product = function()
-                              {
-                              $("#id_over_time_amount").val(parseInt($("#over_time_hourly_pay").val())
-                               * parseInt($("#id_over_time_total_hour").val())
-                              );
-                              }
-                        });
+    //make claculations for overtime computation
+                $(document).ready(function () {
+                  $( "#id_over_time_hourly_pay" ).keyup(function()
+                      {
+                         $.product();
+                      }
+                  );
+                  $( "#id_over_time_total_hour" ).keyup(function()
+                      {
+                         $.product();
+                      }
+                  );
+                  $.product = function()
+                      {
+                      $("#id_over_time_amount").val(parseInt($("#id_over_time_hourly_pay").val())
+                       * parseInt($("#id_over_time_total_hour").val())
+                      );
+                      }
+                });
             //if the user selects payment by cheque
             $("#id_Payment_Method").change(function() {
               if ($(this).val() === "Cheque") {
