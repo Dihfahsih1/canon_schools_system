@@ -6243,5 +6243,4 @@ def Pay_Employee(request, pk):
 
 def Payment_List(request):
     list = SalaryGrade.objects.all()
-    context ['list'] = list
-    return(request, 'payroll/Payment_List.html', context)
+    return render(request, 'payroll/Payment_List.html', {'list':list})
