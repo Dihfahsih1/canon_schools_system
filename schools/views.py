@@ -6235,6 +6235,8 @@ def Pay_Employee(request, pk):
     if request.method == "POST":
         form =  SalaryGradeForm(request.POST, instance=item)
         if form.is_valid():
+            for i in form:
+                print(i.user)
             form.save()
             return redirect('SalaryPayment')
     else:
