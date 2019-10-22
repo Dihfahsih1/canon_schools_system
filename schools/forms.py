@@ -827,7 +827,7 @@ class IncomeForm(forms.ModelForm):
 class SalaryGradeForm(forms.ModelForm):
     class Meta:
         model = SalaryGrade
-        fields = ('school', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
+        fields = ('school','payee', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
                   'over_time_hourly_pay', 'provident_fund', 'hourly_rate', 'total_allowance', 'total_deduction',
                   'gross_salary', 'net_salary','over_time_total_hour','over_time_amount','Bonus','Penalty','Month','Payment_Method','Expenditure_Head','Cheque_Number', 'Bank_Name', 'note')
 
