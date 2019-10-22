@@ -216,7 +216,6 @@
 //hiding the fields that don't require input by this form but will be used at a later input
 //choosing the payment method
       $(".hidden_fields").hide();
-
       $('#id_over_time_total_hour').hide();
       $('#id_over_time_amount').hide();
       $('#id_Bonus').hide();
@@ -226,7 +225,7 @@
       $('#id_Expenditure_Head').hide()
 
 //make claculations before submiting data
-            $(document).ready(function () {
+          $(document).ready(function () {
               $( "#id_house_rent" ).keyup(function()
                   {
                      $.sum();
@@ -277,7 +276,7 @@
                 }
           });
 //function to calculate gross salary
-            $(document).ready(function () {
+          $(document).ready(function () {
               $( "#id_basic_salary" ).keyup(function()
                   {
                      $.total();
