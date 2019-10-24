@@ -1415,8 +1415,3 @@ class MonthlySalaryPaid(models.Model):
     Bank_Name = models.CharField(max_length=100, blank=True, null=True)
     Cheque_Number = models.CharField(max_length=100, blank=True, null=True)
     note = models.CharField(max_length=100, blank=True, null=True)
-
-class searchPaymentHistory(models.Model):
-    Searchschool = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
-    Searchrole = models.ForeignKey(Role, on_delete=models.CASCADE, blank=False, null=True)
-    Searchemployee = models.ForeignKey(Employee, on_delete=models.CASCADE, blank=False, null=True)    
