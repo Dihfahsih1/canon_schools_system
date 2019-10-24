@@ -6264,12 +6264,13 @@ def PaymentHistory(request):
     context = {}
     school = request.GET.get('school')
     role = request.GET.get('role')
-    context['form'] = SalaryPaymentForm(school, role)
+    form = SalaryPaymentForm(school, role)
+    context = {'form':form}
     # Filter
     q = request.GET.get('employee')
     print(q)
     if q:
-        history = MonthlySalaryPaid.objects.filter(id=q.id)
-        context['history'] = history
+        history = MonthlySalaryPaid.objects.filter(id=q)
+        context={'history':history, 'q':q}
         return render(request, 'payroll/salary_payment_history.html', context)
     return render(request, 'payroll/salary_payment_list.html', context)
