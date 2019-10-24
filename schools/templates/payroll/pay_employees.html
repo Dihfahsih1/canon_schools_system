@@ -63,9 +63,10 @@
                                                 </div>
 
                                                 <div  class="form-group col-md-3 mb-0">
-                                                  {% for pay in payee %}
-                                                    {{ pay.salary_grade.user}}
-                                                  {% endfor %}
+                                                {% for employee in payee %}
+                                                <label for="employee">Employee</label>
+                                                <input type="text" name="employee" value="{{ employee.user}}">
+                                                {% endfor%}
                                                 </div>
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.grade_name|as_crispy_field }}
