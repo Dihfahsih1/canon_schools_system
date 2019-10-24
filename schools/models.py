@@ -1411,3 +1411,6 @@ class MonthlySalaryPaid(models.Model):
     Month = models.CharField(max_length=100)
     Payment_Method = models.CharField(max_length=100)
     Expenditure_Head = models.CharField(max_length=100)
+    Bank_Name = models.CharField(max_length=100, blank=True, null=True)
+    Cheque_Number = models.CharField(max_length=100, blank=True, null=True)
+    note = models.CharField(max_length=100, blank=True, null=True)
