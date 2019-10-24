@@ -59,6 +59,7 @@
                                 <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>School</th>
                                     <th>Basic Salary</th>
                                     <th>Net Salary</th>
                                     <th>Pay Salary</th>
@@ -69,6 +70,7 @@
                                 {% for pay in payee %}
                                     <tr>
                                          <td>{{ pay.user }}</td>
+                                         <td>{{ pay.school }}</td>
                                         <td>{{ pay.salary_grade.basic_salary }}</td>
                                         <td>{{ pay.salary_grade.net_salary }}</td>
                                         <td><div class="mb-4">

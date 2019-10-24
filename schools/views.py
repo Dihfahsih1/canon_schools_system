@@ -6243,10 +6243,7 @@ def Pay_Employee(request, pk):
         payee = Employee.objects.filter(id__in = pk)
         for i in payee:
             print(i.school)
-        school = School.objects.filter(id__in = pk)
-        for i in school:
-            print(i.school_name)
-        context={'form':form, 'payee':payee, 'school':school}
+        context={'form':form, 'payee':payee}
         return render(request, 'payroll/pay_employees.html', context)
 #list of all employees paid salary
 def Payment_List(request):
@@ -6257,7 +6254,7 @@ def EmployeeSalaryPaid(request):
         form =  MonthlySalaryPaidForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('EmployeeMonthlySalaryReport')
+            return redirect('SalaryReport')
 
 def EmployeeMonthlySalaryReport(request):
     reports = MonthlySalaryPaid.objects.all()

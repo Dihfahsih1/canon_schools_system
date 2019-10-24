@@ -57,11 +57,7 @@
                                               enctype="multipart/form-data"
                                               accept-charset="utf-8">{% csrf_token %}
                                             <div class="form-row">
-                                              <div  class="form-group col-md-3 mb-0" >
-                                              {% for employeeschool in school %}
-                                              <label for="school">School</label>
-                                              <input type="readOnly" id="school" name="school"  value="{{ employeeschool.school_name}}"maxlength="100" class="textinput textInput form-control">
-                                              {% endfor%}
+                                              
                                               </div>
 
                                             </div><br><br><br><br>
@@ -73,7 +69,7 @@
                                                 <div  class="form-group col-md-3 mb-0" >
                                                 {% for employee in payee %}
                                                 <label for="school">School</label>
-                                                <input type="readOnly" id="school" name="school"  value="{{ employee.user.school}}"maxlength="100" class="textinput textInput form-control">
+                                                <input type="readOnly" id="school" name="school"  value="{{ employee.school}}"maxlength="100" class="textinput textInput form-control">
                                                 <label for="employee">Employee</label>
                                                 <input type="readOnly" id="employee" name="employee"  value="{{ employee.user}}"maxlength="100" class="textinput textInput form-control">
                                                 {% endfor%}
