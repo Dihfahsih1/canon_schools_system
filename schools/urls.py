@@ -498,7 +498,7 @@ urlpatterns = [
     url(r'^Pay_Employee/(?P<pk>\d+)', views.Pay_Employee, name='Pay_Employee'),
     path('SalaryPayment', views.SalaryPayment, name='SalaryPayment'),
     url(r'^payroll/Salary-Paid/index/List/', views.Payment_List, name='Payment_List'),
-    url(r'^payroll/Salary-Paid/index/SalaryPaid/', views.MonthlySalaryPaid, name='PayingSalary'),
+    url(r'^payroll/Salary-Paid/index/SalaryPaid/', views.EmployeeSalaryPaid, name='PayingSalary'),
     url(r'^payroll/Salary-Paid/index/SalaryPaidReport/', views.EmployeeMonthlySalaryReport, name='SalaryReport'),
 
 
