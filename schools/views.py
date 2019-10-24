@@ -6234,6 +6234,7 @@ def Pay_Employee(request, pk):
     item = get_object_or_404(SalaryGrade, id=pk)
     if request.method == "POST":
         form =  SalaryGradeForm(request.POST, instance=item)
+
         if form.is_valid():
             for i in form:
                 print(i.user)
@@ -6241,7 +6242,9 @@ def Pay_Employee(request, pk):
             return redirect('SalaryPayment')
     else:
         form =  SalaryGradeForm(instance=item)
-        return render(request, 'payroll/pay_employees.html', {'form': form})
+        payee_name = Employee.objects.filter(user_id =pk)
+        context={'form':form, 'payee_name':payee_name}
+        return render(request, 'payroll/pay_employees.html', context)
 #list of all employees paid salary
 def Payment_List(request):
     list = SalaryGrade.objects.all()
