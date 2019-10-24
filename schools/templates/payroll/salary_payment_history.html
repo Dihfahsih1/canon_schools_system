@@ -69,6 +69,7 @@
                                 </thead>
                                 <tbody>
                                 {% for details in history %}
+                                   {% if q == details.id %}
                                     <tr>
                                          <td>{{ details.employee }}</td>
                                          <td>{{ details.school }}</td>
@@ -84,8 +85,8 @@
                                                class="btn btn-warning btn-sm">
                                                 <span class="glyphicon glyphicon-pencil"></span> View</a>
                                         </div></td>
-
                                     </tr>
+                                  {% endif %}
                                 {% empty %}
                                     <tr>
                                         <td colspan="9" class="text-center bg-warning">No Data</td>
