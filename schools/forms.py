@@ -919,6 +919,6 @@ class EmployeeForm(forms.ModelForm):
 class MonthlySalaryPaidForm(forms.ModelForm):
     class Meta:
         model = MonthlySalaryPaid
-        fields = ('id','school', 'employee', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
+        fields = ('employee_id','school', 'employee', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
                   'over_time_hourly_pay', 'provident_fund', 'hourly_rate', 'total_allowance', 'total_deduction',
                   'gross_salary', 'net_salary','over_time_total_hour','over_time_amount','Bonus','Penalty','Month','Payment_Method','Expenditure_Head','note','Cheque_Number','Bank_Name')

@@ -6203,7 +6203,7 @@ def SalaryPayment(request):
     # Filter
     q = request.GET.get('employee')
     if q:
-        payee = Employee.objects.filter(id__in =q)
+        payee = Employee.objects.filter(id__in = q)
         context['payee'] = payee
         return render(request, 'payroll/salary_payment_details.html', context)
     return render(request, 'payroll/salary_payment_list.html', context)
@@ -6271,7 +6271,7 @@ def PaymentHistory(request):
     print(q)
     if q:
         print(q)
-        history = MonthlySalaryPaid.objects.filter(id=q)
+        history = MonthlySalaryPaid.objects.filter(id__in=q)
         context={'history':history, 'q':q}
         return render(request, 'payroll/salary_payment_history.html', context)
     return render(request, 'payroll/salary_payment_list.html', context)

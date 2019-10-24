@@ -54,6 +54,7 @@
                                    width="100%">
                                 <thead>
                                 <tr>
+                                  <th>Id</th>
                                     <th>Name</th>
                                     <th>School</th>
                                     <th>Month</th>
@@ -70,6 +71,7 @@
                                 <tbody>
                                 {% for details in history %}
                                     <tr>
+                                         <td>{{ details.id }}</td>
                                          <td>{{ details.employee }}</td>
                                          <td>{{ details.school }}</td>
                                          <td>{{ details.Month }}</td>
