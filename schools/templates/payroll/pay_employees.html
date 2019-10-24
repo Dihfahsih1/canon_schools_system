@@ -63,7 +63,9 @@
                                                 </div>
 
                                                 <div  class="form-group col-md-3 mb-0">
-                                                    {{ payee_name.user}}
+                                                  {% for pay in payee %}
+                                                    {{ pay.salary_grade.user}}
+                                                  {% endfor %}
                                                 </div>
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.grade_name|as_crispy_field }}
