@@ -6240,10 +6240,12 @@ def Pay_Employee(request, pk):
             return redirect('SalaryPayment')
     else:
         form =  SalaryGradeForm(instance=item)
+        payee = Employee.objects.filter(id__in = pk)
+        for i in payee:
+            print(i.school)
         school = School.objects.filter(id__in = pk)
         for i in school:
             print(i.school_name)
-        payee = Employee.objects.filter(id__in = pk)
         context={'form':form, 'payee':payee, 'school':school}
         return render(request, 'payroll/pay_employees.html', context)
 #list of all employees paid salary
