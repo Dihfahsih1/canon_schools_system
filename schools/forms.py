@@ -901,11 +901,13 @@ class EmployeeForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['designation'].queryset = Designation.objects.none()
         self.fields['salary_grade'].queryset = SalaryGrade.objects.none()
+        self.fields['roles'].queryset = Role.objects.none()
         if 'school' in self.data:
             try:
                 school_id = int(self.data.get('school'))
                 self.fields['designation'].queryset = Designation.objects.filter(school_id=school_id).order_by('designation')
                 self.fields['salary_grade'].queryset = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
+                self.fields['roles'].queryset = Role.objects.filter(school_id=school_id).order_by('role_name')
             except (ValueError, TypeError):
                 pass
 
