@@ -55,23 +55,26 @@
                                               action="{% url 'PayingSalary'%}"
                                               method="post"
                                               enctype="multipart/form-data"
-                                              accept-charset="utf-8">{% csrf_token %}
-                                            <div class="form-row">
-
-                                              </div>
-
-                                            </div><br><br><br><br>
+                                              accept-charset="utf-8">
+                                              {% csrf_token %}
                                             <div class="form-row">
                                                 <div  class="school form-group col-md-3 mb-0">
                                                     {{ form.school|as_crispy_field }}
                                                 </div>
-
                                                 <div  class="form-group col-md-3 mb-0" >
                                                 {% for employee in payee %}
-                                                <label for="school">School</label>
-                                                <input type="readOnly" id="school" name="school"  value="{{ employee.school}}"maxlength="100" class="textinput textInput form-control">
+
+                                                  <label for="school">School</label>
+                                                  <input type="readOnly" id="school" name="school"  value="{{ employee.school}}"maxlength="100" class="textinput textInput form-control">
+
+
+                                              <div class="employees_id form-group">
+                                                <label for="employeeid">ID</label>
+                                                <input type="readOnly" id="employeeid" name="employees_id"  value="{{ employee.id}}"maxlength="100" class="textinput textInput form-control"></div>
+
                                                 <label for="employee">Employee</label>
                                                 <input type="readOnly" id="employee" name="employee"  value="{{ employee.user}}"maxlength="100" class="textinput textInput form-control">
+
                                                 {% endfor%}
                                                 </div>
                                                 <div class="form-group col-md-3 mb-0">
@@ -231,6 +234,7 @@
       $(".notes").hide();
       $('#id_note').hide()
       $('.school').hide()
+      $(".employees_id").hide();
 
 //make claculations allowances
             $(document).ready(function () {
