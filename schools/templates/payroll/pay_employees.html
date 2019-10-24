@@ -62,10 +62,10 @@
                                                     {{ form.school|as_crispy_field }}
                                                 </div>
 
-                                                <div  class="form-group col-md-3 mb-0">
+                                                <div  class="form-group col-md-3 mb-0" >
                                                 {% for employee in payee %}
                                                 <label for="employee">Employee</label>
-                                                <input type="text" name="employee" value="{{ employee.user}}">
+                                                <input type="readOnly" id="employee" name="employee"  value="{{ employee.user}}"maxlength="100" class="textinput textInput form-control">
                                                 {% endfor%}
                                                 </div>
                                                 <div class="form-group col-md-3 mb-0">
@@ -408,6 +408,7 @@
            });
           $("#id_Payment_Method").trigger("change");
             document.getElementById('id_school').readOnly = true;
+            document.getElementById('employee').readOnly = true;
             document.getElementById('id_grade_name').readOnly = true;
             document.getElementById('id_basic_salary').readOnly = true;
             document.getElementById('id_house_rent').readOnly = true;

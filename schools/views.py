@@ -6243,9 +6243,6 @@ def Pay_Employee(request, pk):
     else:
         form =  SalaryGradeForm(instance=item)
         payee = Employee.objects.filter(id__in = pk)
-        for i in payee:
-            print(i.user)
-
         context={'form':form, 'payee':payee}
         return render(request, 'payroll/pay_employees.html', context)
 #list of all employees paid salary
