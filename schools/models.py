@@ -1390,6 +1390,7 @@ class Application(models.Model):
     leave_attachment = models.FileField(upload_to='leave/', max_length=100)
 
 class MonthlySalaryPaid(models.Model):
+    employee_id=models.CharField(max_length=100, blank=True, null=True)
     employee = models.CharField(max_length=100)
     school = models.CharField(max_length=100)
     grade_name = models.CharField(max_length=100)
