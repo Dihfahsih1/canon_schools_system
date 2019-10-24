@@ -6252,7 +6252,10 @@ def Payment_List(request):
     return render(request, 'payroll/Payment_List.html', {'list':list})
 def MonthlySalaryPaid(request):
     if request.method == "POST":
-        form =  MonthlySalaryPaidForm()
+        form =  MonthlySalaryPaidForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
             return redirect('SalaryPayment')
+def EmployeeMonthlySalaryReport(request):
+    reports = MonthlySalaryPaid.objects.all()
+    return render(request, 'payroll/Payment_Report.html', {'reports':reports})
