@@ -6242,7 +6242,7 @@ def Pay_Employee(request, pk):
     else:
         form =  SalaryGradeForm(instance=item)
         return render(request, 'payroll/pay_employees.html', {'form': form})
-
+#list of all employees paid salary
 def Payment_List(request):
     list = SalaryGrade.objects.all()
     return render(request, 'payroll/Payment_List.html', {'list':list})
