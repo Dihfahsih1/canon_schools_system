@@ -27,7 +27,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2><i class="fa fa-check-square-o"></i><small> Student Attendance</small></h2>
+                        <h2><i class="fa fa-check-square-o"></i><small>Salary Payment History</small></h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -37,11 +37,9 @@
 
                     <div class="x_content quick-link">
                         <span>Quick Link:</span>
-                        <a href="#">Student Attendance</a>
-                        | <a href="#">Teacher Attendance</a>
-                        | <a href="#">Employee Attendance</a>
-                        | <a href="#">Absent Email</a>
-                        | <a href="#">Absent SMS</a>
+                        <a href="{% url 'salary_grade_list' %}">Salary Grade</a>
+                        | <a href="{% url 'SalaryPayment' %}">Salary Payment</a>
+                        | <a href="{% url 'SalaryHistory' %}">Payment History</a>
                     </div>
 
                     <div class="x_content">
