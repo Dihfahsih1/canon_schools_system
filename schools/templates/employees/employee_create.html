@@ -59,6 +59,7 @@
                                               id="EmployeeForm"
                                               data-designation-url="{% url 'ajax_load_employee_designation' %}"
                                               data-salarygrade-url="{% url 'ajax_load_employee_salarygrade' %}"
+                                              data-roles-url="{% url 'ajax_load_roles' %}"
                                               role="form"
                                               action=""
                                               method="post"
@@ -307,6 +308,20 @@
                     },
                     success: function (data) {
                         $("#id_salary_grade").html(data);
+                    }
+                });
+            });
+
+            $("#id_school").change(function () {
+                var url = $("#EmployeeForm").attr("data-roles-url");
+                var schoolId = $(this).val();
+                $.ajax({
+                    url: url,
+                    data: {
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_roles").html(data);
                     }
                 });
             });
