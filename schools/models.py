@@ -1390,6 +1390,7 @@ class Application(models.Model):
     leave_attachment = models.FileField(upload_to='leave/', max_length=100)
 
 class MonthlySalaryPaid(models.Model):
+
     employee = models.CharField(max_length=100)
     school = models.CharField(max_length=100)
     grade_name = models.CharField(max_length=100)
@@ -1408,9 +1409,14 @@ class MonthlySalaryPaid(models.Model):
     over_time_amount = models.CharField(max_length=100)
     Bonus = models.CharField(max_length=100)
     Penalty = models.CharField(max_length=100)
-    Month = models.CharField(max_length=100, primary_key=True)
+    Month = models.CharField(max_length=100)
     Payment_Method = models.CharField(max_length=100)
     Expenditure_Head = models.CharField(max_length=100)
     Bank_Name = models.CharField(max_length=100, blank=True, null=True)
     Cheque_Number = models.CharField(max_length=100, blank=True, null=True)
     note = models.CharField(max_length=100, blank=True, null=True)
+
+class searchPaymentHistory(models.Model):
+    Searchschool = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    Searchrole = models.ForeignKey(Role, on_delete=models.CASCADE, blank=False, null=True)
+    Searchemployee = models.ForeignKey(Employee, on_delete=models.CASCADE, blank=False, null=True)    
