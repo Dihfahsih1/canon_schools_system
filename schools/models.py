@@ -1390,7 +1390,6 @@ class Application(models.Model):
     leave_attachment = models.FileField(upload_to='leave/', max_length=100)
 
 class MonthlySalaryPaid(models.Model):
-    employee_id=models.CharField(max_length=100, blank=True, null=True)
     employee = models.CharField(max_length=100)
     school = models.CharField(max_length=100)
     grade_name = models.CharField(max_length=100)
@@ -1409,7 +1408,7 @@ class MonthlySalaryPaid(models.Model):
     over_time_amount = models.CharField(max_length=100)
     Bonus = models.CharField(max_length=100)
     Penalty = models.CharField(max_length=100)
-    Month = models.CharField(max_length=100)
+    Month = models.CharField(max_length=100, primary_key=True)
     Payment_Method = models.CharField(max_length=100)
     Expenditure_Head = models.CharField(max_length=100)
     Bank_Name = models.CharField(max_length=100, blank=True, null=True)
