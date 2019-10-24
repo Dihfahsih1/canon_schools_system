@@ -500,6 +500,7 @@ urlpatterns = [
     url(r'^payroll/Salary-Paid/index/List/', views.Payment_List, name='Payment_List'),
     url(r'^payroll/Salary-Paid/index/SalaryPaid/', views.EmployeeSalaryPaid, name='PayingSalary'),
     url(r'^payroll/Salary-Paid/index/SalaryPaidReport/', views.EmployeeMonthlySalaryReport, name='SalaryReport'),
+    url(r'^payroll/history/index/', views.PaymentHistory, name='SalaryHistory'),
 
 
 ]
