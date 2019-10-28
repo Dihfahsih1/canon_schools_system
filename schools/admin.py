@@ -76,6 +76,7 @@ admin.site.register(Page)
 admin.site.register(Slider)
 admin.site.register(Role)
 admin.site.register(Feedback)
+admin.site.register(MonthlySalaryPaid)
 admin.site.unregister(Group)
 class ItemAdmin(admin.ModelAdmin):
     exclude=("total_allowance ",)

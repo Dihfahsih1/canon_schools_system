@@ -54,6 +54,7 @@
                                    width="100%">
                                 <thead>
                                 <tr>
+                                    <th>Date</th>
                                     <th>Name</th>
                                     <th>School</th>
                                     <th>Month</th>
@@ -69,7 +70,7 @@
                                 </thead>
                                 <tbody>
                                 {% for details in history %}
-                                    <tr>
+                                    <tr><td>{{ details.date }}</td>
                                          <td>{{ details.employee }}</td>
                                          <td>{{ details.school }}</td>
                                          <td>{{ details.Month }}</td>
