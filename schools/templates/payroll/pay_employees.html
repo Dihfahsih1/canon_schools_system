@@ -96,6 +96,9 @@
 
 
                                             <div class="form-row">
+                                              <div class="year form-group col-md-3 mb-0">
+                                                  {{ form.academic_year|as_crispy_field }}
+                                              </div>
                                                 <div class="add form-group col-md-3 mb-0">
                                                     {{ form.transport_allowance|as_crispy_field }}
                                                 </div>
@@ -231,10 +234,12 @@
             });
 //hiding the fields that don't require input by this form but will be used at a later input
 //choosing the payment method
+
       $(".notes").hide();
       $('#id_note').hide()
       $('.school').hide()
       $(".employees_id").hide();
+      $(".year").hide();
 
 //make claculations allowances
             $(document).ready(function () {
