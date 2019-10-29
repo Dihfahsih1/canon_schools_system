@@ -35,22 +35,13 @@
                         <div class="clearfix"></div>
                     </div>
 
-                    <div class="x_content quick-link">
-                        <span>Quick Link:</span>
-                        <a href="{% url 'salary_grade_list' %}">Salary Grade</a>
-                        | <a href="{% url 'SalaryPayment' %}">Salary Payment</a>
-                        | <a href="{% url 'SalaryHistory' %}">Payment History</a>
-                    </div>
-
                     <form class="form-horizontal form-label-left"
                           id="SalaryPaymentForm"
-                          data-roles-url="{% url 'ajax_load_roles' %}"
-                          data-employees-url="{% url 'ajax_load_employees' %}"
+                          data-ac_year-url="{% url 'ajax_load_ac_year' %}"
                           method="GET"
                           enctype="multipart/form-data"
                           accept-charset="utf-8"
                           novalidate>{% csrf_token %}
-
                         <div class="form-row">
                             <div class="form-group col-md-3 mb-0">
                                 {{ form.school|as_crispy_field }}
@@ -76,7 +67,6 @@
                                 <tr>
                                     <th>Basic Salary</th>
                                     <th>Net Salary</th>
-
                                 </tr>
                                 </thead>
                                 <tbody>
