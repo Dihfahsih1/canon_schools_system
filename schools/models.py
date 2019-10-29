@@ -358,6 +358,7 @@ class Teacher(models.Model):
 
 
 class Employee(models.Model):
+    date = models.DateField(auto_now_add=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='employee')
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     designation = models.ForeignKey('Designation', on_delete=models.CASCADE, blank=False, null=True)
