@@ -54,7 +54,6 @@
                                               role="form"
                                               action="{% url 'PayingSalary'%}"
                                               method="post"
-                                              data-years-url="{% url 'ajax_load_academic_year' %}"
                                               enctype="multipart/form-data"
                                               accept-charset="utf-8">
                                               {% csrf_token %}
@@ -78,9 +77,10 @@
                                                 <input type="readOnly" id="employee" name="employee"  value="{{ employee.user}}"maxlength="100" class="textinput textInput form-control">
 
                                                 {% endfor%}
-                                                </div>
-                                                <div class="year form-group col-md-3 mb-0">
-                                                    {{ years.academic_year|as_crispy_field }}
+                                                {% for year in years %}
+                                                <label for="academic_year">Academic Year</label>
+                                                <input type="readOnly" id="academic_year" name="academic_year"  value="{{ year.start_month}}"maxlength="100" class="textinput textInput form-control">
+                                                {% endfor%}
                                                 </div>
                                                 <div class="form-group col-md-3 mb-0">
                                                     {{ form.grade_name|as_crispy_field }}
@@ -410,21 +410,7 @@
                 });
 
 
-            //function to load academic years
-           $("#school").change(function () {
-              var url = $("#SalaryGradeForm").attr("data-years-url");
-              var schoolId = $(this).val();
-              $.ajax({
-                  url: url,
-                  data: {
-                      'school': schoolId
-                  },
-                  success: function (data) {
-                      $("#id_academic_year").html(data);
-                  }
-              });
 
-          });
 
           //if the user selects payment by cheque
           $("#id_Payment_Method").change(function() {
@@ -444,6 +430,7 @@
            });
           $("#id_Payment_Method").trigger("change");
             document.getElementById('id_school').readOnly = true;
+            document.getElementById('academic_year').readOnly = true;
             document.getElementById('school').readOnly = true;
             document.getElementById('employee').readOnly = true;
             document.getElementById('id_grade_name').readOnly = true;
