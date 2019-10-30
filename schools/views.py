@@ -6229,6 +6229,11 @@ def load_employee_salary_grade(request):
     school_id = request.GET.get('school')
     salarygrades = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
     return render(request, 'filter/salarygrade_dropdown_list_options.html', {'salarygrades': salarygrades})
+#loading academic year depending on the school selected.
+def load_academic_year(request):
+    school_id = request.GET.get('school')
+    academic_years = Year.objects.filter(school_id=school_id).order_by('start_month')
+    return render(request, 'filter/academic_year_dropdown.html', {'academic_years': academic_years})
 
 def Pay_Employee(request, pk):
     item = get_object_or_404(SalaryGrade, id=pk)
@@ -6241,12 +6246,9 @@ def Pay_Employee(request, pk):
     else:
         form =  SalaryGradeForm(instance=item)
         payee = Employee.objects.filter(id__in = pk)
-        years = Year.objects.filter(id__in = pk)
-        for i in years:
-            print(i.start_month)
         for i in payee:
             print(i.school)
-        context={'form':form, 'payee':payee, 'years':years}
+        context={'form':form, 'payee':payee}
         return render(request, 'payroll/pay_employees.html', context)
 #list of all employees paid salary
 def Payment_List(request):
