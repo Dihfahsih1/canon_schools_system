@@ -54,9 +54,11 @@
                                               role="form"
                                               action="{% url 'PayingSalary'%}"
                                               method="post"
+                                              data-years-url="{% url 'ajax_load_academic_year' %}"
                                               enctype="multipart/form-data"
                                               accept-charset="utf-8">
                                               {% csrf_token %}
+
                                             <div class="form-row">
                                                 <div  class="school form-group col-md-3 mb-0">
                                                     {{ form.school|as_crispy_field }}
@@ -405,7 +407,25 @@
                       );
                       }
                 });
-            //if the user selects payment by cheque
+
+
+            //function to load academic years
+           $("#id_school").change(function () {
+              var url = $("#SalaryGradeForm").attr("data-years-url");
+              var schoolId = $(this).val();
+              $.ajax({
+                  url: url,
+                  data: {
+                      'school': schoolId
+                  },
+                  success: function (data) {
+                      $("#id_academic_year").html(data);
+                  }
+              });
+
+          });
+
+          //if the user selects payment by cheque
           $("#id_Payment_Method").change(function() {
               if ($(this).val() === "Cheque") {
                   $('.bank_name').show();
