@@ -576,10 +576,8 @@ class Year(models.Model):
     end_month = models.DateField(blank=True, null=True)
     is_running = models.BooleanField(default=False, blank=True, null=True)
     note = models.TextField(max_length=300)
-    @property
-    def combined(self):
-        return self.start_month + self.end_month
-
+    def __datetime__(self):
+        return self.start_month
 
 
 class Term(models.Model):
