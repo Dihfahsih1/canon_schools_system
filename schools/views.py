@@ -6232,8 +6232,8 @@ def load_employee_salary_grade(request):
 #loading academic year depending on the school selected.
 def load_academic_year(request):
     school_id = request.GET.get('school')
-    academic_years = Year.objects.filter(school_id=school_id)
-    return render(request, 'filter/academic_year_dropdown.html', {'academic_years': academic_years})    
+    academic_years = Year.objects.filter(school_id=school_id).order_by('start_month')
+    return render(request, 'filter/academic_year_dropdown.html', {'academic_years': academic_years})
 
 def Pay_Employee(request, pk):
     item = get_object_or_404(SalaryGrade, id=pk)
