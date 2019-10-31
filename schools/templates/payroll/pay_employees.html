@@ -218,6 +218,20 @@
             </div>
         </div>
         <script type="text/javascript">
+          $("#school").change(function() {
+          var url = $("#SalaryGradeForm").attr("data-years-url");
+          var schoolname = document.getElementById("school").value;
+          $.ajax({
+              url: url,
+              data: {
+                  'school': schoolname
+              },
+              success: function (data) {
+                  $("#id_academic_year").html(data);
+              }
+
+          });
+        });
             $(document).ready(function () {
                 $('#salary_grade-table').DataTable({
                     dom: 'Bfrtip',
@@ -438,23 +452,7 @@
             document.getElementById('id_gross_salary').readOnly = true;
             document.getElementById('id_net_salary').readOnly = true;
 
-            $("#school").change(function() {
-            var url = $("#SalaryGradeForm").attr("data-years-url");
-            if ($(this).val() === "#school")
-            {
-              var schoolId = $("#school")
-            $.ajax({
-                url: url,
-                data: {
-                    'school': schoolId
-                },
-                success: function (data) {
-                    $("#id_academic_year").html(data);
-                }
 
-            });
-          }
-          });
         </script>
     </div>
 
