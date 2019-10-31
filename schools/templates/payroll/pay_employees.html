@@ -220,8 +220,7 @@
         <script type="text/javascript">
           $("#school").change(function() {
           var url = $("#SalaryGradeForm").attr("data-years-url");
-          var schoolname = document.getElementById("school").value;
-          console.log(schoolname)
+          var schoolname = document.getElementById("school").value;        
           $.ajax({
               url: url,
               data: {

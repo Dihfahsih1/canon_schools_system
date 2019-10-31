@@ -577,11 +577,9 @@ class Year(models.Model):
     is_running = models.BooleanField(default=False, blank=True, null=True)
     note = models.TextField(max_length=300)
 
-    def get_academic_year(self):
-        academic_year = ''
-        if self.start_month and self.end_month:
-            academic_year = str(self.start_month) + " / " + str(self.end_month)
-        return academic_year
+    def __str__(self):
+        return '{}'.format(self.start_month)
+
 
 
 class Term(models.Model):
