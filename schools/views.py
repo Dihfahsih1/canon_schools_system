@@ -6246,6 +6246,10 @@ def Pay_Employee(request, pk):
     else:
         form =  SalaryGradeForm(instance=item)
         payee = Employee.objects.filter(id__in = pk)
+        school = School.objects.all()
+        yr = Year.objects.filter(school__in = pk)
+        for i in yr:
+            print(i.start_month)
         for i in payee:
             print(i.school)
         context={'form':form, 'payee':payee}

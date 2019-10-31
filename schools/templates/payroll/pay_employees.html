@@ -236,13 +236,11 @@
             });
 //hiding the fields that don't require input by this form but will be used at a later input
 //choosing the payment method
-
       $(".notes").hide();
       $('#id_note').hide()
       $('.school').hide()
       $(".employees_id").hide();
       $(".year").show();
-
 //make claculations allowances
             $(document).ready(function () {
               $( "#id_house_rent" ).keyup(function()
@@ -388,7 +386,6 @@
                   );
                   }
             });
-
     //make claculations for overtime computation
                 $(document).ready(function () {
                   $( "#id_over_time_hourly_pay" ).keyup(function()
@@ -407,14 +404,6 @@
                       );
                       }
                 });
-
-
-            //function to load academic years
-
-
-
-
-
           //if the user selects payment by cheque
           $("#id_Payment_Method").change(function() {
               if ($(this).val() === "Cheque") {
