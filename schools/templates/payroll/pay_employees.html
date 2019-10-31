@@ -221,6 +221,7 @@
           $("#school").change(function() {
           var url = $("#SalaryGradeForm").attr("data-years-url");
           var schoolname = document.getElementById("school").value;
+          console.log(schoolname)
           $.ajax({
               url: url,
               data: {
