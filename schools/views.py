@@ -6234,9 +6234,12 @@ def load_academic_year(request):
     schoolname = request.GET.get('school')
     print(schoolname)
     academic_years = Year.objects.filter(school=schoolname).order_by('start_month')
-    for i in academic_years:
-        print(i.start_month)
     return render(request, 'filter/academic_year_dropdown.html', {'academic_years': academic_years})
+
+def load_school(request):
+    schoolname = request.GET.get('school')
+    schools = School.objects.filter(school_name=schoolname).order_by('school_name')
+    return render(request, 'filter/school_dropdown.html', {'schools': schools})
 
 def Pay_Employee(request, pk):
     item = get_object_or_404(SalaryGrade, id=pk)

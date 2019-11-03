@@ -55,6 +55,7 @@
                                               action="{% url 'PayingSalary'%}"
                                               method="post"
                                               data-years-url="{% url 'ajax_load_academic_year' %}"
+                                              data-school-url="{% url 'ajax_load_school' %}"
                                               enctype="multipart/form-data"
                                               accept-charset="utf-8">
                                               {% csrf_token %}
@@ -218,9 +219,24 @@
             </div>
         </div>
         <script type="text/javascript">
+
           $("#school").change(function() {
           var url = $("#SalaryGradeForm").attr("data-years-url");
-          var schoolname = document.getElementById("school").value;        
+          var schoolname = document.getElementById("school").value;
+          $.ajax({
+              url: url,
+              data: {
+                  'school': schoolname
+              },
+              success: function (data) {
+                  $("#school").html(data);
+              }
+
+            });
+          });
+          $("#school").change(function() {
+          var url = $("#SalaryGradeForm").attr("data-years-url");
+          var schoolname = document.getElementById("school").value;
           $.ajax({
               url: url,
               data: {
@@ -230,8 +246,8 @@
                   $("#id_academic_year").html(data);
               }
 
+            });
           });
-        });
             $(document).ready(function () {
                 $('#salary_grade-table').DataTable({
                     dom: 'Bfrtip',
