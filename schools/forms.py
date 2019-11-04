@@ -836,8 +836,11 @@ class SalaryGradeForm(forms.ModelForm):
         }
     def __init__( self, *args, **kwargs):
         super().__init__(*args,**kwargs)
-        school_name=School.objects.all().values('school_name')
-        print(school_name)
+        school_id = elem for elem in School.objects.values_list('id')
+        self.fields['academic_year'].queryset = Year.objects.filter(id__in=school_id).order_by('start_month')
+
+
+
 
 
 
