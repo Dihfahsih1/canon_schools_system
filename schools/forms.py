@@ -834,15 +834,12 @@ class SalaryGradeForm(forms.ModelForm):
         widgets = {
             'note': Textarea(attrs={'cols': 30, 'rows': 2}),
         }
-    def __init__( self, *args, **kwargs):
-        super().__init__(*args,**kwargs)
-        schools=School.objects.all()
-        for i in schools:
-            if (School.objects.get(id__in=i.id)):
-                try:
-                    self.fields['user_type'].queryset = Year.objects.all()
-                except (ValueError, TypeError):
-                    pass
+    def __init__(self, school=pk, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['academic_year'].queryset = Year.objects.filter(id=school)
+        if self.fields['academic_year']:
+            self.fields['academic_year'].queryset = Year.objects.filter(
+                school=school)
 
 
 
