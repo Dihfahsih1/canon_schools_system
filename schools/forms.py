@@ -836,10 +836,17 @@ class SalaryGradeForm(forms.ModelForm):
         }
     def __init__( self, *args, **kwargs):
         super().__init__(*args,**kwargs)
-        if 'school' in self.data:
-            try:
-                school_id = int(self.data.get('school'))
-                print(school_id)
+        schools=School.objects.all()
+        for i in schools:
+            if (School.objects.get(id__in=i.id)):
+                try:
+                    self.fields['user_type'].queryset = Year.objects.all()
+                except (ValueError, TypeError):
+                    pass
+
+
+
+
 
 
 
