@@ -6043,7 +6043,7 @@ def load_subjects(request):
     return render(request, 'filter/subject_dropdown_list_options.html', {'subjects': subjects})
 
 
-    # #######################################===>BEGINNING OF FEE TYPE MODULE<===######################################
+    #########################===>BEGINNING OF FEE TYPE MODULE<===#####################
 
 
 class FeeTypeListView(ListView):
