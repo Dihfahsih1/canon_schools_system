@@ -846,10 +846,13 @@ class SalaryGradeForm(forms.ModelForm):
             print(school)
             print(sch)
             school_id = kwargs.get('school')
-
-            if self.fields['school'].queryset  == school:
-                self.fields['academic_year'].queryset = Year.objects.filter(school=sc).order_by(
+            print(self.data)
+            if 'school' in self.data:
+                try:
+                    self.fields['academic_year'].queryset = Year.objects.filter(school=sc).order_by(
                     'start_month')
+                except (ValueError, TypeError):
+                    pass
             else:
                 self.fields['academic_year'].queryset = Year.objects.none()
 
