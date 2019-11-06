@@ -6174,9 +6174,9 @@ def list_incomeheads(request):
 class SalaryGradeCreateView(CreateView):
     model = SalaryGrade
     template_name = 'salary_grades/salary_grade_create.html'
-    fields = ('school', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance',
+    fields =('academic_year','school', 'payee', 'grade_name', 'basic_salary', 'house_rent',                    'transport_allowance', 'medical_allowance',
               'over_time_hourly_pay', 'provident_fund', 'hourly_rate', 'total_allowance', 'total_deduction',
-              'gross_salary', 'net_salary', 'note')
+              'gross_salary', 'net_salary','over_time_total_hour','over_time_amount','Bonus','Penalty','Month','Payment_Method','Expenditure_Head','Cheque_Number', 'Bank_Name', 'note')
 
     def form_valid(self, form):
         school = form.save(commit=False)
@@ -6229,18 +6229,8 @@ def load_employee_salary_grade(request):
     school_id = request.GET.get('school')
     salarygrades = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
     return render(request, 'filter/salarygrade_dropdown_list_options.html', {'salarygrades': salarygrades})
-#loading academic year depending on the school selected.
-def load_academic_year(request):
-    schoolname = request.GET.get('school')
-    #print(schoolname)
-    academic_years = Year.objects.filter(school=schoolname).order_by('start_month')
-    return render(request, 'filter/academic_year_dropdown.html', {'academic_years': academic_years})
 
-def load_school(request):
-    schoolname = request.GET.get('school')
-    schools = School.objects.filter(school_name=schoolname).order_by('school_name')
-    return render(request, 'filter/school_dropdown.html', {'schools': schools})
-
+#retrieve employee instances from salary grade, add some other information and then save
 def Pay_Employee(request, pk):
     item = get_object_or_404(SalaryGrade, id=pk)
     if request.method == "POST":

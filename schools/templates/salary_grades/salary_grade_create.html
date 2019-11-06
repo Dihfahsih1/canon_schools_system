@@ -142,6 +142,9 @@
                                                 <div class="hidden_fields form-group col-md-3 mb-0">
                                                     {{ form.Expenditure_Head|as_crispy_field }}
                                                 </div>
+                                                <div class="hidden_fields form-group col-md-3 mb-0">
+                                                    {{ form.academic_year|as_crispy_field }}
+                                                </div>
                                                 <div class="form-group col-md-6 mb-0">
                                                     {{ form.note|as_crispy_field }}
                                                 </div>
@@ -226,6 +229,7 @@
       $('#id_Month').hide();
       $('#id_Payment_Method').hide();
       $('#id_Expenditure_Head').hide()
+      $('#id_academic_year').hide()
 
 //make claculations before submiting data
           $(document).ready(function () {

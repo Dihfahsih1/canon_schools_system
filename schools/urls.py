@@ -501,8 +501,6 @@ urlpatterns = [
     url(r'^payroll/Salary-Paid/index/SalaryPaidReport/', views.EmployeeMonthlySalaryReport, name='SalaryReport'),
     url(r'^payroll/history/index/', views.PaymentHistory, name='SalaryHistory'),
     url(r'^payroll/history/index/', views.PaymentHistory, name='SalaryHistory'),
-    url(r'^load-schoolsyears', views.load_school, name='ajax_load_school'),
-    url(r'^load-years', views.load_academic_year, name='ajax_load_academic_year'),
 
 
 ]

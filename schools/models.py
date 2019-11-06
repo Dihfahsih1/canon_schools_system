@@ -1046,9 +1046,9 @@ class ExpenditureHead(models.Model):
         return self.expenditure_head
 
 class SalaryGrade(models.Model):
-    academic_year=models.ForeignKey(Year, on_delete=models.CASCADE, blank=False, null=True)
-    payee = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)
-    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    academic_year=models.ForeignKey(Year, on_delete=models.CASCADE, blank=True, null=True)
+    payee = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True)
     grade_name = models.CharField(max_length=100)
     basic_salary = models.CharField(max_length=100)
     house_rent = models.CharField(max_length=100)
