@@ -6274,3 +6274,4 @@ def PaymentHistory(request):
         context={'history':history, 'q':q}
         return render(request, 'payroll/salary_payment_history.html', context)
     return render(request, 'payroll/salary_payment_list.html', context)
+######################REPORTS MODULE##############################
