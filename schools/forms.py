@@ -837,13 +837,15 @@ class SalaryGradeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        school_name=self.instance.school.pk
-        print(school_name)
-        #
-        AC= Year.objects.filter(school=school_name)
-        for year in AC:
-             self.fields['academic_year'].queryset = (year.start_month)
-        #print( Year.objects.filter(school=school_name).values)
+        #school_name=self.instance.school
+        if self.instance.school:
+            school_id=self.instance.school.pk
+            self.fields['academic_year'].queryset= Year.objects.filter(school__id=school_id)
+            print(Year.objects.filter(school__id=school_id))
+
+
+        #print(self.fields['academic_year'].queryset)
+        #print(Year.objects.filter(school=school_name))
 
 class ManageUserForm(forms.ModelForm):
     class Meta:

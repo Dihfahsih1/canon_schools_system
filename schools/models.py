@@ -1389,7 +1389,7 @@ class Application(models.Model):
     leave_attachment = models.FileField(upload_to='leave/', max_length=100)
 
 class MonthlySalaryPaid(models.Model):
-    academic_year=models.CharField(max_length=100)
+    academic_year=models.ForeignKey(Year, on_delete=models.CASCADE, blank=True, null=True)
     date = models.DateField(auto_now_add=True)
     employees_id=models.CharField(max_length=100, default="id")
     employee = models.CharField(max_length=100)
