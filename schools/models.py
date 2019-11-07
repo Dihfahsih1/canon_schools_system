@@ -394,8 +394,17 @@ class Guardian(models.Model):
     def __str__(self):
         return self.user.username
 
+class Year(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    start_month = models.DateField(blank=True, null=True)
+    end_month = models.DateField(blank=True, null=True)
+    is_running = models.BooleanField(default=False, blank=True, null=True)
+    note = models.TextField(max_length=300)
 
+    def __str__(self):
+        return '{}'.format(self.start_month)
 class Student(models.Model):
+    academic_year = models.ForeignKey(Year, on_delete=models.SET_NULL, blank=True, null=True)
     school = models.ForeignKey(School, on_delete=models.SET_NULL, blank=False, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student')
     admission_no = models.CharField(max_length=100)
@@ -568,18 +577,6 @@ class Section(models.Model):
         ordering = ('section',)
         verbose_name = 'section'
         verbose_name_plural = 'sections'
-
-
-class Year(models.Model):
-    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
-    start_month = models.DateField(blank=True, null=True)
-    end_month = models.DateField(blank=True, null=True)
-    is_running = models.BooleanField(default=False, blank=True, null=True)
-    note = models.TextField(max_length=300)
-
-    def __str__(self):
-        return '{}'.format(self.start_month)
-
 
 
 class Term(models.Model):

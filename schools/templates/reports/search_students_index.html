@@ -53,10 +53,7 @@
                                 {{ form.school|as_crispy_field }}
                             </div>
                             <div class="form-group col-md-2 mb-0">
-                              {% for year in years %}
-                                <label for="academic_year">Academic Year</label>
-                                <input type="text" name="academic" value="{{year.start_month}}" id="academic_year">
-                              {% endfor %}
+                              {{ form.academic_year|as_crispy_field }}
                             </div>
                             <div class="form-group col-md-2 mb-0">
                               {{ form.classroom|as_crispy_field }}
@@ -126,6 +123,22 @@
                 });
 
             });
+
+            $("#id_school").change(function () {
+               var url = $("#StudentsForm").attr("data-years-url");
+               var schoolId = $(this).val();
+
+               $.ajax({
+                   url: url,
+                   data: {
+                       'school': schoolId
+                   },
+                   success: function (data) {
+                       $("#id_academic_year").html(data);
+                   }
+               });
+
+           });
 
         </script>
 

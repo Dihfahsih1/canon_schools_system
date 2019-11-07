@@ -809,7 +809,7 @@ def student_create(request):
         user = form.save(commit=False)
         user.is_student = True
         user.save()
-
+        user.student.school = student_form.cleaned_data.get('academic_year')
         user.student.school = student_form.cleaned_data.get('school')
         user.student.admission_no = student_form.cleaned_data.get('admission_no')
         user.student.admission_date = student_form.cleaned_data.get('admission_date')
@@ -6303,11 +6303,11 @@ def StudentReport(request):
     context = {}
     school = request.GET.get('school')
     academic_year = request.GET.get('academic_year')
-    context['form'] = MonthlySalaryPaidForm(school, academic_year)
+    context['form'] = StudentForm(school)
     # Filter
     q = request.GET.get('classroom')
     if q:
-        details = MonthlySalaryPaid.objects.filter(Month=q).order_by('employee')
+        details = Student.objects.filter(classroom=q).order_by('classroom')
         context['details'] = details
         return render(request, 'reports/students_searched_list.html', context)
     return render(request, 'reports/search_students_index.html', context)
