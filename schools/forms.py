@@ -139,7 +139,7 @@ class GuardianForm(forms.ModelForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ('school', 'admission_no', 'admission_date', 'guardian', 'relation_With_Guardian', 'classroom',
+        fields = ('academic_year','school', 'admission_no', 'admission_date', 'guardian', 'relation_With_Guardian', 'classroom',
                   'section', 'group', 'roll_no', 'registration_no', 'roles', 'caste', 'student_type',
                   'discount', 'second_language', 'previous_school', 'previous_class', 'transfer_certificate',
                   'father_name', 'father_phone', 'father_education', 'father_profession', 'father_designation',
