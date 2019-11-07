@@ -6287,3 +6287,9 @@ def PayrollReport(request):
         context['payee'] = payee
         return render(request, 'reports/search_employee.html', context)
     return render(request, 'reports/search_employee_index.html', context)
+
+#a view for loading the academic years when searching for a report
+def load_academic_years(request):
+    school_id = request.GET.get('school')
+    years = Year.objects.filter(school_id=school_id).order_by('start_month')
+    return render(request, 'filter/years_dropdown.html', {'years': years})
