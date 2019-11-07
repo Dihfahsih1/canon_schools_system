@@ -935,3 +935,12 @@ class MonthlySalaryPaidForm(forms.ModelForm):
     class Meta:
         model = MonthlySalaryPaid
         fields = ('academic_year','employees_id','school', 'employee', 'grade_name', 'basic_salary', 'house_rent', 'transport_allowance', 'medical_allowance','over_time_hourly_pay', 'provident_fund', 'hourly_rate', 'total_allowance','total_deduction','gross_salary','net_salary','over_time_total_hour','over_time_amount','Bonus','Penalty','Month','Payment_Method','Expenditure_Head','note','Cheque_Number','Bank_Name')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['academic_year'].queryset = Years.objects.none()
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['academic_year'].queryset = Years.objects.filter(school_id=school_id).order_by('start_month')
+            except (ValueError, TypeError):
+                pass

@@ -6278,14 +6278,14 @@ def PaymentHistory(request):
 def PayrollReport(request):
     context = {}
     school = request.GET.get('school')
-    month = request.Get.get('Month')
+    academic_year = request.GET.get('academic_year')
     context['form'] = MonthlySalaryPaidForm(school, academic_year)
     # Filter
-    q = request.GET.get('academic_year')
+    q = request.GET.get('Month')
     if q:
-        payee = Employee.objects.filter(id__in = q)
-        context['payee'] = payee
-        return render(request, 'reports/search_employee.html', context)
+        details = MonthlySalaryPaid.objects.filter(Month=q).order_by('employee')
+        context['details'] = details
+        return render(request, 'reports/payrolly_searched_list.html', context)
     return render(request, 'reports/search_employee_index.html', context)
 
 #a view for loading the academic years when searching for a report
