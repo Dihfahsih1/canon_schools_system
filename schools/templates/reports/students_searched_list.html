@@ -50,34 +50,19 @@
                                    width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Name</th>
-                                    <th>School</th>
-                                    <th>Month</th>
-                                    <th>AC Year</th>
-                                    <th>Grade Name</th>
-                                    <th>Salary type</th>
-                                    <th>Total Allowance</th>
-                                    <th>Total Deduction</th>
-                                    <th>Gross Salary</th>
-                                    <th>Net Salary</th>
+                                    <th>Academic Year</th>
+                                    <th>Class Name</th>
+                                    <th>student Name</th>
                                     <th>Action</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for detail in details %}
-                                    <tr><td>{{ detail.date }}</td>
-                                         <td>{{ detail.employee }}</td>
-                                         <td>{{ detail.school }}</td>
+                                    <tr><td>{{ detail.academic_year }}</td>
+                                         <td>{{ detail.classroom }}</td>
+                                         <td>{{ detail.user }}</td>
                                          <td>{{ detail.Month }}</td>
-                                         <td>{{ detail.academic_year }}</td>
-                                         <td>{{ detail.grade_name }}</td>
-                                         <td>{{ detail.basic_salary }}</td>
-                                         <td>{{ detail.total_allowance }}</td>
-                                         <td>{{ detail.total_deduction }}</td>
-                                         <td>{{ detail.gross_salary }}</td>
-                                         <td>{{ detail.net_salary }}</td>
                                         <td><div class="mb-4">
                                             <a href="#"
                                                class="btn btn-warning btn-sm">
