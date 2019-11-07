@@ -502,6 +502,7 @@ urlpatterns = [
     url(r'^payroll/history/index/', views.PaymentHistory, name='SalaryHistory'),
     url(r'^reports/payroll/index/', views.PayrollReport, name='Payroll_Report'),
     url(r'^reports/payroll/load-years/', views.load_academic_years, name='ajax_load_years'),
+    url(r'^reports/Students/index/', views.StudentReport, name='Student_Report'),
 
 
 ]
