@@ -55,7 +55,7 @@
                             <div class="form-group col-md-2 mb-0">
                               {% for year in years %}
                                 <label for="academic_year">Academic Year</label>
-                                <input type="text" name="academic" value="{{year.start_month}}" id="academic_year"> 
+                                <input type="text" name="academic" value="{{year.start_month}}" id="academic_year">
                               {% endfor %}
                             </div>
                             <div class="form-group col-md-2 mb-0">
@@ -112,7 +112,7 @@
 
 //function to load academic years
              $("#id_school").change(function () {
-                var url = $("#SalaryPaymentForm").attr("data-years-url");
+                var url = $("#StudentsForm").attr("data-classrooms-url");
                 var schoolId = $(this).val();
 
                 $.ajax({
@@ -121,7 +121,7 @@
                         'school': schoolId
                     },
                     success: function (data) {
-                        $("#id_academic_year").html(data);
+                        $("#id_classroom").html(data);
                     }
                 });
 
