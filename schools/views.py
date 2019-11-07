@@ -6274,6 +6274,8 @@ def PaymentHistory(request):
         context={'history':history, 'q':q}
         return render(request, 'payroll/salary_payment_history.html', context)
     return render(request, 'payroll/salary_payment_list.html', context)
+
+
 ######################REPORTS MODULE##############################
 #find the payroll report using school, academic year and Month fields
 def PayrollReport(request):
@@ -6294,3 +6296,18 @@ def load_academic_years(request):
     school_id = request.GET.get('school')
     years = Year.objects.filter(school_id=school_id).order_by('start_month')
     return render(request, 'filter/years_dropdown.html', {'years': years})
+
+######################student reports module ##############################
+
+def StudentReport(request):
+    context = {}
+    school = request.GET.get('school')
+    academic_year = request.GET.get('academic_year')
+    context['form'] = MonthlySalaryPaidForm(school, academic_year)
+    # Filter
+    q = request.GET.get('classroom')
+    if q:
+        details = MonthlySalaryPaid.objects.filter(Month=q).order_by('employee')
+        context['details'] = details
+        return render(request, 'reports/students_searched_list.html', context)
+    return render(request, 'reports/search_students_index.html', context)
