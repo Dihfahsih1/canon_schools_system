@@ -941,6 +941,6 @@ class MonthlySalaryPaidForm(forms.ModelForm):
         if 'school' in self.data:
             try:
                 school_id = int(self.data.get('school'))
-                self.fields['academic_year'].queryset = Years.objects.filter(school_id=school_id).order_by('start_month')
+                self.fields['academic_year'].queryset = Year.objects.filter(school_id=school_id).order_by('start_month')
             except (ValueError, TypeError):
                 pass
