@@ -1393,7 +1393,7 @@ class MonthlySalaryPaid(models.Model):
     date = models.DateField(auto_now_add=True)
     employees_id=models.CharField(max_length=100, default="id")
     employee = models.CharField(max_length=100)
-    school = models.CharField(max_length=100)
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True)
     grade_name = models.CharField(max_length=100)
     basic_salary = models.CharField(max_length=100)
     house_rent = models.CharField(max_length=100)
