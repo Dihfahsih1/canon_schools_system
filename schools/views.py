@@ -6275,6 +6275,7 @@ def PaymentHistory(request):
         return render(request, 'payroll/salary_payment_history.html', context)
     return render(request, 'payroll/salary_payment_list.html', context)
 ######################REPORTS MODULE##############################
+#find the payroll report using school, academic year and Month fields
 def PayrollReport(request):
     context = {}
     school = request.GET.get('school')
