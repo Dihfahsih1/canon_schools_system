@@ -154,11 +154,13 @@ class StudentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['classroom'].queryset = Classroom.objects.none()
         self.fields['section'].queryset = Section.objects.none()
+        self.fields['academic_year'].queryset = Year.objects.none()
 
         if 'school' in self.data:
             try:
                 school_id = int(self.data.get('school'))
                 self.fields['classroom'].queryset = Classroom.objects.filter(school_id=school_id).order_by('school')
+                self.fields['academic_year'].queryset = Classroom.Year.filter(id=school_id).order_by('start_month')
             except (ValueError, TypeError):
                 pass
 
