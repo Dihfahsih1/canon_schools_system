@@ -36,10 +36,7 @@
                     </div>
 
                     <div class="x_content quick-link">
-                        <span>Quick Link:</span>
-                        <a href="{% url 'salary_grade_list' %}">Salary Grade</a>
-                        | <a href="{% url 'SalaryPayment' %}">Salary Payment</a>
-                        | <a href="{% url 'SalaryHistory' %}">Payment History</a>
+
                     </div>
 
                     <form class="form-horizontal form-label-left"
@@ -56,14 +53,17 @@
                                 {{ form.school|as_crispy_field }}
                             </div>
                             <div class="form-group col-md-2 mb-0">
+                                {{ form.academic_year|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-2 mb-0">
                                 {{ form.role|as_crispy_field }}
                             </div>
-                            <div class="teacher form-group col-md-2 mb-0">
-                                {{ form.employee|as_crispy_field }}
+                            <div class="form-group col-md-2 mb-0">
+                                {{ form.Month|as_crispy_field }}
                             </div>
                             <div class="form-group col-md-1 mb-0">
                                 <br>
-                                 <button type="submit" class="btn btn-warning">Search</button>
+                                 <button type="submit" class="btn btn-warning">Find</button>
                             </div>
                         </div>
 

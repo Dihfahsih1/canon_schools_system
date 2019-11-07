@@ -6275,3 +6275,15 @@ def PaymentHistory(request):
         return render(request, 'payroll/salary_payment_history.html', context)
     return render(request, 'payroll/salary_payment_list.html', context)
 ######################REPORTS MODULE##############################
+def SalaryPayment(request):
+    context = {}
+    school = request.GET.get('school')
+    role = request.GET.get('role')
+    context['form'] = SalaryPaymentForm(school, role)
+    # Filter
+    q = request.GET.get('employee')
+    if q:
+        payee = Employee.objects.filter(id__in = q)
+        context['payee'] = payee
+        return render(request, 'reports/search_employee.html', context)
+    return render(request, 'reports/search_employee_index.html', context)
