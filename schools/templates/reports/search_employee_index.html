@@ -27,7 +27,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2><i class="fa fa-check-square-o"></i><small> Manage Salary Payments</small></h2>
+                        <h2><i class="fa fa-check-square-o"></i><small> Manage Payroll Report</small></h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -35,26 +35,32 @@
                         <div class="clearfix"></div>
                     </div>
 
+                    <div class="x_content quick-link">
+
+                    </div>
+
                     <form class="form-horizontal form-label-left"
                           id="SalaryPaymentForm"
-                          data-ac_year-url="{% url 'ajax_load_ac_year' %}"
+                          data-years-url="{% url 'ajax_load_years' %}"
                           method="GET"
                           enctype="multipart/form-data"
                           accept-charset="utf-8"
                           novalidate>{% csrf_token %}
+
                         <div class="form-row">
                             <div class="form-group col-md-3 mb-0">
                                 {{ form.school|as_crispy_field }}
                             </div>
                             <div class="form-group col-md-2 mb-0">
-                                {{ form.role|as_crispy_field }}
+                                {{ form.academic_year|as_crispy_field }}
                             </div>
-                            <div class="teacher form-group col-md-2 mb-0">
-                                {{ form.employee|as_crispy_field }}
+                            <div class="form-group col-md-2 mb-0">
+                              <label for="Month">Month</label>
+                              <input type="text" name="Month" value="" id="Month">
                             </div>
                             <div class="form-group col-md-1 mb-0">
                                 <br>
-                                 <button type="submit" class="btn btn-warning">Search</button>
+                                 <button type="submit" class="btn btn-warning">Find</button>
                             </div>
                         </div>
 
@@ -65,13 +71,14 @@
                                    width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Basic Salary</th>
-                                    <th>Net Salary</th>
+                                    <th class="fade in activ">Tabular Report</th>
+                                    <th>Graphical Report</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td colspan="9" class="text-center bg-warning">No Data</td>
+                                        <td colspan="9" class="text-center bg-warning">No available Data</td>
                                     </tr>
 
                                 </tbody>
@@ -100,9 +107,9 @@
                 });
             });
 
-//function to load salary_payee roles
+//function to load academic years
              $("#id_school").change(function () {
-                var url = $("#SalaryPaymentForm").attr("data-roles-url");
+                var url = $("#SalaryPaymentForm").attr("data-year-url");
                 var schoolId = $(this).val();
 
                 $.ajax({
@@ -111,25 +118,10 @@
                         'school': schoolId
                     },
                     success: function (data) {
-                        $("#id_role").html(data);
+                        $("#id_academic_year").html(data);
                     }
                 });
 
-            });
-
-            $("#id_role").change(function () {
-                var url = $("#SalaryPaymentForm").attr("data-employees-url");
-                var roleId = $(this).val();
-
-                $.ajax({
-                    url: url,
-                    data: {
-                        'role': roleId
-                    },
-                    success: function (data) {
-                        $("#id_employee").html(data);
-                    }
-                });
             });
 
         </script>
