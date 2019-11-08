@@ -6230,6 +6230,18 @@ def load_employee_salary_grade(request):
     salarygrades = SalaryGrade.objects.filter(school_id=school_id).order_by('grade_name')
     return render(request, 'filter/salarygrade_dropdown_list_options.html', {'salarygrades': salarygrades})
 
+#a view for loading the academic years when searching for a report
+def load_academic_years(request):
+    school_id = request.GET.get('school')
+    years = Year.objects.filter(school_id=school_id).order_by('start_month')
+    return render(request, 'filter/years_dropdown.html', {'years': years})
+
+#load income heads
+def load_income_heads(request):
+    school_id = request.GET.get('school')
+    incomes = IncomeHeads.objects.filter(school_id=school_id).order_by('income_head')
+    return render(request, 'filter/income_heads_dropdown.html', {'incomes': incomes})         
+
 #retrieve employee instances from salary grade, add some other information and then save
 def Pay_Employee(request, pk):
     item = get_object_or_404(SalaryGrade, id=pk)
@@ -6290,12 +6302,6 @@ def PayrollReport(request):
         context['details'] = details
         return render(request, 'reports/payrolly_searched_list.html', context)
     return render(request, 'reports/search_employee_index.html', context)
-
-#a view for loading the academic years when searching for a report
-def load_academic_years(request):
-    school_id = request.GET.get('school')
-    years = Year.objects.filter(school_id=school_id).order_by('start_month')
-    return render(request, 'filter/years_dropdown.html', {'years': years})
 
 ######################student reports module ##############################
 
