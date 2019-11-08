@@ -6308,8 +6308,9 @@ def StudentReport(request):
     q = request.GET.get('classroom')
     if q:
         details = Student.objects.filter(classroom=q)
-        female = Student.objects.filter(gender='Female').count()
-        male = Student.objects.filter(gender='Male').count()
-        context = {'details':details, 'female':female, 'Male':Male}
+        female = Student.objects.filter(classroom=q, user__gender='Female').count()
+        male = Student.objects.filter(classroom=q, user__gender='Male').count()
+        total = Student.objects.filter(classroom=q).count()
+        context = {'details':details, 'total':total,'female':female,'male':male}
         return render(request, 'reports/students_searched_list.html', context)
     return render(request, 'reports/search_students_index.html', context)
