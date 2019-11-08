@@ -70,9 +70,11 @@
                                     <div class="x_content">
 
                                        <form class="form-horizontal form-label-left"
+                                              id="IncomeForm"
+                                              method="post"
+                                              data-income_heads-url="{% url 'ajax_load_income_heads' %}"
                                               role="form"
                                               action=""
-                                              method="post"
                                               enctype="multipart/form-data"
                                               accept-charset="utf-8">{% csrf_token %}
 
@@ -119,7 +121,20 @@
                     responsive: true
                 });
             });
-
+            //load incomes depending on school select
+                    $("#id_school").change(function () {
+                       var url = $("#IncomeHeadForm").attr("data-income-url");
+                       var schoolId = $(this).val();
+                       $.ajax({
+                           url: url,
+                           data: {
+                               'school': schoolId
+                           },
+                           success: function (data) {
+                               $("#id_income_head").html(data);
+                           }
+                       });
+                   });
         </script>
     </div>
 
@@ -170,4 +185,3 @@
 
 
 {% endblock javascripts %}
-

@@ -125,20 +125,7 @@
                     responsive: true
                 });
             });
-            //load incomes depending on school select
-                    $("#id_school").change(function () {
-                       var url = $("#IncomeForm").attr("data-income-url");
-                       var schoolId = $(this).val();
-                       $.ajax({
-                           url: url,
-                           data: {
-                               'school': schoolId
-                           },
-                           success: function (data) {
-                               $("#id_income_head").html(data);
-                           }
-                       });
-                   });
+            
 
 
                     //choosing the payment method
