@@ -644,6 +644,15 @@ class IncomeHeadForm(forms.ModelForm):
         model = IncomeHead
         fields = ('school', 'income_head', 'note')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['income_head'].queryset = IncomeHead.objects.none()
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['income_head'].queryset = IncomeHead.objects.filter(school_id=school_id).order_by('school')
+            except (ValueError, TypeError):
+                pass
 
 
 class ExpenditureHeadForm(forms.ModelForm):
