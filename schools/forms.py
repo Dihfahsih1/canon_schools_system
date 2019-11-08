@@ -828,15 +828,18 @@ class IncomeForm(forms.ModelForm):
             'date': DatePickerInput(),
             #'Bank_Name': forms.TextInput(attrs= {'placeholder': 'Bank Name'}),
             }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['income_head'].queryset = Income.objects.none()
+        self.fields['income_head'].queryset = IncomeHead.objects.none()
+        
         if 'school' in self.data:
             try:
                 school_id = int(self.data.get('school'))
                 self.fields['income_head'].queryset = IncomeHead.objects.filter(school_id=school_id).order_by('income_head')
             except (ValueError, TypeError):
                 pass
+
 class SalaryGradeForm(forms.ModelForm):
     class Meta:
         model = SalaryGrade
