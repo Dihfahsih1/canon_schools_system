@@ -832,7 +832,6 @@ class IncomeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['income_head'].queryset = IncomeHead.objects.none()
-
         if 'school' in self.data:
             try:
                 school_id = int(self.data.get('school'))
