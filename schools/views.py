@@ -6239,8 +6239,8 @@ def load_academic_years(request):
 #load income heads
 def load_income_heads(request):
     school_id = request.GET.get('school')
-    incomes = Income.objects.filter(school_id=school_id).order_by('income_head')
-    return render(request, 'filter/income_heads_dropdown.html', {'incomes': incomes})         
+    incomes = IncomeHead.objects.filter(school_id=school_id).order_by('income_head')
+    return render(request, 'filter/income_heads_dropdown.html', {'incomes': incomes})
 
 #retrieve employee instances from salary grade, add some other information and then save
 def Pay_Employee(request, pk):
