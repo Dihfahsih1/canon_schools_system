@@ -825,7 +825,8 @@ class IncomeForm(forms.ModelForm):
 
         widgets = {
             'date': DatePickerInput(),
-        }
+            #'Bank_Name': forms.TextInput(attrs= {'placeholder': 'Bank Name'}),
+            }
 class SalaryGradeForm(forms.ModelForm):
     class Meta:
         model = SalaryGrade

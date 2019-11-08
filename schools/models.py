@@ -1171,8 +1171,8 @@ class Income(models.Model):
     method =(('Cash', 'Cash'),
               ('Cheque','Cheque'))
     payment_method = models.CharField(max_length=100, blank=False, choices=method)
-    Bank_Name = models.CharField(max_length=100, default='bank name', blank=True, null=True)
-    Cheque_Number = models.CharField(max_length=100, default='cheque number', blank=True, null=True)
+    Bank_Name = models.CharField(max_length=100, blank=True, null=True)
+    Cheque_Number = models.CharField(max_length=100, blank=True, null=True)
     amount = models.CharField(max_length=100)
     date = models.DateField(null=True)
     note = models.TextField(max_length=300)
