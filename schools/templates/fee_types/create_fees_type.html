@@ -148,6 +148,13 @@
                   $('#id_Class_Amount').hide();}
                   });
                   $("#id_fee_type").trigger("change");
+
+                  //display placeholder
+                  $(document).ready(function(){
+                  $("#id_school").attr('placeholder', '{{form.school.label}}');
+                  $("#id_Class_Amount").attr('placeholder', '{{form.Class_Amount.label}}');
+                  $("#id_fee_title").attr('placeholder', '{{form.fee_title.label}}');
+              });
             </script>
           {% endblock %}
         </div>

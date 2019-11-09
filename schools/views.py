@@ -6364,5 +6364,6 @@ def create_fees_type(request):
           return redirect('fee_type_list')
   else:
       form = FeeTypeForm()
-      context = {'form': form}
+      fees = FeeType.objects.all()
+      context = {'form': form, 'fees':fees}
       return render(request, 'fee_types/create_fees_type.html', context)

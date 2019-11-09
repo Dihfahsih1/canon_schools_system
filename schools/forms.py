@@ -615,6 +615,15 @@ class FeeTypeForm(forms.ModelForm):
     class Meta:
         model = FeeType
         fields = ('school', 'fee_type', 'fee_title', 'note', 'Class', 'Class_Amount')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['Class'].queryset = Classroom.objects.none()
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['Class'].queryset = Classroom.objects.filter(school_id=school_id).order_by('classroom')
+            except (ValueError, TypeError):
+                pass
 
 
 class BulkInvoiceForm(forms.ModelForm):
