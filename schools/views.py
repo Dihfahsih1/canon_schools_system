@@ -6332,4 +6332,4 @@ def create_income(request):
         form = IncomeForm()
         income_heads=IncomeHead.objects.all()
         context = {'form': form, 'income_heads':income_heads}
-        return render(request, 'salary_grades/salary_grade_create.html', context)
+        return render(request, 'incomes/income_create.html', context)
