@@ -6374,6 +6374,6 @@ def Add_fee_types(request):
             form.save()
             return redirect('fee_type_list')
     else:
-        form = DiscountForm()
+        form = FeeTypeForm()
         context = {'form': form}
         return render(request, 'discounts/create_fees_type.html', context)
