@@ -6243,6 +6243,12 @@ def load_income_heads(request):
     incomes = IncomeHead.objects.filter(school_id=school_id).order_by('income_head')
     return render(request, 'filter/income_heads_dropdown.html', {'incomes': incomes})
 
+#load expenditure heads
+def load_expenditure_heads(request):
+    school_id = request.GET.get('school')
+    expenditures = ExpenditureHead.objects.filter(school_id=school_id).order_by('expenditure_head')
+    return render(request, 'filter/expenditure_heads_dropdown.html', {'expenditures': expenditures})    
+
 #retrieve employee instances from salary grade, add some other information and then save
 def Pay_Employee(request, pk):
     item = get_object_or_404(SalaryGrade, id=pk)

@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for expenditure in expenditures %}
+<option value="{{ expenditure.pk  }}">{{ expenditure.expenditure_head }}</option>
+{% endfor %}
