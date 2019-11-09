@@ -656,7 +656,7 @@ class ExpenditureHeadForm(forms.ModelForm):
 class ExpenditureForm(forms.ModelForm):
     class Meta:
         model = Expenditure
-        fields = ('school', 'expenditure_head','payment_method', 'amount', 'date', 'note', 'Bank_Name', 'Cheque_Number')
+        fields = ('school', 'expenditure_head', 'payment_method', 'amount', 'date', 'note', 'Bank_Name', 'Cheque_Number')
 
         widgets = {
             'date': DatePickerInput(),
