@@ -114,7 +114,6 @@
              $("#id_school").change(function () {
                 var url = $("#SalaryPaymentForm").attr("data-roles-url");
                 var schoolId = $(this).val();
-
                 $.ajax({
                     url: url,
                     data: {
@@ -124,7 +123,6 @@
                         $("#id_role").html(data);
                     }
                 });
-
             });
 
             $("#id_role").change(function () {

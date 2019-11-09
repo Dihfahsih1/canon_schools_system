@@ -5304,6 +5304,7 @@ def save_income_form(request, form, template_name):
     return JsonResponse(data)
 
 
+
 def income_view(request, income_pk):
     income = get_object_or_404(Income, pk=income_pk)
     if request.method == 'POST':
@@ -6247,7 +6248,6 @@ def Pay_Employee(request, pk):
     item = get_object_or_404(SalaryGrade, id=pk)
     if request.method == "POST":
         form =  SalaryGradeForm(request.POST, instance=item)
-
         if form.is_valid():
             form.save()
             return redirect('SalaryPayment')
@@ -6320,3 +6320,16 @@ def StudentReport(request):
         context = {'details':details, 'total':total,'female':female,'male':male}
         return render(request, 'reports/students_searched_list.html', context)
     return render(request, 'reports/search_students_index.html', context)
+
+#view for creating incomes
+def create_income(request):
+    if request.method=="POST":
+        form=IncomeForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('income_list')
+    else:
+        form = IncomeForm()
+        income_heads=IncomeHead.objects.all()
+        context = {'form': form, 'income_heads':income_heads}
+        return render(request, 'salary_grades/salary_grade_create.html', context)
