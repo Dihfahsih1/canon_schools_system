@@ -250,6 +250,13 @@
              });
             $("#id_Payment_Method").trigger("change");
 
+            $(document).ready(function(){
+            $("#id_fee_amount").attr('placeholder', '{{form.fee_amount.label}}');
+            $("#id_Bank_Name").attr('placeholder', '{{form.Bank_Name.label}}');
+            $("#id_month").attr('placeholder', '{{form.month.label}}');
+            $("#id_Cheque_Number").attr('placeholder', '{{form.Cheque_Number.label}}');
+        });
+
         </script>
     </div>
 
