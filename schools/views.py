@@ -6247,7 +6247,7 @@ def load_income_heads(request):
 def load_expenditure_heads(request):
     school_id = request.GET.get('school')
     expenditures = ExpenditureHead.objects.filter(school_id=school_id).order_by('expenditure_head')
-    return render(request, 'filter/expenditure_heads_dropdown.html', {'expenditures': expenditures})    
+    return render(request, 'filter/expenditure_heads_dropdown.html', {'expenditures': expenditures})
 
 #retrieve employee instances from salary grade, add some other information and then save
 def Pay_Employee(request, pk):
@@ -6348,7 +6348,7 @@ def create_expenditure(request):
             form.save()
             return redirect('expenditure_list')
     else:
-        form = IncomeForm()
+        form = ExpenditureForm()
         expenditure_heads=ExpenditureHead.objects.all()
         context = {'form': form, 'expenditure_heads':expenditure_heads}
         return render(request, 'expenditures/expenditure_create.html', context)
