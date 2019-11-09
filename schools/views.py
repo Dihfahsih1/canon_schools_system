@@ -6333,3 +6333,16 @@ def create_income(request):
         income_heads=IncomeHead.objects.all()
         context = {'form': form, 'income_heads':income_heads}
         return render(request, 'incomes/income_create.html', context)
+
+#view for creating expenditure
+def create_expenditure(request):
+    if request.method=="POST":
+        form=ExpenditureForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('expenditure_list')
+    else:
+        form = IncomeForm()
+        expenditure_heads=ExpenditureHead.objects.all()
+        context = {'form': form, 'expenditure_heads':expenditure_heads}
+        return render(request, 'expenditures/expenditure_create.html', context)

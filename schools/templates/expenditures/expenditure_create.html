@@ -70,6 +70,8 @@
                                     <div class="x_content">
 
                                        <form class="form-horizontal form-label-left"
+                                             id="ExpenditureForm"
+                                             data-expenditure_heads-url="{% url 'ajax_load_expenditure_heads' %}"
                                               role="form"
                                               action=""
                                               method="post"
@@ -121,6 +123,47 @@
                 });
             });
 
+            //load incomes depending on school select
+                    $("#id_school").change(function () {
+                       var url = $("#ExpenditureForm").attr("data-expenditure_heads-url");
+                       var schoolId = $(this).val();
+                       $.ajax({
+                           url: url,
+                           data: {
+                               'school': schoolId
+                           },
+                           success: function (data) {
+                               $("#id_expenditure_head").html(data);
+                           }
+                       });
+                   });
+
+
+                    //choosing the payment method
+                    $("#id_payment_method").change(function() {
+                      if ($(this).val() === "Cheque") {
+                        $('.bank_name').show();
+                        $('.cheque_number').show();}
+                     else if ($(this).val() === "Cash")
+                          {
+                          $('.bank_name').hide();
+                          $('.cheque_number').hide();
+                          }
+                    else{
+                      $('.bank_name').hide();
+                      $('.cheque_number').hide();
+                    }
+                   });
+                  $("#id_payment_method").trigger("change");
+                  //display placeholder
+                  $(document).ready(function(){
+                  $("#id_Cheque_Number").attr('placeholder', '{{form.Cheque_Number.label}}');
+                  $("#id_Bank_Name").attr('placeholder', '{{form.Bank_Name.label}}');
+                  $("#id_amount").attr('placeholder', '{{form.amount.label}}');
+                  $("#id_date").attr('placeholder', '{{form.date.label}}');
+                  $("#id_note").attr('placeholder', '{{form.note.label}}');
+              });
+
         </script>
     </div>
 
@@ -129,46 +172,8 @@
 {% block javascripts %}
 
     {{ block.super }}
-    <!-- Datatables -->
-    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
-    <!-- Chart.js -->
-    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
-    <!-- Skycons -->
-    <script src="/static/vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="/static/vendors/Flot/jquery.flot.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins -->
-    <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
-    <!-- DateJS -->
-    <script src="/static/vendors/DateJS/build/date.js"></script>
-    <!-- JQVMap -->
-    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+
 
 
 
 {% endblock javascripts %}
-
