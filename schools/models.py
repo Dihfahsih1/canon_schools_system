@@ -1180,7 +1180,7 @@ class Income(models.Model):
 class Expenditure(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
     expenditure_head = models.ForeignKey(ExpenditureHead, on_delete=models.CASCADE, blank=False, null=True)
-         method =(('Cash', 'Cash'),('Cheque','Cheque'))
+    method =(('Cash', 'Cash'),('Cheque','Cheque'))
     payment_method = models.CharField(max_length=100, blank=False, choices=method)
     Bank_Name = models.CharField(max_length=100, blank=True, null=True)
     Cheque_Number = models.CharField(max_length=100, blank=True, null=True)
