@@ -662,6 +662,18 @@ class ExpenditureForm(forms.ModelForm):
             'date': DatePickerInput(),
         }
 
+#load expenditure heads for specific school.
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['expenditure_head'].queryset = ExpenditureHead.objects.none()
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['expenditure_head'].queryset = ExpenditureHead.objects.filter(school_id=school_id).order_by('expenditure_head')
+            except (ValueError, TypeError):
+                pass
+
+
 
 class GalleryForm(forms.ModelForm):
     class Meta:
