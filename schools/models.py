@@ -1113,8 +1113,8 @@ class Invoice(models.Model):
               ('Cheque','Cheque'))
     paid_status = models.CharField(max_length=100, blank=False, choices=STATUS)
     Payment_Method = models.CharField(max_length=100, choices=method, blank=True, null=True)
-    Bank_Name = models.CharField(max_length=100, default='Shs 0.0', blank=True, null=True)
-    Cheque_Number = models.CharField(max_length=100, default='Shs 0.0', blank=True, null=True)
+    Bank_Name = models.CharField(max_length=100, blank=True, null=True)
+    Cheque_Number = models.CharField(max_length=100, blank=True, null=True)
     note = models.TextField(max_length=300)
 
 class BulkInvoice(models.Model):
