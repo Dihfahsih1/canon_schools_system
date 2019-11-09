@@ -320,7 +320,6 @@ class AbsentEmailForm(forms.ModelForm):
             'absent_date': DatePickerInput(),
         }
 
-
 class AbsentSMSForm(forms.ModelForm):
     class Meta:
         model = AbsentSMS

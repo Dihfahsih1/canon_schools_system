@@ -507,6 +507,7 @@ urlpatterns = [
     url(r'^reports/Students/index/', views.StudentReport, name='Student_Report'),
     url(r'^incomes/index/Add/', views.create_income, name='create-income'),
     url(r'^expenditures/index/Add/', views.create_expenditure, name='create-expenditure'),
+    url(r'^accounting/Discounts/index/Add', views.Add_Discount, name='Add-Discount'),
 
 
 

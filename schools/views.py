@@ -6352,3 +6352,25 @@ def create_expenditure(request):
         expenditure_heads=ExpenditureHead.objects.all()
         context = {'form': form, 'expenditure_heads':expenditure_heads}
         return render(request, 'expenditures/expenditure_create.html', context)
+
+class DiscountCreateView(CreateView):
+    model = Discount
+    template_name = 'discounts/discount_create.html'
+    fields = ('school', 'title', 'amount', 'note')
+
+    def form_valid(self, form):
+        discount = form.save(commit=False)
+        discount.save()
+        return redirect('discount_list')
+
+#view for adding discount
+def Add_Discount(request):
+    if request.method=="POST":
+        form=DiscountForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('discount_list')
+    else:
+        form = DiscountForm()
+        context = {'form': form}
+        return render(request, 'incomes/discount_create.html', context)
