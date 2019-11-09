@@ -6006,6 +6006,7 @@ def load_exams(request):
     school_id = request.GET.get('school')
     exams = Exam.objects.filter(school_id=school_id).order_by('exam_title')
     return render(request, 'filter/exam_dropdown_list_options.html', {'exams': exams})
+
 #load fee type depending on a particular school selected.
 def load_fee_types(request):
     school_id = request.GET.get('school')
@@ -6327,7 +6328,7 @@ def StudentReport(request):
         return render(request, 'reports/students_searched_list.html', context)
     return render(request, 'reports/search_students_index.html', context)
 
-#view for creating incomes
+#function based view for creating incomes
 def create_income(request):
     if request.method=="POST":
         form=IncomeForm(request.POST,request.FILES)
@@ -6340,7 +6341,7 @@ def create_income(request):
         context = {'form': form, 'income_heads':income_heads}
         return render(request, 'incomes/income_create.html', context)
 
-#view for creating expenditure
+#function based view for creating expenditure
 def create_expenditure(request):
     if request.method=="POST":
         form=ExpenditureForm(request.POST,request.FILES)
@@ -6353,17 +6354,7 @@ def create_expenditure(request):
         context = {'form': form, 'expenditure_heads':expenditure_heads}
         return render(request, 'expenditures/expenditure_create.html', context)
 
-class DiscountCreateView(CreateView):
-    model = Discount
-    template_name = 'discounts/discount_create.html'
-    fields = ('school', 'title', 'amount', 'note')
-
-    def form_valid(self, form):
-        discount = form.save(commit=False)
-        discount.save()
-        return redirect('discount_list')
-
-#view for adding discount
+#function based view for adding discount
 def Add_Discount(request):
     if request.method=="POST":
         form=DiscountForm(request.POST,request.FILES)
@@ -6374,3 +6365,15 @@ def Add_Discount(request):
         form = DiscountForm()
         context = {'form': form}
         return render(request, 'discounts/discount_create.html', context)
+
+#function based view for adding fee types
+def Add_fee_types(request):
+    if request.method=="POST":
+        form=FeeTypeForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('fee_type_list')
+    else:
+        form = DiscountForm()
+        context = {'form': form}
+        return render(request, 'discounts/create_fees_type.html', context)
