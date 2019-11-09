@@ -24,6 +24,7 @@
 {% endblock stylesheets %}
 
 {% block content %}
+{% load crispy_forms_tags %}
     <div class="right_col" role="main">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -78,7 +79,23 @@
                                               enctype="multipart/form-data"
                                               accept-charset="utf-8">{% csrf_token %}
 
-                                            {% include 'home/form_template.html' %}
+                                              <div class="col-lg-12">
+                                                  <div class=" col-md-3 mb-0">
+                                                      {{ form.school|as_crispy_field }}
+                                                  </div>
+                                                  <div class="col-md-3 mb-0">
+                                                      {{ form.title|as_crispy_field }}
+                                                  </div>
+                                                  <div class="col-md-3 mb-0">
+                                                      {{ form.amount|as_crispy_field }}
+                                                  </div>
+                                                  <div class=" col-md-3 mb-0">
+                                                      {{ form.note|as_crispy_field }}
+                                                  </div>
+
+
+                                              </div>
+                                              
                                             <div class="form-group">
                                                 <div class="col-sm-offset-2 col-sm-10">
                                                     <button type="submit" class="btn btn-success">Submit</button>
@@ -131,45 +148,7 @@
 
     {{ block.super }}
     <!-- Datatables -->
-    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
-    <!-- Chart.js -->
-    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
-    <!-- Skycons -->
-    <script src="/static/vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="/static/vendors/Flot/jquery.flot.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins -->
-    <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
-    <!-- DateJS -->
-    <script src="/static/vendors/DateJS/build/date.js"></script>
-    <!-- JQVMap -->
-    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
 
 
 
 {% endblock javascripts %}
-

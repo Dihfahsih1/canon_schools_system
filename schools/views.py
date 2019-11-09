@@ -6373,4 +6373,4 @@ def Add_Discount(request):
     else:
         form = DiscountForm()
         context = {'form': form}
-        return render(request, 'incomes/discount_create.html', context)
+        return render(request, 'discounts/discount_create.html', context)
