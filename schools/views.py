@@ -6111,17 +6111,6 @@ def fee_type_delete(request, fee_type_pk):
                                              request=request,
                                              )
     return JsonResponse(data)
-def create_fees_type(request):
-  if request.method=="POST":
-      form=FeeTypeForm(request.POST,request.FILES)
-      if form.is_valid():
-          form.save()
-          return redirect('create_fees_type')
-  else:
-      form = FeeTypeForm()
-      context = {'form': form}
-      return render(request, 'fee_types/create_fees_type.html', context)
-
 def create_invoice (request):
     form = InvoiceForm(request.POST or None, request.FILES or None)
     def get_form(self):
@@ -6367,13 +6356,13 @@ def Add_Discount(request):
         return render(request, 'discounts/discount_create.html', context)
 
 #function based view for adding fee types
-def Add_fee_types(request):
-    if request.method=="POST":
-        form=FeeTypeForm(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('fee_type_list')
-    else:
-        form = FeeTypeForm()
-        context = {'form': form}
-        return render(request, 'discounts/create_fees_type.html', context)
+def create_fees_type(request):
+  if request.method=="POST":
+      form=FeeTypeForm(request.POST,request.FILES)
+      if form.is_valid():
+          form.save()
+          return redirect('fee_type_list')
+  else:
+      form = FeeTypeForm()
+      context = {'form': form}
+      return render(request, 'fee_types/create_fees_type.html', context)

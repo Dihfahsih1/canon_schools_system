@@ -491,7 +491,7 @@ urlpatterns = [
     path('ajax/load-employee-salarygrades/', views.load_employee_salary_grade, name='ajax_load_employee_salarygrade'),
     #path('ajax/load-total-allowances/', views.load_total_allowances, name='ajax_load_total_allowances'),
 #
-    path('create_fees_type/', views.create_fees_type, name='create_fees_type'),
+
     path('create_invoice/', views.create_invoice, name='create_invoice'),
     path('Incomes/index/Add/', views.Addincomehead, name='Addincomehead'),
     path('Incomes/index/List/', views.list_incomeheads, name='list_incomeheads'),
@@ -508,6 +508,7 @@ urlpatterns = [
     url(r'^incomes/index/Add/', views.create_income, name='create-income'),
     url(r'^expenditures/index/Add/', views.create_expenditure, name='create-expenditure'),
     url(r'^accounting/Discounts/index/Add', views.Add_Discount, name='Add-Discount'),
+    path('accounting/index/fees-type/Add', views.create_fees_type, name='create-fees-type'),
 
 
 
