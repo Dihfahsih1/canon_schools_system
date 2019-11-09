@@ -828,7 +828,7 @@ class IncomeForm(forms.ModelForm):
             'date': DatePickerInput(),
             #'Bank_Name': forms.TextInput(attrs= {'placeholder': 'Bank Name'}),
             }
-
+#load income heads for specific school.
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['income_head'].queryset = IncomeHead.objects.none()
