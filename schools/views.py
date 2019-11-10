@@ -6300,7 +6300,7 @@ def PayrollReport(request):
     return render(request, 'reports/search_employee_index.html', context)
 
 ######################student reports module ##############################
-
+#these reports are accessed by all users
 def StudentReport(request):
     context = {}
     school = request.GET.get('school')
