@@ -41,7 +41,7 @@ def logout_user(request):
     logout(request)
     return render(request, 'home/login.html')
 
-
+#fetching what to display on the home dashboard
 def index(request):
     student_count = Student.objects.all().count()
     guardian_count = Guardian.objects.all().count()
