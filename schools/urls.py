@@ -509,6 +509,7 @@ urlpatterns = [
     url(r'^expenditures/index/Add/', views.create_expenditure, name='create-expenditure'),
     url(r'^accounting/Discounts/index/Add', views.Add_Discount, name='Add-Discount'),
     path('accounting/index/fees-type/Add', views.create_fees_type, name='create-fees-type'),
+    path('accounting/Due-Fees/Index/Email', views.Send_due_fees_email, name='Send-due-fees-email'),
 
 
 
