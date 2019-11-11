@@ -6379,4 +6379,4 @@ def Send_due_fees_email(request):
       form = DueFeeEmailForm()
       fees = Email.objects.all()
       context = {'form': form, 'emails':emails}
-      return render(request, 'fee_types/create_fees_type.html', context)
+      return render(request, 'due_fee_emails/Send_due_fees_email.html', context)
