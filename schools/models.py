@@ -1138,7 +1138,6 @@ class DueFeeEmail(models.Model):
            ('Student', 'Student'))
     receiver_role = models.CharField(max_length=100, blank=False, choices=PRO)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=False, null=True)
-
     due_fee_student = models.CharField(max_length=100)
     template = models.CharField(max_length=100)
     subject = models.CharField(max_length=100)

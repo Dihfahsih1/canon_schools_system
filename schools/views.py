@@ -6367,3 +6367,16 @@ def create_fees_type(request):
       fees = FeeType.objects.all()
       context = {'form': form, 'fees':fees}
       return render(request, 'fee_types/create_fees_type.html', context)
+
+#function based view for due fees mail
+def create_fees_type(request):
+  if request.method=="POST":
+      form=FeeTypeForm(request.POST,request.FILES)
+      if form.is_valid():
+          form.save()
+          return redirect('fee_type_list')
+  else:
+      form = FeeTypeForm()
+      fees = FeeType.objects.all()
+      context = {'form': form, 'fees':fees}
+      return render(request, 'fee_types/create_fees_type.html', context)
