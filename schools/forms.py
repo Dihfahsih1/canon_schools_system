@@ -638,7 +638,15 @@ class DueFeeEmailForm(forms.ModelForm):
         model = DueFeeEmail
         fields = ('school', 'receiver_role', 'classroom', 'due_fee_student', 'template',
                   'subject', 'email_body', 'attachment')
-
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['classroom'].queryset = Classroom.objects.none()
+        if 'school' in self.data:
+            try:
+                school_id = int(self.data.get('school'))
+                self.fields['classroom'].queryset = Classroom.objects.filter(school_id=school_id).order_by('classroom')
+            except (ValueError, TypeError):
+                pass
 
 class DueFeeSMSForm(forms.ModelForm):
     class Meta:
