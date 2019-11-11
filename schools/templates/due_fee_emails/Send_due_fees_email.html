@@ -73,6 +73,8 @@
                                     <div class="x_content">
 
                                         <form class="form-horizontal form-label-left"
+                                              id="DueFeeEmailForm"
+                                              data-classroom-url="ajax_load_classrooms"
                                               role="form"
                                               action=""
                                               method="post"
@@ -149,7 +151,20 @@
                     responsive: true
                 });
             });
+            $("#id_school").change(function () {
+                var url = $("#DueFeeEmailForm").attr("data-classroom-url");
+                var schoolId = $(this).val();
+                $.ajax({
+                    url: url,
+                    data: {
+                        'school': schoolId
+                    },
+                    success: function (data) {
+                        $("#id_classroom").html(data);
+                    }
+                });
 
+            });
         </script>
     </div>
 
