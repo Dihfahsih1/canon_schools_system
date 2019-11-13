@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'Education.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'schools',
+        'NAME': 'canon_school',
         'USER': 'postgres',
         'PASSWORD': 'canon',
         'HOST': 'localhost'
