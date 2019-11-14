@@ -89,7 +89,7 @@ class ProfileUpdateView(UpdateView):
         # Only get the User record for the user making the request
         return User.objects.get(username=self.request.user.username)
 
-
+#authentication
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
