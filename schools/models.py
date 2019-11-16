@@ -408,6 +408,8 @@ class Discount(models.Model):
     title = models.CharField(max_length=100)
     amount = models.CharField(max_length=100)
     note = models.TextField(max_length=300)
+    def __str__(self):
+        return self.title
 class Student(models.Model):
     academic_year = models.ForeignKey(Year, on_delete=models.SET_NULL, blank=True, null=True)
     school = models.ForeignKey(School, on_delete=models.SET_NULL, blank=False, null=True)
