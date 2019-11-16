@@ -403,6 +403,11 @@ class Year(models.Model):
 
     def __str__(self):
         return '{}'.format(self.start_month)
+class Discount(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    title = models.CharField(max_length=100)
+    amount = models.CharField(max_length=100)
+    note = models.TextField(max_length=300)
 class Student(models.Model):
     academic_year = models.ForeignKey(Year, on_delete=models.SET_NULL, blank=True, null=True)
     school = models.ForeignKey(School, on_delete=models.SET_NULL, blank=False, null=True)
@@ -430,7 +435,7 @@ class Student(models.Model):
     roll_no = models.CharField(max_length=100)
     registration_no = models.CharField(max_length=100)
     roles = models.ForeignKey(Role, on_delete=models.CASCADE, blank=False, null=True)
-    discount = models.CharField(max_length=100)
+    discount = models.ForeignKey(Discount, on_delete=models.CASCADE, blank=False, null=True)
     second_language = models.CharField(max_length=100)
     caste = models.CharField(max_length=100)
 
@@ -1074,13 +1079,6 @@ class SalaryGrade(models.Model):
 
     def __str__(self):
         return self.grade_name
-
-
-class Discount(models.Model):
-    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
-    title = models.CharField(max_length=100)
-    amount = models.CharField(max_length=100)
-    note = models.TextField(max_length=300)
 
 
 class FeeType(models.Model):
