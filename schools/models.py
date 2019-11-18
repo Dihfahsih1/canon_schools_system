@@ -1289,7 +1289,7 @@ class Paystack(models.Model):
 
 
 class ManageUser(models.Model):
-    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=True)
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True)
     user_type = models.ForeignKey(Role, blank=False, null=True, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)
 

@@ -6261,8 +6261,7 @@ def EmployeeSalaryPaid(request):
         form =  MonthlySalaryPaidForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('SalaryReport')
-
+            return redirect('EmployeeMonthlySalaryReport')
 def EmployeeMonthlySalaryReport(request):
     reports = MonthlySalaryPaid.objects.all()
     return render(request, 'payroll/Payment_Report.html', {'reports':reports})
